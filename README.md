@@ -21,3 +21,6 @@ the output will start with a name followed by a short bio then the stats for the
   * Intelligence
   * Wisdom (for focus)
   * Charisma
+
+  #### Vitality and Wisdom
+  Vitality and wisdom are both tied to their "parent" stats. so vitality (or health, stamina, etc.) is heavily influenced by the character's strength. Wisdom (or mana, focus, etc.) is heavily influenced by the character's intelligence. This is done to ensure that a character with high strength and low intelligence does not end up with more wisdom than vitality. 

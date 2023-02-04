@@ -15,8 +15,8 @@ const genStrength = luck => {
 
 //  roll for vitality, add 1/2 STR and add luck
 const genVitality = (luck, strength) => {
-    let numVIT = Math.floor(Math.random() * 51);
-    numVIT += Math.floor(((0.5 * strength) + luck));
+    let numVIT = 20;
+    numVIT += Math.floor(((1.4 * strength) + luck));
     return numVIT
 };
 
@@ -29,8 +29,8 @@ const genIntelligence = luck => {
 
 // roll for wisdom, add 1/2 INT
 const genWisdom = (luck, intelligence) => {
-    let numWIS = Math.floor(Math.random() * 51);
-    numWIS +=  Math.floor(((0.5 * intelligence) + luck));
+    let numWIS = 20;
+    numWIS +=  Math.floor(((1.4 * intelligence) + luck));
     return numWIS;
 };
 
@@ -79,9 +79,9 @@ const CHA = genCharisma(LCK);
 const charName = genName();
 
 console.log(`Name: ${charName}`)
-console.log(`Luck or LCK: ${LCK}`);
-console.log(`Strength or STR: ${STR}`);
-console.log(`Vitality or VIT: ${VIT}`);
-console.log(`Intelligence or INT: ${INT}`);
-console.log(`Wisdom or WIS: ${WIS}`);
-console.log(`Charisma or CHA: ${CHA}`);
+console.log(`Luck: ${LCK}`);
+console.log(`Strength: ${STR}`);
+console.log(`Vitality: ${VIT}`);
+console.log(`Intelligence: ${INT}`);
+console.log(`Wisdom: ${WIS}`);
+console.log(`Charisma: ${CHA}`);
