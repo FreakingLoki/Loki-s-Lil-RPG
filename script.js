@@ -60,7 +60,8 @@ const genName = () => {
         'Tathariel', 'Eilinel', 'Galathil', 'Arweniel', 'Eadwynn', 'Nessa', 'Rhudaur', 
         'Thrainor', 'Melwasul', 'Elara', 'Thorne', 'Kael', 'Niamh', 'Aelric', 
         'Seraphina', 'Evangeline', 'Orion', 'Isolde', 'Lorcan', 'Calla', 'Lysandra', 
-        'Dante', 'Ariadne', 'Galen', 'Mei-Lai', 'Jesse', 'Freaking', 'Loki', 'Partyboy'
+        'Dante', 'Ariadne', 'Galen', 'Mei-Lai', 'Jesse', 'Freaking', 'Loki', 'Partyboy', 
+        'Anti', 'Belle', 'Jasmine', 'Ron', 'John'
     ];
     const lastNames = [
         'Fireheart', 'Starweaver', 'Snowfoot', 'Ironfist', 'Moonblade',
@@ -69,7 +70,8 @@ const genName = () => {
         'Shadowhunter', 'Stormcaller', 'Nightingale', 'Bloodhound', 'Silverclaw',
         'Frostheart', 'Wildwood', 'Thunderstrike', 'Blackthorn', 'Moonblade', 
         'Starweaver', 'Ironfist', 'Fireheart', 'Riverstone', 'Windrider', 'of the Hills', 
-        'of the Stars', 'of the Moon', 'of the Lambs', 'of the Elms', 'McCool Guy', 'Goodparty'
+        'of the Stars', 'of the Moon', 'of the Lambs', 'of the Elms', 'McCool Guy', 
+        'Goodparty', 'Patience', 'Johnson', 'Smith'
     ];
 
     //randomize numbers to get ready to select name
