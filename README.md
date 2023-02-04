@@ -2,9 +2,6 @@
 This program will output a randomized message every time it is run. That message will consist of at least three different pieces of data.
 
 ## To Do List:
-  * Create the message
-  * Store message components
-  * Create script and run it locally
   * Put the program together
   * Bonus points
 
@@ -15,12 +12,17 @@ This character sheet will include some basic stats, a name, and a short bio (enl
 the output will start with a name followed by a short bio then the stats for the character generated.
 
 ### Stats:
+  * Name
+  * Biography
   * Luck (has an affect on all other rolls)
   * Strength
   * Vitality (for health)
+  * Dexterity
+  * Agility (for stunts)
   * Intelligence
   * Wisdom (for focus)
   * Charisma
 
-  #### Vitality and Wisdom
+  #### Vitality, Agility, and Wisdom
   Vitality and wisdom are both tied to their "parent" stats. so vitality (or health, stamina, etc.) is heavily influenced by the character's strength. Wisdom (or mana, focus, etc.) is heavily influenced by the character's intelligence. This is done to ensure that a character with high strength and low intelligence does not end up with more wisdom than vitality. 
+  Once Agility is implimented it will work in the same fashin, influenced by Dexterity.
