@@ -8,7 +8,7 @@ This program was a project given to me by Codecademy. The purpose of this projec
 
 ## Goals:
 the program will generate a Fantasy world character (think DnD or video game) sheet
-This character sheet will include some basic stats, a name, and a short bio (enlist ChatGPT to write a few?)
+This character sheet will be an output in the console (for now) that includes a name, a bio, and stats.
 
 the output will start with a name followed by a short bio then the stats for the character generated.
 
