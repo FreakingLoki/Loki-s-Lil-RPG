@@ -60,7 +60,7 @@ const genName = () => {
         'Tathariel', 'Eilinel', 'Galathil', 'Arweniel', 'Eadwynn', 'Nessa', 'Rhudaur', 
         'Thrainor', 'Melwasul', 'Elara', 'Thorne', 'Kael', 'Niamh', 'Aelric', 
         'Seraphina', 'Evangeline', 'Orion', 'Isolde', 'Lorcan', 'Calla', 'Lysandra', 
-        'Dante', 'Ariadne', 'Galen'
+        'Dante', 'Ariadne', 'Galen', 'Mei-Lai', 'Jesse', 'Freaking', 'Loki', 'Partyboy'
     ];
     const lastNames = [
         'Fireheart', 'Starweaver', 'Snowfoot', 'Ironfist', 'Moonblade',
@@ -68,7 +68,8 @@ const genName = () => {
         'Oceanheart', 'Wildwood', 'Watersinger', 'Wanderer', 'Thundercaller',
         'Shadowhunter', 'Stormcaller', 'Nightingale', 'Bloodhound', 'Silverclaw',
         'Frostheart', 'Wildwood', 'Thunderstrike', 'Blackthorn', 'Moonblade', 
-        'Starweaver', 'Ironfist', 'Fireheart', 'Riverstone', 'Windrider'
+        'Starweaver', 'Ironfist', 'Fireheart', 'Riverstone', 'Windrider', 'of the Hills', 
+        'of the Stars', 'of the Moon', 'of the Lambs', 'of the Elms', 'McCool Guy', 'Goodparty'
     ];
 
     //randomize numbers to get ready to select name
@@ -112,7 +113,9 @@ const genBio = () => {
         "A tiefling warlord who leads their army with cunning and charisma. They are a force to be reckoned with on the battlefield, and their followers would follow them to the ends of the earth.",
         "A dragonborn ranger who is a tracker and hunter of the greatest order. They are at home in the wilderness and can find their way through the darkest of forests.",
         "A gnome illusionist who uses their magic to create and manipulate reality. They are a master of deception and have a mischievous streak a mile wide.",
-        "An elven bard who uses their voice and music to tell tales of adventure and romance. They are a traveling minstrel, and their performances are the stuff of legend."
+        "An elven bard who uses their voice and music to tell tales of adventure and romance. They are a traveling minstrel, and their performances are the stuff of legend.",
+        "A human party animal. This good, good party boy uses his excellent social skills and some liquid courage to avoid or entice conflict as he sees fit.",
+        "A dragonborn warrior. This warrior uses their krav maga mastery (learned from Tom McGraw) to dominate their foes."
     ];
 
     let num = Math.floor(Math.random() * (bios.length + 1));
@@ -131,9 +134,9 @@ const AGI = genAgility(LCK, DEX);
 const INT = genIntelligence(LCK);
 const WIS = genWisdom(LCK, INT);
 const CHA = genCharisma(LCK);
-//generate a name
+//get a name
 const charName = genName();
-//generate a bio
+//get a bio
 const charBio = genBio();
 
 // output the character sheet

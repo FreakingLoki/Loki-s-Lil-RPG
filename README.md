@@ -1,11 +1,12 @@
-# Message Generator Program
-This program will output a randomized message every time it is run. That message will consist of at least three different pieces of data.
+# Character Generator Program
+This program was a project given to me by Codecademy. The purpose of this project was to generate output to the user consisting of at least three items, each randomized. I decided to make a character generator that heavily uses `Math.random` to generate some stats and then looks through a few arrays to generate a name and a short bio for the character.
 
 ## To Do List:
-  * Put the program together
   * Bonus points
+  * possible refactoring into a factory function in the future
+  * may add an "evaluation" that determins what the character would be good or bad at
 
-## Topic:
+## Goals:
 the program will generate a Fantasy world character (think DnD or video game) sheet
 This character sheet will include some basic stats, a name, and a short bio (enlist ChatGPT to write a few?)
 
