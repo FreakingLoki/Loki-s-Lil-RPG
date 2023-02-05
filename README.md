@@ -2,9 +2,10 @@
 This program was a project given to me by Codecademy. The purpose of this project was to generate output to the user consisting of at least three items, each randomized. I decided to make a character generator that heavily uses `Math.random` to generate some stats and then looks through a few arrays to generate a name and a short bio for the character.
 
 ## To Do List:
-  * Bonus points
-  * possible refactoring into a factory function in the future
-  * may add an "evaluation" that determins what the character would be good or bad at
+  * look into turning the entire script into a single factory function
+  * may add an "evaluation" that determines what the character would be good or bad at
+  * add alignments (good, neutral, evil) (chaotic, neutral, lawful) (neutral + neutral = true neutral)
+  * look into changing the way bios are generated so that the class within the bio makes sense for the generated stats
 
 ## Goals:
 the program will generate a Fantasy world character (think DnD or video game) sheet

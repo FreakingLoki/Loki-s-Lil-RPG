@@ -1,56 +1,21 @@
-//define functions for stats
+//define random number generator function
 
-// luck has an effect on all other stat rolls
-const genLuck = () => {
-    let luck = Math.floor(Math.random() * 51);
-    return luck;
-};
-
-//roll for strength and add luck
-const genStrength = luck => {
-    let numSTR = Math.floor(Math.random() * 51);
-    numSTR += luck;
-    return numSTR;
-};
-
-//  roll for vitality, add 1/2 STR and add luck
-const genVitality = (luck, strength) => {
-    let numVIT = 20;
-    numVIT += Math.floor(((1.4 * strength) + luck));
-    return numVIT
-};
-
-const genDexterity = luck => {
-    let numDEX = Math.floor(Math.random() * 51);
-    numDEX += luck;
-    return numDEX;
+const getRandomInt = multiplier => {
+    const randomInt = Math.floor(Math.random() * multiplier);
+    return randomInt;
 }
 
-const genAgility = (luck, dexterity) => {
-    let numAGI = 20;
-    numAGI += Math.floor(((1.4 * dexterity) + luck));
-    return numAGI
+const getComplexInt = (luck, parentStat) => {
+    let complexInt = 20 + Math.floor(((1.4 * parentStat) + luck));
+    return complexInt;
 }
 
-// roll for intelligence and add luck
-const genIntelligence = luck => {
-    let numINT = Math.floor(Math.random() * 51);
-    numINT += luck;
-    return numINT;
-};
+const getStat = luck => {
+    const stat = getRandomInt(51) + luck
+    return stat;
+}
 
-// roll for wisdom, add 1/2 INT
-const genWisdom = (luck, intelligence) => {
-    let numWIS = 20;
-    numWIS +=  Math.floor(((1.4 * intelligence) + luck));
-    return numWIS;
-};
 
-const genCharisma = luck => {
-    let numCHA = Math.floor(Math.random() * 51);
-    numCHA += Math.floor((0.25 * luck));
-    return numCHA
-};
 
 //name generator
 const genName = () => {
@@ -75,8 +40,8 @@ const genName = () => {
     ];
 
     //randomize numbers to get ready to select name
-    let numOne = Math.floor(Math.random() * (firstNames.length + 1));
-    let numTwo = Math.floor(Math.random() * (lastNames.length + 1));
+    let numOne = Math.floor(Math.random() * (firstNames.length));
+    let numTwo = Math.floor(Math.random() * (lastNames.length));
 
     let charName = firstNames[numOne] + ' ' + lastNames[numTwo];
     return charName;
@@ -120,24 +85,28 @@ const genBio = () => {
         "A dragonborn warrior. This warrior uses their krav maga mastery (learned from Tom McGraw) to dominate their foes."
     ];
 
-    let num = Math.floor(Math.random() * (bios.length + 1));
+    let num = Math.floor(Math.random() * (bios.length));
 
     let randomBio = bios[num];
     return randomBio;
       
 }
 
-//get values for the stats
-const LCK = genLuck();
-const STR = genStrength(LCK);
-const VIT = genVitality(LCK, STR);
-const DEX = genDexterity(LCK);
-const AGI = genAgility(LCK, DEX);
-const INT = genIntelligence(LCK);
-const WIS = genWisdom(LCK, INT);
-const CHA = genCharisma(LCK);
+// luck has an effect on all other stat rolls and has to be rolled for first
+let LCK = getRandomInt(51);
+
+//roll for other stats
+let STR = getStat(LCK);
+let VIT = getComplexInt(LCK, STR);
+let DEX = getStat(LCK);
+let AGI = getComplexInt(LCK,DEX);
+let INT = getStat(LCK);
+let WIS = getComplexInt(LCK, INT);
+let CHA = getStat(LCK);
+
 //get a name
 const charName = genName();
+
 //get a bio
 const charBio = genBio();
 
