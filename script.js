@@ -1,15 +1,17 @@
-//define random number generator function
-
+// define random number generator function
 const getRandomInt = multiplier => {
     const randomInt = Math.floor(Math.random() * multiplier);
     return randomInt;
 }
 
+// define randomized number generator based on a parent stat and a luck stat
+// stats using this function have a beginning value of 20
 const getComplexInt = (luck, parentStat) => {
-    let complexInt = 20 + Math.floor(((1.4 * parentStat) + luck));
+    const complexInt = 20 + Math.floor(((1.4 * parentStat) + luck));
     return complexInt;
 }
 
+// define function for determining value of a stat based only on luck
 const getStat = luck => {
     const stat = getRandomInt(51) + luck
     return stat;
@@ -17,9 +19,9 @@ const getStat = luck => {
 
 
 
-//name generator
+// define name generator function
 const genName = () => {
-    //arrays of names
+    // array of possible first names
     const firstNames = [
         'Daryndel', 'Azura', 'Deliadorn', 'Hrothgar', 'Faelivrin', 'Lothlorien', 
         'Tathariel', 'Eilinel', 'Galathil', 'Arweniel', 'Eadwynn', 'Nessa', 'Rhudaur', 
@@ -28,6 +30,8 @@ const genName = () => {
         'Dante', 'Ariadne', 'Galen', 'Mei-Lai', 'Jesse', 'Freaking', 'Loki', 'Partyboy', 
         'Anti', 'Belle', 'Jasmine', 'Ron', 'John'
     ];
+
+    // array of possible last names
     const lastNames = [
         'Fireheart', 'Starweaver', 'Snowfoot', 'Ironfist', 'Moonblade',
         'of the Wood', 'Stormchaser', 'Moonlit', 'Forestwhisper', 'Shadowblade', 
@@ -39,17 +43,47 @@ const genName = () => {
         'Goodparty', 'Patience', 'Johnson', 'Smith'
     ];
 
-    //randomize numbers to get ready to select name
-    let numOne = Math.floor(Math.random() * (firstNames.length));
-    let numTwo = Math.floor(Math.random() * (lastNames.length));
+    // randomize numbers to get ready to select name
+    const numOne = getRandomInt(firstNames.length);
+    const numTwo = getRandomInt(lastNames.length);
 
-    let charName = firstNames[numOne] + ' ' + lastNames[numTwo];
+    // concat the results into a single string and return the name
+    const charName = firstNames[numOne] + ' ' + lastNames[numTwo];
     return charName;
 
 };
 
-//bio generator
+// define randomized alignment function
+getAlignment =() => {
+    // array of possible lawfulness or order
+    const order = ['Lawful', 'Neutral', 'Chaotic'];
+
+    // array of possible moralities
+    const morals = ['Good', 'Neutral', 'Evil'];
+
+    //get randomized index for each array
+    const orderRoll = getRandomInt(order.length);
+    const moralRoll = getRandomInt(morals.length);
+
+    //declare alignment variable
+    let randomAlignment = '';
+
+    // avoid returning 'Neutral Neutral' by reassigning that result to 'True Neutral'
+    // return all other results normally
+    if (orderRoll === moralRoll) {
+        randomAlignment = 'True Neutral';
+    } else {
+        randomAlignment = `${order[orderRoll]} ${morals[moralRoll]}`;
+    };
+
+    //output alignment
+    return randomAlignment;
+
+};
+
+//define biography generator function
 const genBio = () => {
+    // array of possible biographies
     const bios = [
         "A dragonborn warrior who serves as the champion of their people. With a powerful voice and unmatched strength, they lead their tribe to victory in battle.",
         "A tiefling rogue who uses their charm and cunning to navigate the criminal underworld. They live by their own code and are always on the lookout for the DEXt big score.",
@@ -85,33 +119,44 @@ const genBio = () => {
         "A dragonborn warrior. This warrior uses their krav maga mastery (learned from Tom McGraw) to dominate their foes."
     ];
 
-    let num = Math.floor(Math.random() * (bios.length));
+    // get a random index to use with the array of biographies
+    const num = Math.floor(Math.random() * (bios.length));
 
-    let randomBio = bios[num];
+    // choose a biography based on the random index
+    const randomBio = bios[num];
+
+    //return the randomized biography
     return randomBio;
       
 }
 
 // luck has an effect on all other stat rolls and has to be rolled for first
-let LCK = getRandomInt(51);
+const LCK = getRandomInt(51);
 
-//roll for other stats
-let STR = getStat(LCK);
-let VIT = getComplexInt(LCK, STR);
-let DEX = getStat(LCK);
-let AGI = getComplexInt(LCK,DEX);
-let INT = getStat(LCK);
-let WIS = getComplexInt(LCK, INT);
-let CHA = getStat(LCK);
+// roll for basic stats
+const STR = getStat(LCK);
+const DEX = getStat(LCK);
+const INT = getStat(LCK);
+const CHA = getStat(LCK);
 
-//get a name
+// roll for stats based on a parent stat
+const VIT = getComplexInt(LCK, STR);
+const AGI = getComplexInt(LCK,DEX);
+const WIS = getComplexInt(LCK, INT);
+
+
+// generate a randomized name
 const charName = genName();
 
-//get a bio
+// generate a randomized alignment
+const charAlign = getAlignment();
+
+// get a randomized biography
 const charBio = genBio();
 
 // output the character sheet
 console.log(`Name: ${charName}`)
+console.log(`Alignment: ${charAlign}`)
 console.log(`Bio: ${charBio}`)
 console.log(`Luck: ${LCK}`);
 console.log(`Strength: ${STR}`);
