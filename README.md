@@ -52,4 +52,11 @@ the output will start with a name followed by a short bio then the stats for the
   21-40 = low
   41-60 = middling
   61-80 = high
-  81-100 = very hihgh
+  81-100 = very high
+
+  max level for complex stats is 210 and the minimum is 20
+  20-56 = very low
+  56-92 = low
+  92-128 = middling
+  128-164 = high
+  164-210 = very high
