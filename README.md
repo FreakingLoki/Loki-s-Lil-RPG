@@ -31,23 +31,33 @@ the output will start with a name followed by a short bio then the stats for the
   Vitality and wisdom are both tied to their "parent" stats. so vitality (or health, stamina, etc.) is heavily influenced by the character's strength. Wisdom (or mana, focus, etc.) is heavily influenced by the character's intelligence. This is done to ensure that a character with high strength and low intelligence does not end up with more wisdom than vitality. Agility works in the same fashion, influenced by Dexterity.
 
   #### Possible Classes (not currently determined by stat values)
-    * Warrior: high strength and vitality
-    * Rouge: high dexterity and charisma
-    * Wizard: high intelligence and wisdom
-    * Paladin: middling strength and intelligence
-    * Bard: high charisma
-    * Cleric: high intelligence and charsima
-    * Ranger: high dexterity and low charisma
-    * Sorcerer: high intelligence and low charisma
-    * Warlock: very high wisdom
-    * Druid: high intelligence and vitality
-    * Fighter: middling strength and high vitality
-    * Archer: very high dexterity
-    * Barbarian: very high strength low charisma
-    * Thief: high dexterity and high agility
-    * Warlord: high strength and high charsima
-    * Illusionist: high intelligence and high dexterity
-    * Party Animal: very high charisma
+
+    Ordered from highest main stat to lowest
+    STR:
+    * Barbarian: secondary stat is low CHA
+    * Warrior: secondary stat is high DEX
+    * Paladin: secondary stat is high INT
+    * Warlord: secondary stat is high CHA
+    * Fighter: default if STR is highest main stat
+
+    DEX:
+    * Archer: secondary stat is high STR
+    * Ranger: secondary stat is low CHA
+    * Rogue: secondary stat is high CHA
+    * Thief: default if DEX is highest main stat
+
+    INT:
+    * Wizard: secondary stat is low STR
+    * Warlock: secondary stat is high STR
+    * Druid: secondary stat is low DEX
+    * Illusionist: secondary stat is high DEX
+    * Sorcerer: default if INT is highest main stat
+
+    CHA:
+    * Party Animal: secondary stat is high LCK
+    * Cleric: secondary stat is high INT
+    * Bard: default if CHA is highest main stat
+    
 
 #### Stat Ranges
   maximum level for normal stats is 100. minimum is 0.

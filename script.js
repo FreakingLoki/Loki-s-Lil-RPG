@@ -128,7 +128,64 @@ const genBio = () => {
     //return the randomized biography
     return randomBio;
       
-}
+};
+
+// define class selection function
+const getClass = (STR, DEX, INT, CHA, LCK) => {
+
+    let determinedClass = ''
+
+    // strength based classes
+    if (STR > DEX && STR > INT) {
+        if (DEX > CHA && INT > CHA) {
+            determinedClass = 'Barbarian'
+        } else if (DEX > INT && DEX > CHA) {
+            determinedClass = 'Warrior'
+        } else if (INT > DEX && INT > CHA) {
+            determinedClass = 'Paladin'
+        } else if (CHA > INT && CHA > DEX) {
+            determinedClass ='Warlord'
+        } else {
+            determinedClass = 'Fighter'
+        }
+    }
+
+    // dexterity based classes
+    if (DEX > STR && DEX > INT) {
+        if (STR > INT && STR > CHA) {
+            determinedClass = 'Archer'
+        } else if (CHA < INT && CHA < STR) {
+            determinedClass = 'Ranger'
+        } else if (CHA > INT && CHA > STR) {
+            determinedClass = 'Rogue'
+        } else {
+            determinedClass = 'Thief'
+        }
+    } if (INT > STR && INT > DEX) {
+        if (STR < DEX && STR < CHA) {
+            determinedClass = 'Wizard'
+        } else if (STR > DEX && STR > CHA) {
+            determinedClass = 'Warlock'
+        } else if (DEX < STR && DEX < CHA) {
+            determinedClass = 'Druid'
+        } else if (DEX > STR && DEX > CHA) {
+            determinedClass = 'Illusionist'
+        } else {
+            determinedClass = 'Sorcerer'
+        }
+    } if (CHA > STR && CHA > INT) {
+        if (LCK >= 50) {
+            determinedClass = 'Party Animal'
+        } else if (INT > STR && INT > DEX) {
+            determinedClass ='Cleric'
+        } else {
+            determinedClass = 'Bard'
+        }
+
+    };
+
+    return determinedClass;
+};
 
 // luck has an effect on all other stat rolls and has to be rolled for first
 const LCK = getRandomInt(51);
@@ -144,6 +201,8 @@ const VIT = getComplexInt(LCK, STR);
 const AGI = getComplexInt(LCK,DEX);
 const WIS = getComplexInt(LCK, INT);
 
+const charClass = getClass(STR, DEX, INT, CHA, LCK);
+
 
 // generate a randomized name
 const charName = genName();
@@ -155,9 +214,10 @@ const charAlign = getAlignment();
 const charBio = genBio();
 
 // output the character sheet
-console.log(`Name: ${charName}`)
-console.log(`Alignment: ${charAlign}`)
-console.log(`Bio: ${charBio}`)
+console.log(`Name: ${charName}`);
+console.log(`Alignment: ${charAlign}`);
+console.log(`Class: ${charClass}`);
+console.log(`Bio: ${charBio}`);
 console.log(`Luck: ${LCK}`);
 console.log(`Strength: ${STR}`);
 console.log(`Vitality: ${VIT}`);
