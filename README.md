@@ -29,33 +29,31 @@ the output will start with a name followed by a short bio then the stats for the
   #### Vitality, Agility, and Wisdom
   Vitality and wisdom are both tied to their "parent" stats. so vitality (or health, stamina, etc.) is heavily influenced by the character's strength. Wisdom (or mana, focus, etc.) is heavily influenced by the character's intelligence. This is done to ensure that a character with high strength and low intelligence does not end up with more wisdom than vitality. Agility works in the same fashion, influenced by Dexterity.
 
-  #### Possible Classes (not currently determined by stat values)
-
-    Ordered from highest main stat to lowest
-    STR:
-    * Barbarian: secondary stat is low CHA
-    * Warrior: secondary stat is high DEX
-    * Paladin: secondary stat is high INT
-    * Warlord: secondary stat is high CHA
-    * Fighter: default if STR is highest main stat
+  #### Possible Classes (sorted by highest main stat)
+  STR:
+  * Barbarian: secondary stat is low CHA
+  * Warrior: secondary stat is high DEX
+  * Paladin: secondary stat is high INT
+  * Warlord: secondary stat is high CHA
+  * Fighter: default if STR is highest main stat
 
     DEX:
-    * Archer: secondary stat is high STR
-    * Ranger: secondary stat is low CHA
-    * Rogue: secondary stat is high CHA
-    * Thief: default if DEX is highest main stat
+  * Archer: secondary stat is high STR
+  * Ranger: secondary stat is low CHA
+  * Rogue: secondary stat is high CHA
+  * Thief: default if DEX is highest main stat
 
-    INT:
-    * Wizard: secondary stat is low STR
-    * Warlock: secondary stat is high STR
-    * Druid: secondary stat is low DEX
-    * Illusionist: secondary stat is high DEX
-    * Sorcerer: default if INT is highest main stat
+  INT:
+  * Wizard: secondary stat is low STR
+  * Warlock: secondary stat is high STR
+  * Druid: secondary stat is low DEX
+  * Illusionist: secondary stat is high DEX
+  * Sorcerer: default if INT is highest main stat
 
-    CHA:
-    * Party Animal: secondary stat is high LCK
-    * Cleric: secondary stat is high INT
-    * Bard: default if CHA is highest main stat
+  CHA:
+  * Party Animal: secondary stat is high LCK
+  * Cleric: secondary stat is high INT
+  * Bard: default if CHA is highest main stat
     
 
 #### Stat Ranges
