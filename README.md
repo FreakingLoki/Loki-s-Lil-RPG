@@ -2,9 +2,12 @@
 This program was a project given to me by Codecademy. The purpose of this project was to generate output to the user consisting of at least three items, each randomized. I decided to make a character generator that heavily uses `Math.random` to generate some stats and then looks through a few arrays to generate a name and a short bio for the character.
 
 ## To Do List:
+  * add a randomizer for race
+  * add a function that chooses the character's class based on the stats rolled
+  * change the way biography are generated. the character race and class will be determined outside of the biography and either added to the sheet seperately or "folded into" the bio
   * look into turning the entire script into a single factory function
   * may add an "evaluation" that determines what the character would be good or bad at
-  * look into changing the way bios are generated so that the class within the bio makes sense for the generated stats
+
 
 ## Goals:
 the program will generate a Fantasy world character (think DnD or video game) sheet
@@ -27,7 +30,7 @@ the output will start with a name followed by a short bio then the stats for the
   #### Vitality, Agility, and Wisdom
   Vitality and wisdom are both tied to their "parent" stats. so vitality (or health, stamina, etc.) is heavily influenced by the character's strength. Wisdom (or mana, focus, etc.) is heavily influenced by the character's intelligence. This is done to ensure that a character with high strength and low intelligence does not end up with more wisdom than vitality. Agility works in the same fashion, influenced by Dexterity.
 
-  #### Possible Classes
+  #### Possible Classes (not currently determined by stat values)
     * Warrior: high strength and vitality
     * Rouge: high dexterity and charisma
     * Wizard: high intelligence and wisdom
