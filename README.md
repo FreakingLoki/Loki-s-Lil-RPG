@@ -3,7 +3,6 @@ This program was a project given to me by Codecademy. The purpose of this projec
 
 ## To Do List:
   * add a randomizer for race
-  * add a function that chooses the character's class based on the stats rolled
   * change the way biography are generated. the character race and class will be determined outside of the biography and either added to the sheet seperately or "folded into" the bio
   * look into turning the entire script into a single factory function
   * may add an "evaluation" that determines what the character would be good or bad at
