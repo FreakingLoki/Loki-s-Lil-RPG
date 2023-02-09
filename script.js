@@ -5,7 +5,6 @@ const getRandomInt = multiplier => {
 }
 
 // define randomized number generator based on a parent stat and a luck stat
-// stats using this function have a beginning value of 20
 const getComplexInt = (base, luck, multiplier, parentStat) => {
     const complexInt = base + Math.floor(((multiplier * parentStat) + luck));
     return complexInt;
