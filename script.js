@@ -6,14 +6,14 @@ const getRandomInt = multiplier => {
 
 // define randomized number generator based on a parent stat and a luck stat
 // stats using this function have a beginning value of 20
-const getComplexInt = (luck, parentStat) => {
-    const complexInt = 20 + Math.floor(((1.4 * parentStat) + luck));
+const getComplexInt = (base, luck, multiplier, parentStat) => {
+    const complexInt = base + Math.floor(((multiplier * parentStat) + luck));
     return complexInt;
 }
 
 // define function for determining value of a stat based only on luck
-const getStat = luck => {
-    const stat = getRandomInt(51) + luck
+const getStat = (luck, multiplier) => {
+    const stat = getRandomInt(multiplier) + luck
     return stat;
 }
 
@@ -339,15 +339,15 @@ const getClass = (STR, DEX, INT, CHA, LCK) => {
 const LCK = getRandomInt(51);
 
 // roll for basic stats
-const STR = getStat(LCK);
-const DEX = getStat(LCK);
-const INT = getStat(LCK);
-const CHA = getStat(LCK);
+const STR = getStat(LCK, 51);
+const DEX = getStat(LCK, 51);
+const INT = getStat(LCK, 51);
+const CHA = getStat(LCK, 51);
 
 // roll for stats based on a parent stat
-const VIT = getComplexInt(LCK, STR);
-const AGI = getComplexInt(LCK,DEX);
-const WIS = getComplexInt(LCK, INT);
+const VIT = getComplexInt(20, LCK, 1.4, STR);
+const AGI = getComplexInt(20, LCK, 1.4, DEX);
+const WIS = getComplexInt(20, LCK, 1.4, INT);
 
 const charClass = getClass(STR, DEX, INT, CHA, LCK);
 
