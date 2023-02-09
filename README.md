@@ -3,7 +3,6 @@ This program was a project given to me by Codecademy. The purpose of this projec
 
 ## To Do List:
   * add a randomizer for race
-  * change the way biography are generated. the character race and class will be determined outside of the biography and either added to the sheet seperately or "folded into" the bio
   * look into turning the entire script into a single factory function
   * may add an "evaluation" that determines what the character would be good or bad at
 
@@ -57,16 +56,16 @@ the output will start with a name followed by a short bio then the stats for the
     
 
 #### Stat Ranges
-  maximum level for normal stats is 100. minimum is 0.
-  0-20 = very low
-  21-40 = low
-  41-60 = middling
-  61-80 = high
+  maximum level for normal stats is 100. minimum is 0:\
+  0-20 = very low\
+  21-40 = low\
+  41-60 = middling\
+  61-80 = high\
   81-100 = very high
 
-  max level for complex stats is 210 and the minimum is 20
-  20-56 = very low
-  56-92 = low
-  92-128 = middling
-  128-164 = high
-  164-210 = very high
+  max level for complex stats is 210 and the minimum is 20:\
+  20-56 = very low\
+  56-92 = low\
+  92-128 = middling\
+  128-164 = high\
+  164-210 = very high\
