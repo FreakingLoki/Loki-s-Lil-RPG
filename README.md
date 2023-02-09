@@ -1,15 +1,17 @@
 # Character Generator Program
-This program was a project given to me by Codecademy. The purpose of this project was to generate output to the user consisting of at least three items, each randomized. I decided to make a character generator that heavily uses `Math.random` to generate some stats and then looks through a few arrays to generate a name and a short bio for the character.
+This program was a project given to me by Codecademy. The purpose of this project was to generate output to the user consisting of at least three items, each randomized. I decided to make a character generator that heavily uses `Math.random()` to generate some stats and then looks through a few arrays to generate a name and a short bio for the character.
 
 ## To Do List:
-  * add a randomizer for race
+  * add a generator and random selector for character race
   * look into turning the entire script into a single factory function
   * may add an "evaluation" that determines what the character would be good or bad at
+  * allow the user to define the base value for the complex stats (currently 20)
+  * allow the user to define the multiplier for the complex stats (currently 1.4)
+  * moonshot goal: build a website that runs the script and displayes the output character
 
 
 ## Goals:
-the program will generate a Fantasy world character (think DnD or video game) sheet
-This character sheet will be an output in the console (for now) that includes a name, a bio, and stats.
+the program will generate a Fantasy world character stat sheet. Similar to, but not following the rules of Dungeons and Dragons or other tabletop role playing games. This character sheet will be an output in the console (for now) that includes a name, a character class, a short biography, and stats.
 
 the output will start with a name followed by a short bio then the stats for the character generated.
 
