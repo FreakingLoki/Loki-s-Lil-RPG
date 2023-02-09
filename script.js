@@ -259,6 +259,9 @@ const genBio = (characterClass) => {
         case 'Party Animal':
             classBio = partyAnimalBios;
             break;
+        case 'Cleric':
+            classBio = clericBios;
+            break;
         case 'Bard':
             classBio = bardBios;
             break;
