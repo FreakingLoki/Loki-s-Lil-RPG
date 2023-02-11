@@ -2,26 +2,30 @@
 This program was a project given to me by Codecademy. The purpose of this project was to generate output to the user consisting of at least three items, each randomized. I decided to make a character generator that heavily uses `Math.random()` to generate some stats and then looks through a few arrays to generate a name and a short bio for the character.
 
 ## To Do List:
+  * clean up styling on the outputs
+  * seriously rethink the fonts 
   * add a generator and random selector for character race
   * may add an "evaluation" that determines what the character would be good or bad at
-  * moonshot goal: build a website that runs the script and displayes the output character
+
 
 
 ## Goals:
-the program will generate a Fantasy world character stat sheet. Similar to, but not following the rules of Dungeons and Dragons or other tabletop role playing games. This character sheet will be an output in the console (for now) that includes a name, a character class, a short biography, and stats.
+the program will generate a Fantasy world character stat sheet. Similar to, but not following the rules of Dungeons and Dragons or other role playing games. This character sheet will be output on the webpage that includes a name, a character class, a short biography, and some basic and compound stats.
 
-the output will start with a name followed by a short bio then the stats for the character generated.
+the output will start with a name followed by a short bio then the stats for the generated character.
 
-### Stats:
+### Generated Character Sheet:
   * Name
+  * Alignment
+  * Class
   * Biography
   * Luck (affects all other rolls)
   * Strength
   * Vitality (for health)
   * Dexterity
-  * Agility (for stunts)
+  * Agility (for stamina or sneaking)
   * Intelligence
-  * Wisdom (for focus)
+  * Wisdom (for mana or spellcasting)
   * Charisma
 
   #### Vitality, Agility, and Wisdom
@@ -55,6 +59,9 @@ the output will start with a name followed by a short bio then the stats for the
     
 
 #### Stat Ranges
+
+The below stat ranges are for the default values. Default Base is 20, default Multiplier is 1.4 and default Max Level is 100.
+
   maximum level for normal stats is 100. minimum is 0:\
   0-20 = very low\
   21-40 = low\
