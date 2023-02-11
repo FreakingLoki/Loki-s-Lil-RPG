@@ -3,10 +3,7 @@ This program was a project given to me by Codecademy. The purpose of this projec
 
 ## To Do List:
   * add a generator and random selector for character race
-  * look into turning the entire script into a single factory function
   * may add an "evaluation" that determines what the character would be good or bad at
-  * allow the user to define the base value for the complex stats (currently 20)
-  * allow the user to define the multiplier for the complex stats (currently 1.4)
   * moonshot goal: build a website that runs the script and displayes the output character
 
 

@@ -6,7 +6,7 @@ const getRandomInt = multiplier => {
 
 // define randomized number generator based on a parent stat and a luck stat
 const getComplexInt = (base, luck, multiplier, parentStat) => {
-    const complexInt = base + Math.floor(((multiplier * parentStat) + luck));
+    const complexInt = (base + Math.floor(((multiplier * parentStat) + luck)));
     return complexInt;
 }
 
@@ -334,42 +334,96 @@ const getClass = (STR, DEX, INT, CHA, LCK) => {
     return determinedClass;
 };
 
-// luck has an effect on all other stat rolls and has to be rolled for first
-const LCK = getRandomInt(51);
+const generateCharacter = () => {
+    console.log("Initializing matter reconfiguration lasers...");
+    console.log("Adjusting matter slurry concentration within vat...");
+    console.log("Lasers at maximum power.");
+    console.log("Commence matter deconstruction.");
+    console.log("Moisture level optimal.");
+    console.log("Adjusting laser pulse to reconstruction mode...");
+    console.log("Life created! Logging results...")
+    //get inputs from form and assign to constants
+    const statBase = parseFloat(document.getElementById('complex-stat-base').value);
+    const statMultiplier = parseFloat(document.getElementById('complex-stat-multiplier').value);
+    const statMax = parseFloat(((document.getElementById('max-stat-level').value) / 2) + 1);
 
-// roll for basic stats
-const STR = getStat(LCK, 51);
-const DEX = getStat(LCK, 51);
-const INT = getStat(LCK, 51);
-const CHA = getStat(LCK, 51);
+    //call functions to generate character sheet
+    //Luck has to be rolled first because it effects every other stat
+    const LCK = getRandomInt(statMax);
 
-// roll for stats based on a parent stat
-const VIT = getComplexInt(20, LCK, 1.4, STR);
-const AGI = getComplexInt(20, LCK, 1.4, DEX);
-const WIS = getComplexInt(20, LCK, 1.4, INT);
+    // roll for basic stats
+    const STR = getStat(LCK, statMax);
+    const DEX = getStat(LCK, statMax);
+    const INT = getStat(LCK, statMax);
+    const CHA = getStat(LCK, statMax);
 
-const charClass = getClass(STR, DEX, INT, CHA, LCK);
+    // roll for stats based on a parent stat
+    const VIT = getComplexInt(statBase, LCK, statMultiplier, STR);
+    const AGI = getComplexInt(statBase, LCK, statMultiplier, DEX);
+    const WIS = getComplexInt(statBase, LCK, statMultiplier, INT);
+
+    //determine the character's class
+    const charClass = getClass(STR, DEX, INT, CHA, LCK);
+
+    // generate a randomized name
+    const charName = genName();
+
+    // generate a randomized moral alignment
+    const charAlign = getAlignment();
+
+    // get a randomized biography
+    const charBio = genBio(charClass);
 
 
-// generate a randomized name
-const charName = genName();
 
-// generate a randomized alignment
-const charAlign = getAlignment();
+    const characterSheet = {
+        name: charName,
+        className: charClass,
+        alignment: charAlign,
 
-// get a randomized biography
-const charBio = genBio(charClass);
+        bio: charBio,
 
-// output the character sheet
-console.log(`Name: ${charName}`);
-console.log(`Alignment: ${charAlign}`);
-console.log(`Class: ${charClass}`);
-console.log(`Bio: ${charBio}`);
-console.log(`Luck: ${LCK}`);
-console.log(`Strength: ${STR}`);
-console.log(`Vitality: ${VIT}`);
-console.log(`Dexterity: ${DEX}`);
-console.log(`Agility: ${AGI}`);
-console.log(`Intelligence: ${INT}`);
-console.log(`Wisdom: ${WIS}`);
-console.log(`Charisma: ${CHA}`);
+        luck: LCK,
+        strength: STR,
+        vitality: VIT,
+        dexterity: DEX,
+        agility: AGI,
+        intelligence: INT,
+        wisdom: WIS,
+        charisma: CHA,
+    }
+
+    document.getElementById("output-section").innerHTML = `
+    <h3>Name:</h3> <p>${characterSheet.name}</p>
+    <h4>Alignment:</h4> <p>${characterSheet.alignment}</p>
+    <h4>Class:</h4> <p>${characterSheet.className}</p>
+
+    <h4>Bio:</h4> <p>${characterSheet.bio}</p>
+
+    <h3>Stats</h3>
+    <h4>Luck:</h4> <p>${characterSheet.luck}</p>
+    <h4>Strength:</h4> <p>${characterSheet.strength}</p>
+    <h4>Vitality:</h4> <p>${characterSheet.vitality}</p>
+    <h4>Dexterity:</h4> <p>${characterSheet.dexterity}</p>
+    <h4>Agility:</h4> <p>${characterSheet.agility}</p>
+    <h4>Intelligence:</h4> <p>${characterSheet.intelligence}</p>
+    <h4>Wisdom:</h4> <p>${characterSheet.wisdom}</p>
+    <h4>Charisma:</h4> <p>${characterSheet.charisma}</p>
+    `;
+
+};
+
+// this outputs a character sheet to the console for testing purposes
+// const testCharacter = generateCharacter();
+// console.log(`Name: ${testCharacter.name}`);
+// console.log(`Alignment: ${testCharacter.alignment}`);
+// console.log(`Class: ${testCharacter.className}`);
+// console.log(`Bio: ${testCharacter.bio}`);
+// console.log(`Luck: ${testCharacter.luck}`);
+// console.log(`Strength: ${testCharacter.strength}`);
+// console.log(`Vitality: ${testCharacter.vitality}`);
+// console.log(`Dexterity: ${testCharacter.dexterity}`);
+// console.log(`Agility: ${testCharacter.agility}`);
+// console.log(`Intelligence: ${testCharacter.intelligence}`);
+// console.log(`Wisdom: ${testCharacter.wisdom}`);
+// console.log(`Charisma: ${testCharacter.charisma}`);

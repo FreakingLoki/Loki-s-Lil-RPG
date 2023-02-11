@@ -1,0 +1,103 @@
+/*
+COLORS:
+text: #DDE392
+highlighted anchor: #C6D191
+anchor: #AFBE8F
+borders: #7D8570
+header/footer/div backgrounds: #646F58
+main background: #504B3A
+
+FONTS:
+Headers and Labels: 'Major Mono Display'
+Main Text: 'League Spartan'
+*/
+
+/* ---- UNIVERSAL ----*/
+* {
+    margin: 0;
+
+    font-family: 'League Spartan', sans-serif;
+}
+
+body {
+    background-color: #504B3A;
+    color: #DDE392;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Major Mono Display', monospace;
+}
+
+h1 {
+    font-size: 3rem;;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+/* ---- HEADER ---- */
+header {
+    width: 100%;
+    height: 5rem;
+
+    background-color: #646F58;
+    border-bottom: 4px solid #7D8570;
+}
+
+/* ---- MAIN CONTENT ---- */
+main {
+    margin: 5rem 7.5% 5rem 7.5%;
+    width: 85%;
+}
+
+form#input-form {
+    margin: 2rem 0 2rem 0;
+    width: 100%;
+    height: 25rem;
+    border: 4px solid #7D8570;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+div.input-item {
+height: 12rem;
+width: 10rem;
+}
+
+label {
+    margin: 1rem;
+}
+
+input {
+    margin: 1rem;
+    height: 1.5rem;
+    width: 5rem;
+}
+
+button#generate-button {
+    height: 5rem;
+    width: 8rem;
+
+    border: 3px solid #7D8570;
+    border-radius: 8px;
+    color: #DDE392;
+    background-color: #646F58;
+}
+
+
+/* ---- FOOTER ---- */
+footer {
+    width: 100%;
+    height: 5rem;
+
+    background-color: #646F58;
+    border-top: 4px solid #7D8570;
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--stylesheet link-->
+    <link href ="./resources/style.css" rel="stylesheet" type="text/css">
+    <!--fonts links-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&family=Major+Mono+Display&display=swap" rel="stylesheet">
+    <!--javascript link-->
+    <script src="./script.js" defer></script>
+    <title>Loki's Character Generator</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>Loki's Character Generator</h1>
+    </header>
+
+    <main>
+
+            <h2>Generate a Character</h2>
+
+        <section id="input-section">
+            <form id="input-form">
+
+                <div class="input-item">
+                    <label for="base"><h3>Base Level:</h3></label>
+                    <input type="number" id="complex-stat-base" name="base" required min="0" max="1000" size="6" value="20">
+                    <p>Defines a minimum value for Vitality, Agility, and Wisdom. Default value is 20.</p>
+                </div>
+
+                <div class="input-item">
+                    <label for="complex-multiplier"><h3>Multiplier:</h3></label>
+                    <input type="number" id="complex-stat-multiplier" name="complex-multiplier" required min="0" max="1000" step="0.01" size="6" value="1.4">
+                    <p>Determines how influential parent stats are on stats they influence. Default value is 1.4.</p>
+                </div>
+
+                <div class="input-item">
+                    <label for="max-level"><h3>Max Level:</h3></label>
+                    <input type="number" id="max-stat-level" name="max-level" required min="0" max="1000" size="6" value="100">
+                    <p>Defines a maximum level for the main stats. Default value is 100.</p>
+                </div>
+
+                <div class="input-item">
+                    <button type="button" id="generate-button" onclick="generateCharacter()"><h3>Generate</h3></button>
+                </div>
+
+            </form>
+        </section>
+
+        <section id="output-section">
+            
+        </section>
+
+    </main>
+
+    <footer>
+        <p>This is a learning tool built by Jesse Heald in February of 2022.</p>
+    </footer>
+
+</body>
+</html>
