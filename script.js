@@ -22,7 +22,7 @@ const getStat = (luck, multiplier) => {
 const genName = () => {
     // array of possible first names
     const firstNames = [
-        'Daryndel', 'Azura', 'Deliadorn', 'Hrothgar', 'Faelivrin', 'Lothlorien', 
+        'Daryndel', 'Azura', 'Deliadorn', 'Hrothgar', 'Faelivrin', 'Lorien', 
         'Tathariel', 'Eilinel', 'Galathil', 'Arweniel', 'Eadwynn', 'Nessa', 'Rhudaur', 
         'Thrainor', 'Melwasul', 'Elara', 'Thorne', 'Kael', 'Niamh', 'Aelric', 
         'Seraphina', 'Evangeline', 'Orion', 'Isolde', 'Lorcan', 'Calla', 'Lysandra', 
@@ -209,6 +209,13 @@ const genBio = (characterClass) => {
         "A bard of the court, this musician uses their songs to sway the hearts and minds of those in power. They are as cunning as they are charming, and they are never afraid to use their wit and musical talents to get what they want.",
         "This bard is a chronicler of history, using their music to preserve the tales and traditions of their people. Their songs are a testament to their culture, and they travel far and wide to collect new stories and melodies to add to their repertoire."   
     ];
+    const peasantBios = [
+        "A farmer who has lived a simple life tending to crops and livestock, but dreams of adventure.",
+        "A former blacksmith who lost their job due to a new age of technology and seeks to find their place in the world.",
+        "A tavern worker who has overheard countless stories of heroics and now seeks to experience it for themselves.",
+        "A street performer who uses their skills to earn a living, but yearns for excitement and a greater purpose.",
+        "A former soldier who has seen the horrors of war and now wishes to live a quiet life, but can never shake their combat instincts."
+        ];
 
     //based on characterClass, choose a bio array
     let classBio = [];
@@ -264,6 +271,9 @@ const genBio = (characterClass) => {
         case 'Bard':
             classBio = bardBios;
             break;
+        default:
+            classBio = peasantBios;
+            break;
     }
     // get a random index to use with the array of biographies
     const num = getRandomInt(classBio.length);
@@ -284,52 +294,54 @@ const getClass = (STR, DEX, INT, CHA, LCK) => {
     // strength based classes
     if (STR > DEX && STR > INT) {
         if (DEX > CHA && INT > CHA) {
-            determinedClass = 'Barbarian'
+            determinedClass = 'Barbarian';
         } else if (DEX > INT && DEX > CHA) {
-            determinedClass = 'Warrior'
+            determinedClass = 'Warrior';
         } else if (INT > DEX && INT > CHA) {
-            determinedClass = 'Paladin'
+            determinedClass = 'Paladin';
         } else if (CHA > INT && CHA > DEX) {
-            determinedClass ='Warlord'
+            determinedClass ='Warlord';
         } else {
-            determinedClass = 'Fighter'
+            determinedClass = 'Fighter';
         }
     }
     // dexterity based classes
     if (DEX > STR && DEX > INT) {
         if (STR > INT && STR > CHA) {
-            determinedClass = 'Archer'
+            determinedClass = 'Archer';
         } else if (CHA < INT && CHA < STR) {
-            determinedClass = 'Ranger'
+            determinedClass = 'Ranger';
         } else if (CHA > INT && CHA > STR) {
-            determinedClass = 'Rogue'
+            determinedClass = 'Rogue';
         } else {
-            determinedClass = 'Thief'
+            determinedClass = 'Thief';
         }
     // intelligence based classes
     } if (INT > STR && INT > DEX) {
         if (STR < DEX && STR < CHA) {
-            determinedClass = 'Wizard'
+            determinedClass = 'Wizard';
         } else if (STR > DEX && STR > CHA) {
-            determinedClass = 'Warlock'
+            determinedClass = 'Warlock';
         } else if (DEX < STR && DEX < CHA) {
-            determinedClass = 'Druid'
+            determinedClass = 'Druid';
         } else if (DEX > STR && DEX > CHA) {
-            determinedClass = 'Illusionist'
+            determinedClass = 'Illusionist';
         } else {
-            determinedClass = 'Sorcerer'
+            determinedClass = 'Sorcerer';
         }
     // charisma based classes
     } if (CHA > STR && CHA > INT) {
         if (LCK >= 50) {
-            determinedClass = 'Party Animal'
+            determinedClass = 'Party Animal';
         } else if (INT > STR && INT > DEX) {
-            determinedClass ='Cleric'
+            determinedClass ='Cleric';
         } else {
-            determinedClass = 'Bard'
+            determinedClass = 'Bard';
         }
 
-    };
+    } else {
+        determinedClass = 'Peasant';
+    }
 
     return determinedClass;
 };

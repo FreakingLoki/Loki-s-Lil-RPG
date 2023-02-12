@@ -8,8 +8,9 @@ header/footer/div backgrounds: #646F58
 main background: #504B3A
 
 FONTS:
-Headers and Labels: 'Major Mono Display'
-Main Text: 'League Spartan'
+Title: font-family:'Major Mono Display', monospace;
+Headers and Labels: font-family: 'Cinzel', serif;
+Main Text: font-family: 'League Spartan', sans-serif;
 */
 
 /* ---- UNIVERSAL ----*/
@@ -28,11 +29,12 @@ body {
     justify-content: space-between;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Major Mono Display', monospace;
+h2, h3, h4, h5, h6 {
+    font-family: 'Cinzel', serif;
 }
 
 h1 {
+    font-family: 'Major Mono Display', monospace;
     font-size: 3rem;;
 }
 
@@ -90,6 +92,17 @@ button#generate-button {
     border-radius: 8px;
     color: #DDE392;
     background-color: #646F58;
+}
+
+button#generate-button:hover {
+    cursor: pointer;
+    color: #7D8570;
+    background-color: #DDE392;
+}
+
+button#generate-button:active {
+    color: #646F58;
+    background-color: #504B3A;
 }
 
 

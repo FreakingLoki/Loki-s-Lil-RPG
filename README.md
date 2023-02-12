@@ -2,6 +2,7 @@
 This program was a project given to me by Codecademy. The purpose of this project was to generate output to the user consisting of at least three items, each randomized. I decided to make a character generator that heavily uses `Math.random()` to generate some stats and then looks through a few arrays to generate a name and a short bio for the character.
 
 ## To Do List:
+  * HOTFIX determine the issue with the class selector function and patch it (see Known Issues section)
   * clean up styling on the outputs
   * seriously rethink the fonts 
   * add a generator and random selector for character race
@@ -75,3 +76,44 @@ The below stat ranges are for the default values. Default Base is 20, default Mu
   92-128 = middling\
   128-164 = high\
   164-210 = very high\
+
+  ## Known Issues
+
+  Currently there is a possibility for the script to output a (new) class of Peasant which should be unreachable code. I intend to figure out why this is possible and get rid of the Peasant class. This class is a placeholder for generated characters which run into this error. Example character below should have been assigned a class of Paladin  because `(INT > DEX && INT > CHA)`
+
+  Name:\
+  John Forestwhisper\
+
+  Alignment:\
+  Lawful Neutral\
+
+  Class:\
+  Peasant\
+
+  Bio:\
+  A farmer who has lived a simple life tending to crops and livestock, but dreams of adventure.\
+
+  Stats\
+  Luck:\
+  21\
+
+  Strength:\
+  65\
+
+  Vitality:\
+  132\
+
+  Dexterity:\
+  30\
+
+  Agility:\
+  83\
+
+  Intelligence:\
+  48\
+
+  Wisdom:\
+  108\
+
+  Charisma:\
+  41\
