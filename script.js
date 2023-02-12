@@ -28,19 +28,22 @@ const genName = () => {
         'Seraphina', 'Evangeline', 'Orion', 'Isolde', 'Lorcan', 'Calla', 'Lysandra', 
         'Dante', 'Ariadne', 'Galen', 'Mei-Lai', 'Jesse', 'Freaking', 'Loki', 'Partyboy', 
         'Anti', 'Belle', 'Jasmine', 'Ron', 'John', 'Griffin', 'Travis', 'Justin', 'Sydnee', 
-        'Rachel', 'Teresa'
+        'Rachel', 'Teresa', 'Firstname', 'Barbariana', 'Ziggy', 'Fanny', 'Bubbles', 'Cheesecake', 
+        'Fluffy', 'Giggles', 'Honeybun', 'Pumpkin', 'Snuggles', 'Tiny', 'Lil', 'Gentle', 'Bear', 'Dragon'
     ];
 
     // array of possible last names
     const lastNames = [
-        'Fireheart', 'Starweaver', 'Snowfoot', 'Ironfist', 'Moonblade',
-        'of the Wood', 'Stormchaser', 'Moonlit', 'Forestwhisper', 'Shadowblade', 
-        'Oceanheart', 'Wildwood', 'Watersinger', 'Wanderer', 'Thundercaller',
-        'Shadowhunter', 'Stormcaller', 'Nightingale', 'Bloodhound', 'Silverclaw',
-        'Frostheart', 'Wildwood', 'Thunderstrike', 'Blackthorn', 'Moonblade', 
-        'Starweaver', 'Ironfist', 'Fireheart', 'Riverstone', 'Windrider', 'of the Hills', 
-        'of the Stars', 'of the Moon', 'of the Lambs', 'of the Elms', 'McCool Guy', 
-        'Goodparty', 'Patience', 'Johnson', 'Smith', 'Ronson', 'Paulson'
+        'Fireheart', 'Starweaver', 'Snowfoot', 'Ironfist', 'Moonblade', 'Blue', 'the Cowardly', 
+        'of the Wood', 'Stormchaser', 'Moonlit', 'Forestwhisper', 'Shadowblade', 'Justgotme', 
+        'Oceanheart', 'Wildwood', 'Watersinger', 'Wanderer', 'Thundercaller', 'Ridewinder', 
+        'Shadowhunter', 'Stormcaller', 'Nightingale', 'Bloodhound', 'Silverclaw', 'Goodblade', 'Goodwand', 
+        'Frostheart', 'Wildwood', 'Thunderstrike', 'Blackthorn', 'Moonblade', 'Flatfoot', 'Goodaxe', 'Goodshot', 
+        'Starweaver', 'Ironfist', 'Fireheart', 'Riverstone', 'Windrider', 'of the Hills', 'Goodguy',
+        'of the Stars', 'of the Moon', 'of the Lambs', 'of the Elms', 'McCool Guy', 'Goodparty', 'Badparty',  
+        'Goodparty', 'Patience', 'Johnson', 'Smith', 'Ronson', 'Paulson', 'Lastname', 'Wreckit', 
+        'McSlammaJamma', 'Baddabing', 'Bloop', 'Sizzlefist', 'Nogginwhack', 'Thundertush', 'Gigglefang', 
+        'Zapzap', 'Razzlefluff', 'Cheddarbiscuit', 'Punchpenny', 'Snickerdoodle', 'Cracklepop', 'Pizzazzle'
     ];
 
     // randomize numbers to get ready to select name
@@ -209,12 +212,54 @@ const genBio = (characterClass) => {
         "A bard of the court, this musician uses their songs to sway the hearts and minds of those in power. They are as cunning as they are charming, and they are never afraid to use their wit and musical talents to get what they want.",
         "This bard is a chronicler of history, using their music to preserve the tales and traditions of their people. Their songs are a testament to their culture, and they travel far and wide to collect new stories and melodies to add to their repertoire."   
     ];
-    const peasantBios = [
-        "A farmer who has lived a simple life tending to crops and livestock, but dreams of adventure.",
-        "A former blacksmith who lost their job due to a new age of technology and seeks to find their place in the world.",
-        "A tavern worker who has overheard countless stories of heroics and now seeks to experience it for themselves.",
-        "A street performer who uses their skills to earn a living, but yearns for excitement and a greater purpose.",
-        "A former soldier who has seen the horrors of war and now wishes to live a quiet life, but can never shake their combat instincts."
+    const swashbucklerBios = [
+        "Born into a life of adventure and excitement, this Swashbuckler has always lived on the edge. With quick wit and even quicker reflexes, they have become a master of fencing and the art of the blade. Whether they're dueling with rival pirates or plundering treasure from enemy ships, they always manage to come out on top.",
+        "A former street urchin, this Swashbuckler learned how to survive by their wits and cunning. They honed their skills as a pickpocket and thief, eventually becoming a notorious rogue known throughout the land. They use their charm and grace to outwit their opponents, making them a formidable opponent in both combat and negotiation.",
+        "Having grown up in a family of traveling performers, this Swashbuckler learned to dance, sing, and fence at a young age. They've since combined these skills to become the life of any party and a daring adventurer. They're just as likely to take on a challenge for the thrill of it as they are for the reward, making them a true wild card.",
+        "After a life of hard work on their family's farm, this Swashbuckler was ready for a change of pace. They joined a group of sailors and quickly rose through the ranks, eventually becoming the ship's first mate. Their cunning and bravery in battle earned them the respect of their crew, and they now lead daring raids and adventures on the high seas.",
+        "As a former member of the city guard, this Swashbuckler has seen their fair share of action. They were forced to retire after a run-in with corrupt officials, but they've since found a new calling as a mercenary and adventurer. They use their combat skills and strategic mind to take on the toughest of challenges, always coming out on top."
+      ];
+      const spellswordBios = [
+        "A former soldier, this Spellsword has honed their skills in both combat and magic. They are a formidable opponent on the battlefield, wielding their sword and spells with equal mastery.",
+        "This Spellsword has lived a life of adventure, seeking out powerful magical artifacts and battling dangerous creatures. They are always ready for their next challenge, their sword and spellbook always at their side.",
+        "This Spellsword is a respected member of their local mage's guild, known for their unique blend of martial prowess and magical abilities. They often use their powers to protect their community and keep the peace.",
+        "A wanderer and mercenary, this Spellsword will take any job that pays well and presents a good challenge. They are equally skilled in swordplay and spellcasting, always finding a way to use both to their advantage.",
+        "This Spellsword is a student of both magic and swordplay, seeking to master both disciplines. They spend their days training and studying, hoping to one day become a legend among Spellswords."
+      ];
+      const warriorPoetBios = [
+        "A bard with a battle axe, they combine their artistic talent with brute strength to create a truly unique experience in combat. Often seen reciting epic verse while they swing their weapon.",
+        "A lyrical genius who uses their words to inspire allies and strike fear into foes. They wield their sword as deftly as they wield a quill.",
+        "A true romantic, they believe that chivalry and combat go hand in hand. With their silver tongue and sharp steel, they always come out on top.",
+        "A wordsmith who uses their charisma and wit to confuse and disarm opponents. Their weapons are their rhymes, and they always hit their mark.",
+        "An artist of war, they see every battle as a performance. With their poetic prowess and impressive prowess, they captivate audiences on and off the battlefield."
+        ];
+      const assassinBios = [
+        "An elusive figure who always seems to be one step ahead of their target. Skilled in the arts of subterfuge and assassination.",
+        "A master of disguise who can blend into any crowd and strike from the shadows. Their blade is always sharp and their aim true.",
+        "A hired killer who never fails to complete their contract. Their cold, calculating nature makes them feared by friend and foe alike.",
+        "A silent predator who can slip into any stronghold undetected. Their expertise in the arts of poisoning and trap-making is unmatched.",
+        "A mysterious individual who takes pride in their work. Their clients may never know their face, but they will never forget their name."
+      ];
+      const daredevilBios = [
+        "Skills with a blade are only the beginning of this daring rogue's talents. Parkour and acrobatics are just as essential to their daring escapes.",
+        "This daredevil is never one to back down from a challenge, be it a high-stakes heist or a death-defying stunt. They live for the thrill of the unknown.",
+        "Their quick thinking and even quicker reflexes make this daredevil a formidable opponent in any situation. They thrive on the rush of adrenaline.",
+        "From freeing political prisoners to stealing from the rich, this daredevil uses their skills for both personal gain and the greater good. They're always looking for their next adventure.",
+        "This daredevil has a reputation for being one of the most fearless and unpredictable adventurers in the land. They never hesitate to take on a dangerous mission, even if the odds are against them."
+      ];
+      const mesmerBios = [
+        "A master of illusion and persuasion, this Mesmer weaves spells to bend the minds of their enemies.",
+        "An enigma wrapped in mystery, this Mesmer leaves onlookers guessing as to what is real and what is just an illusion.",
+        "With a flick of their wrist and a wave of their hand, this Mesmer commands attention and dominates the battlefield with their enchanting abilities.",
+        "A charismatic performer, this Mesmer draws crowds with their mesmerizing shows and leaves their audience in awe.",
+        "Through their mastery of the arcane, this Mesmer creates illusions that confound and confuse their enemies, leaving them vulnerable to attack."
+      ];
+     const heroBios = [
+        "They say heroes never die, but this one has died at least three times and still keeps coming back. Must be that plot armor.",
+        "They always seem to have the right thing to say in any situation, probably because they've memorized every good alignment speech in the book.",
+        "Their bravery is only matched by their inability to understand basic math. 'One plus one equals sword!'",
+        "Their shining armor is always blindingly bright, but that's probably because it's never actually been cleaned.",
+        "They have a habit of leaving a trail of unconscious bodies behind them, but somehow still manage to convince people they're the good guys."
         ];
 
     //based on characterClass, choose a bio array
@@ -271,8 +316,26 @@ const genBio = (characterClass) => {
         case 'Bard':
             classBio = bardBios;
             break;
-        default:
-            classBio = peasantBios;
+        case 'Swashbuckler':
+            classBio = swashbucklerBios;
+            break;
+        case 'Spellsword':
+            classBio = spellswordBios;
+            break;
+        case 'Warrior-Poet':
+            classBio = warriorPoetBios;
+            break;
+        case 'Assassin':
+            classBio = assassinBios;
+            break;
+        case 'Daredevil':
+            classBio = daredevilBios;
+            break;
+        case 'Mesmer':
+            classBio = mesmerBios;
+            break;
+        case 'Hero':
+            classBio = heroBios;
             break;
     }
     // get a random index to use with the array of biographies
@@ -287,7 +350,7 @@ const genBio = (characterClass) => {
 };
 
 // define class selection function
-const getClass = (STR, DEX, INT, CHA, LCK) => {
+const getClass = (STR, DEX, INT, CHA, LCK, maxLuck) => {
 
     let determinedClass = ''
 
@@ -306,7 +369,7 @@ const getClass = (STR, DEX, INT, CHA, LCK) => {
         }
     }
     // dexterity based classes
-    if (DEX > STR && DEX > INT) {
+    else if (DEX > STR && DEX > INT) {
         if (STR > INT && STR > CHA) {
             determinedClass = 'Archer';
         } else if (CHA < INT && CHA < STR) {
@@ -317,7 +380,7 @@ const getClass = (STR, DEX, INT, CHA, LCK) => {
             determinedClass = 'Thief';
         }
     // intelligence based classes
-    } if (INT > STR && INT > DEX) {
+    } else if (INT > STR && INT > DEX) {
         if (STR < DEX && STR < CHA) {
             determinedClass = 'Wizard';
         } else if (STR > DEX && STR > CHA) {
@@ -330,17 +393,33 @@ const getClass = (STR, DEX, INT, CHA, LCK) => {
             determinedClass = 'Sorcerer';
         }
     // charisma based classes
-    } if (CHA > STR && CHA > INT) {
-        if (LCK >= 50) {
+    } else if (CHA > STR && CHA > INT) {
+        if (LCK >= maxLuck) {
             determinedClass = 'Party Animal';
         } else if (INT > STR && INT > DEX) {
             determinedClass ='Cleric';
         } else {
             determinedClass = 'Bard';
         }
-
+    // multistat based classes
     } else {
-        determinedClass = 'Peasant';
+        if ( STR === DEX && STR === INT && STR === CHA) {
+            determinedClass = 'Hero';
+        } else if (STR === DEX) {
+            determinedClass = 'Swashbuckler';
+        } else if (STR === INT) {
+            determinedClass = 'Spellsword';
+        } else if (STR === CHA) {
+            determinedClass = 'Warrior-Poet';
+        } else if (DEX === INT) {
+            determinedClass = 'Assassin';
+        } else if (DEX === CHA) {
+            determinedClass = 'Daredevil'
+        } else if (INT === CHA) {
+            determinedClass = 'Mesmer'
+        } else {
+            determinedClass = 'Hero'
+        }
     }
 
     return determinedClass;
@@ -375,7 +454,7 @@ const generateCharacter = () => {
     const WIS = getComplexInt(statBase, LCK, statMultiplier, INT);
 
     //determine the character's class
-    const charClass = getClass(STR, DEX, INT, CHA, LCK);
+    const charClass = getClass(STR, DEX, INT, CHA, LCK, statMax);
 
     // generate a randomized name
     const charName = genName();
@@ -406,21 +485,50 @@ const generateCharacter = () => {
     }
 
     document.getElementById("output-section").innerHTML = `
-    <h3>Name:</h3> <p>${characterSheet.name}</p>
-    <h4>Alignment:</h4> <p>${characterSheet.alignment}</p>
-    <h4>Class:</h4> <p>${characterSheet.className}</p>
+    <div id="character-info">
+        <h3>Name:</h3> <p>${characterSheet.name}</p>
+        <h4>Alignment:</h4> <p>${characterSheet.alignment}</p>
+        <h4>Class:</h4> <p>${characterSheet.className}</p>
+    </div>
 
-    <h4>Bio:</h4> <p>${characterSheet.bio}</p>
+    <div id="character-bio">
+        <h4>Bio:</h4> <p>${characterSheet.bio}</p>
+    </div>
 
-    <h3>Stats</h3>
-    <h4>Luck:</h4> <p>${characterSheet.luck}</p>
-    <h4>Strength:</h4> <p>${characterSheet.strength}</p>
-    <h4>Vitality:</h4> <p>${characterSheet.vitality}</p>
-    <h4>Dexterity:</h4> <p>${characterSheet.dexterity}</p>
-    <h4>Agility:</h4> <p>${characterSheet.agility}</p>
-    <h4>Intelligence:</h4> <p>${characterSheet.intelligence}</p>
-    <h4>Wisdom:</h4> <p>${characterSheet.wisdom}</p>
-    <h4>Charisma:</h4> <p>${characterSheet.charisma}</p>
+    <div id="character-stats>
+        <h3>Stats</h3>
+        <div class="stat-card">
+            <h4>Luck:</h4> <p>${characterSheet.luck}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Strength:</h4> <p>${characterSheet.strength}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Vitality:</h4> <p>${characterSheet.vitality}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Dexterity:</h4> <p>${characterSheet.dexterity}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Agility:</h4> <p>${characterSheet.agility}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Intelligence:</h4> <p>${characterSheet.intelligence}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Wisdom:</h4> <p>${characterSheet.wisdom}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Charisma:</h4> <p>${characterSheet.charisma}</p>
+        </div>
+    </div>
     `;
 
 };
