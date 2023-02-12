@@ -35,11 +35,15 @@ h2, h3, h4, h5, h6 {
 
 h1 {
     font-family: 'Major Mono Display', monospace;
-    font-size: 3rem;;
+    font-size: 4rem;;
 }
 
 h2 {
     font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.8rem;
 }
 
 /* ---- HEADER ---- */
@@ -86,7 +90,7 @@ input {
 
 button#generate-button {
     height: 5rem;
-    width: 8rem;
+    width: 12rem;
 
     border: 3px solid #7D8570;
     border-radius: 8px;
@@ -105,6 +109,60 @@ button#generate-button:active {
     background-color: #504B3A;
 }
 
+/* ---- OUTPUT SECTION ---- */
+
+section#output-section {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(8, 12.5%);
+    grid-template-rows: repeat(8, 4rem);
+
+    border: 4px solid #7D8570;
+}
+
+section#output-section p#placeholder-text {
+    grid-column-start: 4;
+    grid-column-end: 6;
+    grid-row-start: 4;
+    grid-row-end: 6;
+}
+
+div#character-info {
+    grid-column-start: 1;
+    grid-column-end: span 8;
+    grid-row-start: 1;
+    grid-row-end: 3;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    margin: 1rem;
+}
+
+div#character-bio {
+    grid-column-start: 1;
+    grid-column-end: span 8;
+    grid-row-start: 4;
+    grid-row-end: 5;
+
+    margin: 1rem;
+}
+
+div#character-stats {
+    grid-column-start: 1;
+    grid-column-end: span 8;
+    grid-row-start: 6;
+    grid-row-end: 7;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    margin: 1rem;
+}
 
 /* ---- FOOTER ---- */
 footer {

@@ -486,17 +486,24 @@ const generateCharacter = () => {
 
     document.getElementById("output-section").innerHTML = `
     <div id="character-info">
-        <h3>Name:</h3> <p>${characterSheet.name}</p>
-        <h4>Alignment:</h4> <p>${characterSheet.alignment}</p>
-        <h4>Class:</h4> <p>${characterSheet.className}</p>
+        <div id="character-info-card">
+            <h3>Name:</h3> <p>${characterSheet.name}</p>
+        </div>
+
+        <div id="character-info-card">
+            <h4>Alignment:</h4> <p>${characterSheet.alignment}</p>
+        </div>
+
+        <div id="character-info-card">
+            <h4>Class:</h4> <p>${characterSheet.className}</p>
+        </div>
     </div>
 
     <div id="character-bio">
         <h4>Bio:</h4> <p>${characterSheet.bio}</p>
     </div>
 
-    <div id="character-stats>
-        <h3>Stats</h3>
+    <div id="character-stats">
         <div class="stat-card">
             <h4>Luck:</h4> <p>${characterSheet.luck}</p>
         </div>
