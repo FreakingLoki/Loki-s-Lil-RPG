@@ -1,19 +1,18 @@
 # Character Generator Program
-This program was a project given to me by Codecademy. The purpose of this project was to generate output to the user consisting of at least three items, each randomized. I decided to make a character generator that heavily uses `Math.random()` to generate some stats and then looks through a few arrays to generate a name and a short bio for the character.
+This program was a project given to me by Codecademy. The purpose of this project was to generate output to the user consisting of at least three items, each randomized. I decided to make a character generator that heavily uses `Math.random()` to generate some stats and then looks through a few arrays to generate a name and a short bio for the character. Currently there are 24 possible character classes. Each class has five possible biographies. 
 
 ## To Do List:
-  * HOTFIX determine the issue with the class selector function and patch it (see Known Issues section)
   * clean up styling on the outputs
-  * seriously rethink the fonts 
-  * add a generator and random selector for character race
-  * may add an "evaluation" that determines what the character would be good or bad at
+  * add responsiveness for different screen sizes
 
 
 
 ## Goals:
-the program will generate a Fantasy world character stat sheet. Similar to, but not following the rules of Dungeons and Dragons or other role playing games. This character sheet will be output on the webpage that includes a name, a character class, a short biography, and some basic and compound stats.
+The program will generate a Fantasy world character stat sheet. Similar to, but not following the rules of Dungeons and Dragons or other role playing games. This character sheet will be output on the webpage that includes a name, a character class, a short biography, and some basic and compound stats.
 
-the output will start with a name followed by a short bio then the stats for the generated character.
+The output will start with a name followed by a short bio then the stats for the generated character.
+
+Eventually this page may add an enemy generator script and allow for combat.
 
 ### Generated Character Sheet:
   * Name
