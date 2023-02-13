@@ -153,7 +153,7 @@ const genBio = (characterClass) => {
         "An acrobat and performer, this thief uses their athletic abilities to maneuver through tight spaces and avoid danger. They have a quick wit and a talent for distraction, using their charm to distract guards and slip by unnoticed. They use their skills to entertain crowds and gather information, always looking for their next big score."  
     ];
 
-    //arrays of intelligence character bios
+    //arrays of arcana character bios
     const wizardBios = [
         "A reclusive scholar, spending most of their time in research and spellcasting. They are a master of the arcane and a force to be reckoned with on the battlefield.",
         "A former court wizard, driven from their position by political upheaval. They now use their magic to earn a living as a mercenary, offering their services to the highest bidder.",
@@ -350,37 +350,37 @@ const genBio = (characterClass) => {
 };
 
 // define class selection function
-const getClass = (STR, DEX, INT, CHA, LCK, maxLuck) => {
+const getClass = (STR, DEX, ARC, CHA, LCK, maxLuck) => {
 
     let determinedClass = ''
 
     // strength based classes
-    if (STR > DEX && STR > INT) {
-        if (DEX > CHA && INT > CHA) {
+    if (STR > DEX && STR > ARC) {
+        if (DEX > CHA && ARC > CHA) {
             determinedClass = 'Barbarian';
-        } else if (DEX > INT && DEX > CHA) {
+        } else if (DEX > ARC && DEX > CHA) {
             determinedClass = 'Warrior';
-        } else if (INT > DEX && INT > CHA) {
+        } else if (ARC > DEX && ARC > CHA) {
             determinedClass = 'Paladin';
-        } else if (CHA > INT && CHA > DEX) {
+        } else if (CHA > ARC && CHA > DEX) {
             determinedClass ='Warlord';
         } else {
             determinedClass = 'Fighter';
         }
     }
     // dexterity based classes
-    else if (DEX > STR && DEX > INT) {
-        if (STR > INT && STR > CHA) {
+    else if (DEX > STR && DEX > ARC) {
+        if (STR > ARC && STR > CHA) {
             determinedClass = 'Archer';
-        } else if (CHA < INT && CHA < STR) {
+        } else if (CHA < ARC && CHA < STR) {
             determinedClass = 'Ranger';
-        } else if (CHA > INT && CHA > STR) {
+        } else if (CHA > ARC && CHA > STR) {
             determinedClass = 'Rogue';
         } else {
             determinedClass = 'Thief';
         }
-    // intelligence based classes
-    } else if (INT > STR && INT > DEX) {
+    // arcana based classes
+    } else if (ARC > STR && ARC > DEX) {
         if (STR < DEX && STR < CHA) {
             determinedClass = 'Wizard';
         } else if (STR > DEX && STR > CHA) {
@@ -393,29 +393,29 @@ const getClass = (STR, DEX, INT, CHA, LCK, maxLuck) => {
             determinedClass = 'Sorcerer';
         }
     // charisma based classes
-    } else if (CHA > STR && CHA > INT) {
+    } else if (CHA > STR && CHA > ARC) {
         if (LCK >= maxLuck) {
             determinedClass = 'Party Animal';
-        } else if (INT > STR && INT > DEX) {
+        } else if (ARC > STR && ARC > DEX) {
             determinedClass ='Cleric';
         } else {
             determinedClass = 'Bard';
         }
     // multistat based classes
     } else {
-        if ( STR === DEX && STR === INT && STR === CHA) {
+        if ( STR === DEX && STR === ARC && STR === CHA) {
             determinedClass = 'Hero';
         } else if (STR === DEX) {
             determinedClass = 'Swashbuckler';
-        } else if (STR === INT) {
+        } else if (STR === ARC) {
             determinedClass = 'Spellsword';
         } else if (STR === CHA) {
             determinedClass = 'Warrior-Poet';
-        } else if (DEX === INT) {
+        } else if (DEX === ARC) {
             determinedClass = 'Assassin';
         } else if (DEX === CHA) {
             determinedClass = 'Daredevil'
-        } else if (INT === CHA) {
+        } else if (ARC === CHA) {
             determinedClass = 'Mesmer'
         } else {
             determinedClass = 'Hero'
@@ -445,16 +445,16 @@ const generateCharacter = () => {
     // roll for basic stats
     const STR = getStat(LCK, statMax);
     const DEX = getStat(LCK, statMax);
-    const INT = getStat(LCK, statMax);
+    const ARC = getStat(LCK, statMax);
     const CHA = getStat(LCK, statMax);
 
     // roll for stats based on a parent stat
     const VIT = getComplexInt(statBase, LCK, statMultiplier, STR);
     const AGI = getComplexInt(statBase, LCK, statMultiplier, DEX);
-    const WIS = getComplexInt(statBase, LCK, statMultiplier, INT);
+    const FOC = getComplexInt(statBase, LCK, statMultiplier, ARC);
 
     //determine the character's class
-    const charClass = getClass(STR, DEX, INT, CHA, LCK, statMax);
+    const charClass = getClass(STR, DEX, ARC, CHA, LCK, statMax);
 
     // generate a randomized name
     const charName = genName();
@@ -479,8 +479,8 @@ const generateCharacter = () => {
         vitality: VIT,
         dexterity: DEX,
         agility: AGI,
-        intelligence: INT,
-        wisdom: WIS,
+        arcana: ARC,
+        focus: FOC,
         charisma: CHA,
     }
 
@@ -525,11 +525,11 @@ const generateCharacter = () => {
         </div>
 
         <div class="stat-card">
-            <h4>Intelligence:</h4> <p>${characterSheet.intelligence}</p>
+            <h4>Arcana:</h4> <p>${characterSheet.arcana}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Wisdom:</h4> <p>${characterSheet.wisdom}</p>
+            <h4>Focus:</h4> <p>${characterSheet.focus}</p>
         </div>
 
         <div class="stat-card">
@@ -551,6 +551,6 @@ const generateCharacter = () => {
 // console.log(`Vitality: ${testCharacter.vitality}`);
 // console.log(`Dexterity: ${testCharacter.dexterity}`);
 // console.log(`Agility: ${testCharacter.agility}`);
-// console.log(`Intelligence: ${testCharacter.intelligence}`);
-// console.log(`Wisdom: ${testCharacter.wisdom}`);
+// console.log(`Arcana: ${testCharacter.arcana}`);
+// console.log(`Focus: ${testCharacter.focus}`);
 // console.log(`Charisma: ${testCharacter.charisma}`);
