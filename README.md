@@ -2,8 +2,12 @@
 This program was a project given to me by Codecademy. The purpose of this project was to generate output to the user consisting of at least three items, each randomized. I decided to make a character generator that heavily uses `Math.random()` to generate some stats and then looks through a few arrays to generate a name and a short bio for the character. Currently there are 24 possible character classes. Each class has five possible biographies. 
 
 ## To Do List:
-  * clean up styling on the outputs
-  * add responsiveness for different screen sizes
+  * Add character abilities based on their class
+  * add a function that gets the character's overall level (some sort of average or something... not sure what this will look like yet)
+  * Add an enemy generator that scales the enemy to the player
+  * Add images for each class (this is a maybe)
+  * Add turn based combat (this is a long term goal)
+
 
 
 
@@ -68,4 +72,4 @@ Vitality, Agility, and Focus are "sub stats" that are determined based on the va
 
   ## Known Issues
 
-Currently the webpage has some styling issues especially on smaller screens.
+None at the moment. If you find any please shoot me an email at jesse@jesseheald.com. Include a screenshot or any other data you think may help. Thank you.
