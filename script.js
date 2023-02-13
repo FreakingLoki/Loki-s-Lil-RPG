@@ -485,55 +485,56 @@ const generateCharacter = () => {
     }
 
     document.getElementById("output-section").innerHTML = `
-    <div id="character-info">
-        <div id="character-info-card">
-            <h3>Name:</h3> <p>${characterSheet.name}</p>
+        <div id="character-name-card">
+            <h3>Name</h3> <p>${characterSheet.name}</p>
         </div>
 
-        <div id="character-info-card">
-            <h4>Alignment:</h4> <p>${characterSheet.alignment}</p>
+
+        <div id="info-container">
+            <div class="character-info-card">
+                <h4>Alignment</h4> <p>${characterSheet.alignment}</p>
+            </div>
+
+            <div class="character-info-card">
+                <h4>Class</h4> <p>${characterSheet.className}</p>
+            </div>
         </div>
 
-        <div id="character-info-card">
-            <h4>Class:</h4> <p>${characterSheet.className}</p>
-        </div>
-    </div>
-
-    <div id="character-bio">
-        <h4>Bio:</h4> <p>${characterSheet.bio}</p>
+    <div id="character-bio-card">
+        <h4>Bio</h4> <p>${characterSheet.bio}</p>
     </div>
 
     <div id="character-stats">
         <div class="stat-card">
-            <h4>Luck:</h4> <p>${characterSheet.luck}</p>
+            <h4>Luck</h4> <p>${characterSheet.luck}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Strength:</h4> <p>${characterSheet.strength}</p>
+            <h4>Strength</h4> <p>${characterSheet.strength}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Vitality:</h4> <p>${characterSheet.vitality}</p>
+            <h4>Vitality</h4> <p>${characterSheet.vitality}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Dexterity:</h4> <p>${characterSheet.dexterity}</p>
+            <h4>Dexterity</h4> <p>${characterSheet.dexterity}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Agility:</h4> <p>${characterSheet.agility}</p>
+            <h4>Agility</h4> <p>${characterSheet.agility}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Arcana:</h4> <p>${characterSheet.arcana}</p>
+            <h4>Arcana</h4> <p>${characterSheet.arcana}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Focus:</h4> <p>${characterSheet.focus}</p>
+            <h4>Focus</h4> <p>${characterSheet.focus}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Charisma:</h4> <p>${characterSheet.charisma}</p>
+            <h4>Charisma</h4> <p>${characterSheet.charisma}</p>
         </div>
     </div>
     `;
