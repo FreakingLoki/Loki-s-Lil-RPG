@@ -16,7 +16,42 @@ const getStat = (luck, multiplier) => {
     return stat;
 }
 
+// add event listeners to buttons
+const addEventListeners = () => {
+    const attackButton = document.getElementById("basic-attack");
+    const defendButton = document.getElementById("defend");
+    const abilityOneButton = document.getElementById("ability-one");
+    const abilityTwoButton = document.getElementById("ability-two");
+    const abilityThreeButton = document.getElementById("ability-three");
 
+    attackButton.addEventListener('click', () => {
+        //this is temporary functionality
+        console.log('Attack button clicked!');
+    });
+
+    defendButton.addEventListener('click', () => {
+        //this is temporary functionality
+        console.log('Defend button clicked!');
+    });
+
+    abilityOneButton.addEventListener('click', () => {
+        //this is temporary functionality
+        console.log('Ability One button clicked!');
+    });
+
+    abilityTwoButton.addEventListener('click', () => {
+        //this is temporary functionality
+        console.log('Ability Two button clicked!');
+    });
+
+    abilityThreeButton.addEventListener('click', () => {
+        //this is temporary functionality
+        console.log('Ability Three button clicked!');
+    });
+};
+
+//function call adds event listeners to the DOM
+addEventListeners();
 
 // define name generator function
 const genName = () => {
@@ -771,4 +806,41 @@ const updateDOM = () => {
     </div>
     `;
 
+};
+
+//functions for the combat
+
+const playerAttack = (player, enemy) => {
+
+}
+
+let turn = 'player';
+
+const playerTurn = player => {
+    //player's turn logic here
+
+    //update the DOM after the player's action is taken
+    updateDOM();
+    //switch the turn to be the enemy's
+    turn = 'enemy';
+
+};
+
+const enemyTurn = enemy => {
+    //enemy's turn logic here
+
+    //update the DOM after the enemy's action is taken
+    updateDOM();
+    //switch the turn back to the player's
+    turn = 'player';
+};
+
+const gameLoop = (player, enemy) => {
+    while (player.vitality > 0 && enemy.vitality > 0) {
+        if (turn === 'player') {
+            playerTurn();
+        } else {
+            enemyTurn();
+        }
+    }
 };
