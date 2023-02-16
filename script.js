@@ -212,6 +212,8 @@ const genBio = (characterClass) => {
         "A bard of the court, this musician uses their songs to sway the hearts and minds of those in power. They are as cunning as they are charming, and they are never afraid to use their wit and musical talents to get what they want.",
         "This bard is a chronicler of history, using their music to preserve the tales and traditions of their people. Their songs are a testament to their culture, and they travel far and wide to collect new stories and melodies to add to their repertoire."   
     ];
+
+    // multi stat bios
     const swashbucklerBios = [
         "Born into a life of adventure and excitement, this Swashbuckler has always lived on the edge. With quick wit and even quicker reflexes, they have become a master of fencing and the art of the blade. Whether they're dueling with rival pirates or plundering treasure from enemy ships, they always manage to come out on top.",
         "A former street urchin, this Swashbuckler learned how to survive by their wits and cunning. They honed their skills as a pickpocket and thief, eventually becoming a notorious rogue known throughout the land. They use their charm and grace to outwit their opponents, making them a formidable opponent in both combat and negotiation.",
@@ -450,8 +452,11 @@ const generateCharacter = () => {
 
     // roll for stats based on a parent stat
     const VIT = getComplexInt(statBase, LCK, statMultiplier, STR);
+    const maxVIT = VIT;
     const AGI = getComplexInt(statBase, LCK, statMultiplier, DEX);
+    const maxAGI = AGI;
     const FOC = getComplexInt(statBase, LCK, statMultiplier, ARC);
+    const maxFOC = FOC;
 
     //determine the character's class
     const charClass = getClass(STR, DEX, ARC, CHA, LCK, statMax);
@@ -467,7 +472,7 @@ const generateCharacter = () => {
 
 
 
-    const characterSheet = {
+    const player = {
         name: charName,
         className: charClass,
         alignment: charAlign,
@@ -476,82 +481,248 @@ const generateCharacter = () => {
 
         luck: LCK,
         strength: STR,
+        maxVitality: maxVIT,
         vitality: VIT,
         dexterity: DEX,
+        maxAgility: maxAGI,
         agility: AGI,
         arcana: ARC,
+        maxFocus: maxFOC,
         focus: FOC,
         charisma: CHA,
     }
 
-    document.getElementById("output-section").innerHTML = `
-        <div id="character-name-card">
-            <h3>Name</h3> <p>${characterSheet.name}</p>
-        </div>
-
-
-        <div id="info-container">
-            <div class="character-info-card">
-                <h4>Alignment</h4> <p>${characterSheet.alignment}</p>
-            </div>
-
-            <div class="character-info-card">
-                <h4>Class</h4> <p>${characterSheet.className}</p>
-            </div>
-        </div>
-
-    <div id="character-bio-card">
-        <h4>Bio</h4> <p>${characterSheet.bio}</p>
-    </div>
-
-    <div id="character-stats">
-        <div class="stat-card">
-            <h4>Luck</h4> <p>${characterSheet.luck}</p>
-        </div>
-
-        <div class="stat-card">
-            <h4>Strength</h4> <p>${characterSheet.strength}</p>
-        </div>
-
-        <div class="stat-card">
-            <h4>Vitality</h4> <p>${characterSheet.vitality}</p>
-        </div>
-
-        <div class="stat-card">
-            <h4>Dexterity</h4> <p>${characterSheet.dexterity}</p>
-        </div>
-
-        <div class="stat-card">
-            <h4>Agility</h4> <p>${characterSheet.agility}</p>
-        </div>
-
-        <div class="stat-card">
-            <h4>Arcana</h4> <p>${characterSheet.arcana}</p>
-        </div>
-
-        <div class="stat-card">
-            <h4>Focus</h4> <p>${characterSheet.focus}</p>
-        </div>
-
-        <div class="stat-card">
-            <h4>Charisma</h4> <p>${characterSheet.charisma}</p>
-        </div>
-    </div>
-    `;
+    return player;
 
 };
 
-// this outputs a character sheet to the console for testing purposes
-// const testCharacter = generateCharacter();
-// console.log(`Name: ${testCharacter.name}`);
-// console.log(`Alignment: ${testCharacter.alignment}`);
-// console.log(`Class: ${testCharacter.className}`);
-// console.log(`Bio: ${testCharacter.bio}`);
-// console.log(`Luck: ${testCharacter.luck}`);
-// console.log(`Strength: ${testCharacter.strength}`);
-// console.log(`Vitality: ${testCharacter.vitality}`);
-// console.log(`Dexterity: ${testCharacter.dexterity}`);
-// console.log(`Agility: ${testCharacter.agility}`);
-// console.log(`Arcana: ${testCharacter.arcana}`);
-// console.log(`Focus: ${testCharacter.focus}`);
-// console.log(`Charisma: ${testCharacter.charisma}`);
+// enemy name generator function
+const getEnemyName = () => {
+    //arrays of first and last names for bad dudes
+    const enemyFirstNames = [
+        'Sneaky', 'Scooter', 'Ziggy', 'Slim', 'Bones', 'Mort', 'Mugsy', 'Vinnie',
+        'Fingers', 'Ducky', 'Sparks', 'Scrappy', 'Stretch', 'Toothpick', 'Grouch', 'Waldo',
+        'Rascal', 'Ratso', 'Weasel', 'Stinky', 'Snortgargle', 'Paul', 'Billy', 'Bruiser', 
+        'Bad', 'John', 'Rat', 'Snake'
+    ];
+    
+    const enemyLastNames = [
+        'The Sneak', 'Badparty', 'Q. Evil', 'Smith', 'The Ugly', 'The Rude', 'The Entitled', 'of the Depths',
+        'Badtimes', 'Meanface', 'McGee', 'The Quarrelsome', 'of the Swamp', 'of the Mists', 'Underfoot', 'No Fun',
+        'The Hood', 'Johnson', 'Big Claw', 'Left Swipe', 'Redeye', 'Fart', 'Slow-walker', 'The Misunderstood', 'the Fist',
+        'Punchalot', 'Kickalot', 'Stabalot', 'The Vengeful', 'of the Plague'
+    ];
+    
+    // randomize numbers to get ready to select name
+    const numOne = getRandomInt(enemyFirstNames.length);
+    const numTwo = getRandomInt(enemyLastNames.length);
+
+    // concat the results into a single string and return the name
+    const enemyName = enemyFirstNames[numOne] + ' ' + enemyLastNames[numTwo];
+    return enemyName;
+}
+
+// enemy type generator function
+const getEnemyType = () => {
+    //array containing all possible enemy types sorted from low difficulty to high
+    const enemyTypes = [
+        'Gerblin', 'Troll', 'Lich', 'Krav Maga Master', 'Dragon'
+    ];
+
+    //determine range of possible indicies
+    const range = (enemyTypes.length - 1) - 0;
+    //this exponent determines the "weight" toward the easy end of the array
+    const exponent = 1.4;
+    // raise range to the power of exponent
+    const weightedRange = Math.pow(range, exponent);
+    // generate random number between 0 and weightedRange then root to make the final result more likely to be toward beginning of array
+    const random = Math.floor(Math.pow(Math.random() * weightedRange, 1/exponent));
+    // calculate the index
+    const index = Math.round((random / weightedRange) * range);
+    const enemyType = enemyTypes[index];
+    return enemyType;
+};
+
+const determineDifficulty = enemyType => {
+    //declare variable and assign default value
+    let difficulty = 0.1;
+
+    // determine difficulty based on enemy type higher index in the array should have higher difficulty
+    switch (enemyType) {
+        case 'Gerblin':
+          difficulty = 0.25;
+          break;
+        case 'Troll':
+          difficulty = 0.5;
+          break;
+        case 'Lich':
+          difficulty = 0.75;
+          break;
+        case 'Krav Maga Master':
+            difficulty = 1;
+            break;
+        case 'Dragon':
+            difficulty = 1.25;
+            break;
+        default:
+          difficulty = 0.1;
+          break;
+      }
+
+    return difficulty;
+};
+
+const generateEnemy = (player) => {
+    //generate a name first
+    const enemyName = getEnemyName();
+
+    //get an enemy type next
+    const enemyType = getEnemyType();
+
+    //get difficulty modifier
+    const difficulty = determineDifficulty(enemyType);
+
+    //generate stats based on difficulty
+    const enemyVIT = Math.floor(player.maxVitality * difficulty);
+    const enemyMaxVIT = enemyVIT;
+    const enemyAGI = Math.floor(player.maxAgility * difficulty);
+    const enemyMaxAGI = enemyAGI;
+    const enemyFOC = Math.floor(player.maxFocus * difficulty);
+    const enemyMaxFOC = enemyFOC;
+
+    const enemyLCK = Math.floor(player.luck * difficulty);
+    const enemySTR = Math.floor(player.strength * difficulty);
+    const enemyDEX = Math.floor(player.dexterity * difficulty);
+    const enemyARC = Math.floor(player.arcana * difficulty);
+    const enemyCHA = Math.floor(player.charisma * difficulty);
+
+    const enemy = {
+        name: enemyName,
+        type: enemyType,
+
+        vitality: enemyVIT,
+        maxVitality: enemyMaxVIT,
+        agility: enemyAGI,
+        maxAgility: enemyMaxAGI,
+        focus: enemyFOC,
+        maxFocus: enemyMaxFOC,
+
+        luck: enemyLCK,
+        strength: enemySTR,
+        dexterity: enemyDEX,
+        arcana: enemyARC,
+        charisma: enemyCHA
+
+    }
+
+    return enemy;
+};
+
+const updateDOM = () => {
+
+    // update player's status
+    document.getElementById("player-info").innerHTML = `
+    <div id="player-name-card">
+        <h3>Name</h3> <p>${player.name}</p>
+    </div>
+
+
+    <div id="player-info-container">
+        <div class="player-info-card">
+            <h4>Alignment</h4> <p>${player.alignment}</p>
+        </div>
+
+        <div class="player-info-card">
+            <h4>Class</h4> <p>${player.className}</p>
+        </div>
+    </div>
+
+<div id="player-bio-card">
+    <h4>Bio</h4> <p>${player.bio}</p>
+</div>
+
+<div id="player-stats">
+    <div class="stat-card">
+        <h4>Luck</h4> <p>${player.luck}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Strength</h4> <p>${player.strength}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Vitality</h4> <p>${player.vitality} / ${player.maxVitality}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Dexterity</h4> <p>${player.dexterity}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Agility</h4> <p>${player.agility} / ${player.maxAgility}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Arcana</h4> <p>${player.arcana}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Focus</h4> <p>${player.focus} / ${player.maxFocus}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Charisma</h4> <p>${player.charisma}</p>
+    </div>
+</div>
+`;
+
+// update enemy status
+document.getElementById("enemy-info").innerHTML = `
+<div id="enemy-name-card">
+    <h3>Name</h3> <p>${enemy.name}</p>
+</div>
+
+
+<div id="enemy-info-container">
+
+    <div class="enemy-info-card">
+        <h4>Enemy Type</h4> <p>${enemy.type}</p>
+    </div>
+</div>
+
+<div id="enemy-stats">
+    <div class="stat-card">
+        <h4>Luck</h4> <p>${enemy.luck}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Strength</h4> <p>${enemy.strength}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Vitality</h4> <p>${enemy.vitality} / ${enemy.maxVitality}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Dexterity</h4> <p>${enemy.dexterity}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Agility</h4> <p>${enemy.agility} / ${enemy.maxAgility}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Arcana</h4> <p>${enemy.arcana}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Focus</h4> <p>${enemy.focus} / ${enemy.maxFocus}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Charisma</h4> <p>${enemy.charisma}</p>
+    </div>
+</div>
+`;
+
+}

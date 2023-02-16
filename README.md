@@ -1,12 +1,18 @@
 # Character Generator Program
-This program was a project given to me by Codecademy. The purpose of this project was to generate output to the user consisting of at least three items, each randomized. I decided to make a character generator that heavily uses `Math.random()` to generate some stats and then looks through a few arrays to generate a name and a short bio for the character. Currently there are 24 possible character classes. Each class has five possible biographies. 
+This project began as a simple message generator learning tool. The purpose of this project was to generate output to the user consisting of at least three items, each randomized. I decided to make a character generator that heavily uses `Math.random()` to generate some stats and then also generate a name and a short bio for the character. Currently there are 24 possible character classes. Each class has five possible biographies. 
 
 ## To Do List:
-  * Add character abilities based on their class
-  * add a function that gets the character's overall level (some sort of average or something... not sure what this will look like yet)
-  * Add an enemy generator that scales the enemy to the player
+  * Rework Input section
+    * remove ability for user to modify the stat rolls. base, multiplier, and max stats will be hard coded
+    * build a Begin button that generates both the player character and an enemy
+    * after Begin is pressed, hide it and show player and enemy vitals along with available actions
+    * rename this section to Interface
+    
+  * build out turn-based combat system that includes attack and defend (to for now)
+  * add player and enemy abilities (up to four for each class, not all need to be unique)
+      * add these to the interface section so that the player can choose to Attack, Defend, or use Ability 1, etc
   * Add images for each class (this is a maybe)
-  * Add turn based combat (this is a long term goal)
+
 
 
 

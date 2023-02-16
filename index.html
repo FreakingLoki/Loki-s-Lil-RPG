@@ -27,7 +27,7 @@
     <main>
 
         <h2>Generate a Character</h2>
-        <section id="input-section">
+        <section id="interface-section">
             <form id="input-form">
 
                 <div class="input-item">
@@ -49,21 +49,26 @@
                 </div>
 
                 <div class="input-item">
-                    <button type="button" id="generate-button" onclick="generateCharacter()"><h3>Generate</h3></button>
+                    <button type="button" id="generate-button" onclick="player=generateCharacter(); enemy=generateEnemy(player); updateDOM()"><h3>Generate</h3></button>
                 </div>
 
             </form>
         </section>
 
-        <h2>Character Sheet</h2>
-        <section id="output-section">
-            <p id="placeholder-text">Your generated character's stats, biography, and more will appear here.</p>
-        </section>
+        <div id="stat-display-panel">
+            <section id="player-info">
+                <p id="player-placeholder-text">Your generated character's stats, biography, and more will appear here.</p>
+            </section>
+            <section id="enemy-info">
+                <p id="enemy-placeholder-text">A decidedly oppositional energy emnates from this location...</p>
+            </section>
+        </div>
+
 
     </main>
 
     <footer>
-        <p>This is a learning tool built by Jesse Heald in February of 2022.</p>
+        <p>This is a learning tool built by Jesse Heald starting in February of 2022.</p>
     </footer>
 
 </body>
