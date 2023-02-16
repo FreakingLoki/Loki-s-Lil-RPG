@@ -811,7 +811,92 @@ const updateDOM = () => {
 //functions for the combat
 
 const playerAttack = (player, enemy) => {
+    let attackDamage = 1;
 
+    switch (player.className) {
+
+//strength based classes
+        case 'Barbarian':
+            attackDamage = Math.floor(1/5 * player.strength + player.luck);
+            break;
+        case 'Warrior':
+            attackDamage = Math.floor(1/7 * player.strength + player.luck);
+            break;
+        case 'Paladin':
+            attackDamage = Math.floor(1/8 * player.strength + player.luck);
+            break;
+        case 'Warlord':
+            attackDamage = Math.floor(1/9 * player.strength + player.luck);
+            break;
+        case 'Fighter':
+            attackDamage = Math.floor(1/10 * player.strength + player.luck);
+            break;
+
+// dexterity based classes
+        case 'Archer':
+            attackDamage = Math.floor(1/10 * player.dexterity + player.luck);
+            break;
+        case 'Ranger':
+            classBio = rangerBios;
+            break;
+        case 'Rogue':
+            classBio = rogueBios;
+            break;
+        case 'Thief':
+            classBio = thiefBios;
+            break;
+
+// arcana based classes
+        case 'Wizard':
+            classBio = wizardBios;
+            break;
+        case 'Warlock':
+            classBio = warlockBios;
+            break;
+        case 'Druid':
+            classBio = druidBios;
+            break;
+        case 'Illusionist':
+            classBio = illusionistBios;
+            break;
+        case 'Sorcerer':
+            classBio = sorcererBios;
+            break;
+
+// charisma based classes
+        case 'Party Animal':
+            classBio = partyAnimalBios;
+            break;
+        case 'Cleric':
+            classBio = clericBios;
+            break;
+        case 'Bard':
+            classBio = bardBios;
+            break;
+
+// multistat classes
+        case 'Swashbuckler':
+            classBio = swashbucklerBios;
+            break;
+        case 'Spellsword':
+            classBio = spellswordBios;
+            break;
+        case 'Warrior-Poet':
+            classBio = warriorPoetBios;
+            break;
+        case 'Assassin':
+            classBio = assassinBios;
+            break;
+        case 'Daredevil':
+            classBio = daredevilBios;
+            break;
+        case 'Mesmer':
+            classBio = mesmerBios;
+            break;
+        case 'Hero':
+            classBio = heroBios;
+            break;
+    }
 }
 
 let turn = 'player';
