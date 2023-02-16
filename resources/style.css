@@ -91,7 +91,7 @@ main {
     width: 87.5%;
 }
 
-form#input-form {
+section#interface-section {
     margin: 2rem 0 2rem 0;
     width: 100%;
     height: 25rem;
@@ -103,61 +103,36 @@ form#input-form {
     align-items: center;
 }
 
-div.input-item {
-    height: 12rem;
-    width: 25%;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-
-    margin: 1.5rem;
-}
-
-label {
-    margin: 1rem;
-    padding: 1rem;
-}
-
-input {
-    margin: 1.25rem;
-    height: 1.5rem;
-    width: 5rem;
-}
-
-button#generate-button {
-    height: 5rem;
-    width: 12rem;
-
+button {
     border: 3px solid #7D8570;
     border-radius: 8px;
     color: #DDE392;
     background-color: #646F58;
 }
 
-button#generate-button:hover {
+button#begin-button {
+    height: 5rem;
+    width: 12rem;
+}
+
+button:hover {
     cursor: pointer;
     color: #7D8570;
     background-color: #DDE392;
 }
 
-button#generate-button:active {
+button:active {
     color: #646F58;
     background-color: #504B3A;
 }
 
 @media only screen and (max-width: 1080px) {
-    form#input-form {
+    section#interface-section {
         height: 50rem;
 
         flex-direction: column;
         justify-content: space-between;
-    }
-
-    div.input-item {
-        height: 7.5rem;
-        width: 8rem;
     }
 }
 

@@ -434,11 +434,16 @@ const generateCharacter = () => {
     console.log("Commence matter deconstruction.");
     console.log("Moisture level optimal.");
     console.log("Adjusting laser pulse to reconstruction mode...");
-    console.log("Life created! Logging results...")
-    //get inputs from form and assign to constants
-    const statBase = parseFloat(document.getElementById('complex-stat-base').value);
-    const statMultiplier = parseFloat(document.getElementById('complex-stat-multiplier').value);
-    const statMax = parseFloat(((document.getElementById('max-stat-level').value) / 2) + 1);
+    console.log("Life created! Logging results...");
+
+    // statBase is the base value for the player's vitals
+    const statBase = 25;
+
+    // statMultiplier defines how much of an effect the parent stat has on the related vital stat
+    const statMultiplier = 1.5;
+
+    // statMax is the maximum level for luck which makes the maximum possible level for the other stats double this value
+    const statMax = 20;
 
     //call functions to generate character sheet
     //Luck has to be rolled first because it effects every other stat
@@ -450,7 +455,7 @@ const generateCharacter = () => {
     const ARC = getStat(LCK, statMax);
     const CHA = getStat(LCK, statMax);
 
-    // roll for stats based on a parent stat
+    // roll for vitals based on a parent stat
     const VIT = getComplexInt(statBase, LCK, statMultiplier, STR);
     const maxVIT = VIT;
     const AGI = getComplexInt(statBase, LCK, statMultiplier, DEX);
@@ -619,6 +624,8 @@ const generateEnemy = (player) => {
 };
 
 const updateDOM = () => {
+    //hide the begin button
+    document.getElementById("begin-button").style.display = 'none';
 
     // update player's status
     document.getElementById("player-info").innerHTML = `
@@ -637,92 +644,117 @@ const updateDOM = () => {
         </div>
     </div>
 
-<div id="player-bio-card">
-    <h4>Bio</h4> <p>${player.bio}</p>
-</div>
-
-<div id="player-stats">
-    <div class="stat-card">
-        <h4>Luck</h4> <p>${player.luck}</p>
+    <div id="player-bio-card">
+        <h4>Bio</h4> <p>${player.bio}</p>
     </div>
 
-    <div class="stat-card">
-        <h4>Strength</h4> <p>${player.strength}</p>
+    <div id="player-stats">
+        <div class="stat-card">
+            <h4>Vitality</h4> <p>${player.vitality} / ${player.maxVitality}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Agility</h4> <p>${player.agility} / ${player.maxAgility}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Focus</h4> <p>${player.focus} / ${player.maxFocus}</p>
+        </div>
+        
+        <div class="stat-card">
+            <h4>Luck</h4> <p>${player.luck}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Strength</h4> <p>${player.strength}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Dexterity</h4> <p>${player.dexterity}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Arcana</h4> <p>${player.arcana}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Charisma</h4> <p>${player.charisma}</p>
+        </div>
+    </div>
+    `;
+
+    // add player stats to vitals area
+    document.getElementById("player-vitals").innerHTML = `
+    <div class="vitals-card">
+        <h4>Vitality</h4><p>${player.vitality}/${player.maxVitality}</p>
+    </div>
+    <div class="vitals-card">
+        <h4>Agility</h4><p>${player.agility}/${player.maxAgility}</p>
+    </div>
+    <div class="vitals-card">
+        <h4>Focus</h4><p>${player.focus}/${player.maxFocus}</p>
+    </div>
+    `;
+
+    // update enemy status
+    document.getElementById("enemy-info").innerHTML = `
+    <div id="enemy-name-card">
+        <h3>Enemy</h3> <p>${enemy.name}</p>
     </div>
 
-    <div class="stat-card">
-        <h4>Vitality</h4> <p>${player.vitality} / ${player.maxVitality}</p>
+
+    <div id="enemy-info-container">
+        <div class="enemy-info-card">
+            <h4>Enemy Type</h4> <p>${enemy.type}</p>
+        </div>
     </div>
 
-    <div class="stat-card">
-        <h4>Dexterity</h4> <p>${player.dexterity}</p>
+    <div id="enemy-stats">
+        <div class="stat-card">
+            <h4>Vitality</h4> <p>${enemy.vitality} / ${enemy.maxVitality}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Agility</h4> <p>${enemy.agility} / ${enemy.maxAgility}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Focus</h4> <p>${enemy.focus} / ${enemy.maxFocus}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Luck</h4> <p>${enemy.luck}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Strength</h4> <p>${enemy.strength}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Dexterity</h4> <p>${enemy.dexterity}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Arcana</h4> <p>${enemy.arcana}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Charisma</h4> <p>${enemy.charisma}</p>
+        </div>
     </div>
+    `;
 
-    <div class="stat-card">
-        <h4>Agility</h4> <p>${player.agility} / ${player.maxAgility}</p>
+    // add enemy stats to vitals area
+    document.getElementById("enemy-vitals").innerHTML = `
+    <div class="vitals-card">
+        <h4>Vitality</h4><p>${enemy.vitality}/${enemy.maxVitality}</p>
     </div>
-
-    <div class="stat-card">
-        <h4>Arcana</h4> <p>${player.arcana}</p>
+    <div class="vitals-card">
+        <h4>Agility</h4><p>${enemy.agility}/${enemy.maxAgility}</p>
     </div>
-
-    <div class="stat-card">
-        <h4>Focus</h4> <p>${player.focus} / ${player.maxFocus}</p>
+    <div class="vitals-card">
+        <h4>Focus</h4><p>${enemy.focus}/${enemy.maxFocus}</p>
     </div>
-
-    <div class="stat-card">
-        <h4>Charisma</h4> <p>${player.charisma}</p>
-    </div>
-</div>
-`;
-
-// update enemy status
-document.getElementById("enemy-info").innerHTML = `
-<div id="enemy-name-card">
-    <h3>Name</h3> <p>${enemy.name}</p>
-</div>
-
-
-<div id="enemy-info-container">
-
-    <div class="enemy-info-card">
-        <h4>Enemy Type</h4> <p>${enemy.type}</p>
-    </div>
-</div>
-
-<div id="enemy-stats">
-    <div class="stat-card">
-        <h4>Luck</h4> <p>${enemy.luck}</p>
-    </div>
-
-    <div class="stat-card">
-        <h4>Strength</h4> <p>${enemy.strength}</p>
-    </div>
-
-    <div class="stat-card">
-        <h4>Vitality</h4> <p>${enemy.vitality} / ${enemy.maxVitality}</p>
-    </div>
-
-    <div class="stat-card">
-        <h4>Dexterity</h4> <p>${enemy.dexterity}</p>
-    </div>
-
-    <div class="stat-card">
-        <h4>Agility</h4> <p>${enemy.agility} / ${enemy.maxAgility}</p>
-    </div>
-
-    <div class="stat-card">
-        <h4>Arcana</h4> <p>${enemy.arcana}</p>
-    </div>
-
-    <div class="stat-card">
-        <h4>Focus</h4> <p>${enemy.focus} / ${enemy.maxFocus}</p>
-    </div>
-
-    <div class="stat-card">
-        <h4>Charisma</h4> <p>${enemy.charisma}</p>
-    </div>
-</div>
-`;
+    `;
 
 }
