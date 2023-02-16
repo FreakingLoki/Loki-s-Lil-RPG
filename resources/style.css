@@ -85,56 +85,98 @@ header {
     border-bottom: 4px solid #7D8570;
 }
 
-/* ---- MAIN CONTENT ---- */
+/* ---- INTERFACE SECTION ---- */
 main {
     margin: 5rem 7.5% 5rem 7.5%;
     width: 87.5%;
 }
 
 section#interface-section {
-    margin: 2rem 0 2rem 0;
+    margin: 2rem 0;
     width: 100%;
     height: 25rem;
-    border: 4px solid #7D8570;
-
+    border: 4px solid #7d8570;
+  
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 1rem;
+  }
+  
+  div#player-vitals {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    border-bottom: 2px solid #7d8570;
+    border-right: 2px solid #7d8570;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
-}
+  }
+  
+  div#enemy-vitals {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    border-bottom: 2px solid #7d8570;
+    border-left: 2px solid #7d8570;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  
+  div#player-actions-panel {
 
-
-button {
-    border: 3px solid #7D8570;
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    display: none;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  div.vitals-card {
+    margin: 1rem;
+    padding: 0.5rem;
+  }
+  
+  button {
+    margin: 0.5rem;
+    padding: 0.25rem;
+    border: 3px solid #7d8570;
     border-radius: 8px;
-    color: #DDE392;
-    background-color: #646F58;
-}
-
-button#begin-button {
+    color: #dde392;
+    background-color: #646f58;
+  }
+  
+  button#begin-button {
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+    justify-self: center;
+    align-self: center;
     height: 5rem;
     width: 12rem;
-}
-
-button:hover {
+  }
+  
+  button:hover {
     cursor: pointer;
-    color: #7D8570;
-    background-color: #DDE392;
-}
-
-button:active {
-    color: #646F58;
-    background-color: #504B3A;
-}
-
-@media only screen and (max-width: 1080px) {
+    color: #7d8570;
+    background-color: #dde392;
+  }
+  
+  button:active {
+    color: #646f58;
+    background-color: #504b3a;
+  }
+  
+  @media only screen and (max-width: 1080px) {
     section#interface-section {
-        height: 50rem;
-
-        flex-direction: column;
-        justify-content: space-between;
+      height: 50rem;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(3, 1fr);
     }
-}
+  }
+  
 
 /* ---- PLAYER AND ENEMY STAT DISPLAYS ---- */
 

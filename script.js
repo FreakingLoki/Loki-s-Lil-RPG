@@ -627,6 +627,9 @@ const updateDOM = () => {
     //hide the begin button
     document.getElementById("begin-button").style.display = 'none';
 
+    //show player action buttons
+    document.getElementById("player-actions-panel").style.display = 'flex';
+
     // update player's status
     document.getElementById("player-info").innerHTML = `
     <div id="player-name-card">
@@ -683,8 +686,14 @@ const updateDOM = () => {
     </div>
     `;
 
+    // show player vitals panel
+    document.getElementById("player-vitals").style.display = 'flex';
     // add player stats to vitals area
     document.getElementById("player-vitals").innerHTML = `
+    <div class="vitals-card">
+        <p>${player.name} the ${player.className}</p>
+    </div>
+
     <div class="vitals-card">
         <h4>Vitality</h4><p>${player.vitality}/${player.maxVitality}</p>
     </div>
@@ -744,8 +753,13 @@ const updateDOM = () => {
     </div>
     `;
 
+    //show enemy vitals panel
+    document.getElementById("enemy-vitals").style.display = 'flex';
     // add enemy stats to vitals area
     document.getElementById("enemy-vitals").innerHTML = `
+    <div class="vitals-card">
+        <p>${enemy.name} the ${enemy.type}</p>
+    </div>
     <div class="vitals-card">
         <h4>Vitality</h4><p>${enemy.vitality}/${enemy.maxVitality}</p>
     </div>
@@ -757,4 +771,4 @@ const updateDOM = () => {
     </div>
     `;
 
-}
+};

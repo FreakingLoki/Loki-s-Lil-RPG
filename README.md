@@ -3,10 +3,8 @@ This project began as a simple message generator learning tool. The purpose of t
 
 ## To Do List:
   * Rework Input section
-    * remove ability for user to modify the stat rolls. base, multiplier, and max stats will be hard coded
-    * build a Begin button that generates both the player character and an enemy
-    * after Begin is pressed, hide it and show player and enemy vitals along with available actions
-    * rename this section to Interface
+    * add a tooltip box when an action button is hovered
+    * design styling to show that a button is unavailable (strikethrough + border color match button color)
     
   * build out turn-based combat system that includes attack and defend (to for now)
   * add player and enemy abilities (up to four for each class, not all need to be unique)

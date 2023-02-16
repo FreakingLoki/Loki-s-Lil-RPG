@@ -28,9 +28,21 @@
 
         <h2>Generate a Character</h2>
         <section id="interface-section">
-            <div id="player-vitals"></div>
+
             <button type="button" id="begin-button" onclick="player=generateCharacter(); enemy=generateEnemy(player); updateDOM();"><h3>Begin</h3></button>
+
+            <div id="player-vitals"></div>
             <div id="enemy-vitals"></div>
+
+            <div id="player-actions-panel">
+                <button type="button" id="basic-attack"><h4>Attack</h4></button>
+                <button type="button" id="defend"><h4>Defend</h4></button>
+                <button type="button" id="ability-one"><h4>Ability</h4></button>
+                <button type="button" id="ability-two"><h4>Ability</h4></button>
+                <button type="button" id="ability-three"><h4>Ability</h4></button>
+                <button type="button" id="ability-four"><h4>Ability</h4></button>
+            </div>
+
         </section>
 
         <div id="stat-display-panel">
