@@ -26,6 +26,7 @@ const addEventListeners = () => {
 
     attackButton.addEventListener('click', () => {
         //this is temporary functionality
+        playerAttack(player, enemy);
         console.log('Attack button clicked!');
     });
 
@@ -662,8 +663,7 @@ const updateDOM = () => {
     //hide the begin button
     document.getElementById("begin-button").style.display = 'none';
 
-    //show player action buttons
-    document.getElementById("player-actions-panel").style.display = 'flex';
+
 
     // update player's status
     document.getElementById("player-info").innerHTML = `
@@ -808,106 +808,179 @@ const updateDOM = () => {
 
 };
 
-//functions for the combat
+//this section handles combat functions
+//functions defining basic damage numbers based on a main stat with bonus damage from luck
+//strength based damage
+const strDamge = (character) => {
+    let damage = 1;
+    damage = Math.floor(0.25 * (Math.floor(0.5 * (character.strength + character.luck))));
+    return damage;
+};
 
+//dexterity based damage
+const dexDamage = (character) => {
+    let damage = 1;
+    damage = Math.floor(0.25 * (Math.floor(0.5 * (character.dexterity + character.luck))));
+    return damage
+};
+
+//arcana based damage
+const arcDamage = (character) => {
+    let damage = 1;
+    damage = Math.floor(0.25* (Math.floor(0.5 * (character.arcana + character.luck))));
+    return damage;
+};
+
+//charisma based damage 
+const chaDamage = (character) => {
+    let damage = 1;
+    damage = Math.floor(0.25* (Math.floor(0.5 * (character.charisma + character.luck))));
+    return damage;
+};
+
+//basic attack function for the player
 const playerAttack = (player, enemy) => {
     let attackDamage = 1;
 
     switch (player.className) {
 
-//strength based classes
+        //strength based classes
         case 'Barbarian':
-            attackDamage = Math.floor(1/5 * player.strength + player.luck);
+            attackDamage = strDamge(player);
             break;
         case 'Warrior':
-            attackDamage = Math.floor(1/7 * player.strength + player.luck);
+            attackDamage = strDamge(player);
             break;
         case 'Paladin':
-            attackDamage = Math.floor(1/8 * player.strength + player.luck);
+            attackDamage = strDamge(player);
             break;
         case 'Warlord':
-            attackDamage = Math.floor(1/9 * player.strength + player.luck);
+            attackDamage = strDamge(player);
             break;
         case 'Fighter':
-            attackDamage = Math.floor(1/10 * player.strength + player.luck);
+            attackDamage = strDamge(player);
             break;
 
-// dexterity based classes
+        // dexterity based classes
         case 'Archer':
-            attackDamage = Math.floor(1/10 * player.dexterity + player.luck);
+            attackDamage = dexDamage(player);
             break;
         case 'Ranger':
-            classBio = rangerBios;
+            attackDamage = dexDamage(player);
             break;
         case 'Rogue':
-            classBio = rogueBios;
+            attackDamage = dexDamage(player);
             break;
         case 'Thief':
-            classBio = thiefBios;
+            attackDamage = dexDamage(player);
             break;
 
-// arcana based classes
+        // arcana based classes
         case 'Wizard':
-            classBio = wizardBios;
+            attackDamage = arcDamage(player);
             break;
         case 'Warlock':
-            classBio = warlockBios;
+            attackDamage = arcDamage(player);
             break;
         case 'Druid':
-            classBio = druidBios;
+            attackDamage = arcDamage(player);
             break;
         case 'Illusionist':
-            classBio = illusionistBios;
+            attackDamage = arcDamage(player);
             break;
         case 'Sorcerer':
-            classBio = sorcererBios;
+            attackDamage = arcDamage(player);
             break;
 
-// charisma based classes
+        // charisma based classes
         case 'Party Animal':
-            classBio = partyAnimalBios;
+            attackDamage = chaDamage(player);
             break;
         case 'Cleric':
-            classBio = clericBios;
+            attackDamage = chaDamage(player);
             break;
         case 'Bard':
-            classBio = bardBios;
+            attackDamage = chaDamage(player);
             break;
 
-// multistat classes
+        // multistat classes
         case 'Swashbuckler':
-            classBio = swashbucklerBios;
+            attackDamage = Math.floor(0.5 * (strDamge(player) + dexDamage(player)));
             break;
         case 'Spellsword':
-            classBio = spellswordBios;
+            attackDamage = Math.floor(0.5 * (strDamge(player) + arcDamage(player)));
             break;
         case 'Warrior-Poet':
-            classBio = warriorPoetBios;
+            attackDamage = Math.floor(0.5 * (strDamge(player) + chaDamage(player)));
             break;
         case 'Assassin':
-            classBio = assassinBios;
+            attackDamage = Math.floor(0.5 * (dexDamage(player) + arcDamage(player)));
             break;
         case 'Daredevil':
-            classBio = daredevilBios;
+            attackDamage = Math.floor(0.5 * (dexDamage(player) + chaDamage(player)));
             break;
         case 'Mesmer':
-            classBio = mesmerBios;
+            attackDamage = Math.floor(0.5* (arcDamage(player) + chaDamage(player)));
             break;
         case 'Hero':
-            classBio = heroBios;
+            attackDamage = Math.ceil((0.3 * (strDamge(player) + dexDamage(player) + arcDamage(player) + chaDamage(player))) + (0.25 * player.luck));
+            break;
+        default:
+            attackDamage = strDamge(player);
             break;
     }
-}
+
+    //
+    enemy.vitality -= attackDamage;
+};
+
+const enemyAttack = (enemy, player) => {
+    let attackDamage = 1;
+    
+    //define enemy basic attack damage as a function of an average of their stats
+
+    const enemyAttackDamage = Math.floor(0.25 *(strDamge(enemy) + dexDamage(enemy) + arcDamage(enemy) +chaDamage(enemy)));
+
+    switch (enemy.type) {
+        case 'Gerblin':
+            attackDamage = Math.floor(0.6 * enemyAttackDamage);
+            break;
+        case 'Troll':
+            attackDamage = Math.floor(0.75 * enemyAttackDamage);
+            break;
+        case 'Lich':
+            attackDamage = enemyAttackDamage;
+            break;
+        case 'Krav Maga Master':
+            attackDamage = Math.floor(1.2 * enemyAttackDamage);
+            break;
+        case 'Dragon':
+            attackDamage = Math.ceil(1.5 * enemyAttackDamage);
+            break;
+        default:
+            attackDamage = enemyAttackDamage;
+            break;
+    }
+
+    player.vitality -= attackDamage;
+};
 
 let turn = 'player';
 
 const playerTurn = player => {
+    //show player action buttons
+    document.getElementById("player-actions-panel").style.display = 'flex';
+
     //player's turn logic here
 
     //update the DOM after the player's action is taken
     updateDOM();
+    
     //switch the turn to be the enemy's
     turn = 'enemy';
+
+    //hide the player action buttons as a visual indicator that it is the enemy's turn
+    document.getElementById("player-actions-panel").style.display = 'none';
 
 };
 
