@@ -16,44 +16,6 @@ const getStat = (luck, multiplier) => {
     return stat;
 }
 
-// add event listeners to buttons
-const addEventListeners = () => {
-    const attackButton = document.getElementById("basic-attack");
-    const defendButton = document.getElementById("defend");
-    const abilityOneButton = document.getElementById("ability-one");
-    const abilityTwoButton = document.getElementById("ability-two");
-    const abilityThreeButton = document.getElementById("ability-three");
-
-    attackButton.addEventListener('click', () => {
-        //this is temporary functionality
-        playerAttack(player, enemy);
-        console.log('Attack button clicked!');
-    });
-
-    defendButton.addEventListener('click', () => {
-        //this is temporary functionality
-        console.log('Defend button clicked!');
-    });
-
-    abilityOneButton.addEventListener('click', () => {
-        //this is temporary functionality
-        console.log('Ability One button clicked!');
-    });
-
-    abilityTwoButton.addEventListener('click', () => {
-        //this is temporary functionality
-        console.log('Ability Two button clicked!');
-    });
-
-    abilityThreeButton.addEventListener('click', () => {
-        //this is temporary functionality
-        console.log('Ability Three button clicked!');
-    });
-};
-
-//function call adds event listeners to the DOM
-addEventListeners();
-
 // define name generator function
 const genName = () => {
     // array of possible first names
@@ -463,6 +425,35 @@ const getClass = (STR, DEX, ARC, CHA, LCK, maxLuck) => {
     return determinedClass;
 };
 
+//functions defining basic damage numbers based on a main stat with bonus damage from luck
+//strength based damage
+const strDamge = (character) => {
+    let damage = 1;
+    damage = Math.floor(0.25 * (Math.floor(0.5 * (character.strength + character.luck))));
+    return damage;
+};
+
+//dexterity based damage
+const dexDamage = (character) => {
+    let damage = 1;
+    damage = Math.floor(0.25 * (Math.floor(0.5 * (character.dexterity + character.luck))));
+    return damage
+};
+
+//arcana based damage
+const arcDamage = (character) => {
+    let damage = 1;
+    damage = Math.floor(0.25* (Math.floor(0.5 * (character.arcana + character.luck))));
+    return damage;
+};
+
+//charisma based damage 
+const chaDamage = (character) => {
+    let damage = 1;
+    damage = Math.floor(0.25* (Math.floor(0.5 * (character.charisma + character.luck))));
+    return damage;
+};
+
 const generateCharacter = () => {
     console.log("Initializing matter reconfiguration lasers...");
     console.log("Adjusting matter slurry concentration within vat...");
@@ -494,6 +485,8 @@ const generateCharacter = () => {
     // roll for vitals based on a parent stat
     const VIT = getComplexInt(statBase, LCK, statMultiplier, STR);
     const maxVIT = VIT;
+    const ARM = getComplexInt(statBase, LCK, statMultiplier, LCK);
+    const maxARM = ARM;
     const AGI = getComplexInt(statBase, LCK, statMultiplier, DEX);
     const maxAGI = AGI;
     const FOC = getComplexInt(statBase, LCK, statMultiplier, ARC);
@@ -514,16 +507,21 @@ const generateCharacter = () => {
 
 
     const player = {
+        //player name and flavor
         name: charName,
         className: charClass,
         alignment: charAlign,
 
+        //player bio
         bio: charBio,
 
+        //player stats
         luck: LCK,
         strength: STR,
         maxVitality: maxVIT,
         vitality: VIT,
+        maxArmor: maxARM,
+        armor: ARM,
         dexterity: DEX,
         maxAgility: maxAGI,
         agility: AGI,
@@ -531,6 +529,152 @@ const generateCharacter = () => {
         maxFocus: maxFOC,
         focus: FOC,
         charisma: CHA,
+
+        //basic attack function for the player
+        playerAttack: function(enemy) {
+            let attackDamage = 1;
+
+            switch (this.className) {
+
+                //strength based classes
+                case 'Barbarian':
+                    attackDamage = strDamge(this);
+                    break;
+                case 'Warrior':
+                    attackDamage = strDamge(this);
+                    break;
+                case 'Paladin':
+                    attackDamage = strDamge(this);
+                    break;
+                case 'Warlord':
+                    attackDamage = strDamge(this);
+                    break;
+                case 'Fighter':
+                    attackDamage = strDamge(this);
+                    break;
+
+                // dexterity based classes
+                case 'Archer':
+                    attackDamage = dexDamage(this);
+                    break;
+                case 'Ranger':
+                    attackDamage = dexDamage(this);
+                    break;
+                case 'Rogue':
+                    attackDamage = dexDamage(this);
+                    break;
+                case 'Thief':
+                    attackDamage = dexDamage(this);
+                    break;
+
+                // arcana based classes
+                case 'Wizard':
+                    attackDamage = arcDamage(this);
+                    break;
+                case 'Warlock':
+                    attackDamage = arcDamage(this);
+                    break;
+                case 'Druid':
+                    attackDamage = arcDamage(this);
+                    break;
+                case 'Illusionist':
+                    attackDamage = arcDamage(this);
+                    break;
+                case 'Sorcerer':
+                    attackDamage = arcDamage(this);
+                    break;
+
+                // charisma based classes
+                case 'Party Animal':
+                    attackDamage = chaDamage(this);
+                    break;
+                case 'Cleric':
+                    attackDamage = chaDamage(this);
+                    break;
+                case 'Bard':
+                    attackDamage = chaDamage(this);
+                    break;
+
+                // multistat classes
+                case 'Swashbuckler':
+                    attackDamage = Math.floor(0.5 * (strDamge(this) + dexDamage(this)));
+                    break;
+                case 'Spellsword':
+                    attackDamage = Math.floor(0.5 * (strDamge(this) + arcDamage(this)));
+                    break;
+                case 'Warrior-Poet':
+                    attackDamage = Math.floor(0.5 * (strDamge(this) + chaDamage(this)));
+                    break;
+                case 'Assassin':
+                    attackDamage = Math.floor(0.5 * (dexDamage(this) + arcDamage(this)));
+                    break;
+                case 'Daredevil':
+                    attackDamage = Math.floor(0.5 * (dexDamage(this) + chaDamage(this)));
+                    break;
+                case 'Mesmer':
+                    attackDamage = Math.floor(0.5* (arcDamage(this) + chaDamage(this)));
+                    break;
+                case 'Hero':
+                    attackDamage = Math.ceil((0.3 * (strDamge(this) + dexDamage(this) + arcDamage(this) + chaDamage(this))) + (0.25 * this.luck));
+                    break;
+                default:
+                    attackDamage = strDamge(this);
+                    break;
+            }
+
+            // deal damage to enemy
+            if (enemy.armor > 0) {
+                if ((enemy.armor - attackDamage) < 0) {
+                    enemy.armor = 0;
+                    console.log(`You knocked the enemy's armor down to nothing!`)
+                } else {
+                    enemy.armor -= attackDamage;
+                    console.log(`You dealt ${attackDamage} to the enemy and reduced their armor to ${enemy.armor}!`)
+                }
+            } else {
+                enemy.vitality -= attackDamage;
+                console.log(`You attacked the enemy and dealt ${attackDamage} damage to them!`)
+            }
+
+        },
+
+        // player defense function
+        playerDefend: function() {
+            let diceRoll = getRandomInt(20);
+            const critDefend = Math.floor((this.agility * 0.5) + 4);
+            const highDefend = Math.floor((this.agility * 0.1) + 3);
+            const lowDefend =  Math.floor((this.agility * 0.05) + 2);
+            const badDefend = Math.floor((this.agility * 0.025) + 1);
+
+            if (this.agility > 0) {
+                if (diceRoll === 19) {
+                    this.armor += critDefend;
+                    console.log(`Critical success! You artfully recover your defensive stance (armor + ${critDefend})!`);
+                } else if (diceRoll >= 14) {
+                    this.armor += highDefend;
+                    console.log(`Success! You recover your footing and brace for attack (armor + ${highDefend})!`);
+                } else if (diceRoll >= 9) {
+                    this.armor += lowDefend;
+                    console.log(`Barely managed it! You clumisly keep your balance (armor + ${lowDefend}).`);
+                } else if (diceRoll >= 4) {
+                    this.armor += badDefend;
+                    console.log(`It is bewildering that you are still on your feet (armor + ${badDefend}).`);
+                } else {
+                    this.armor -= 1;
+                    console.log(`You fell right on your bum (armor - 1).`)
+                };
+            
+                if (this.armor >= this.maxArmor) {
+                    this.armor = this.maxArmor;
+                };
+            
+                this.agility -= 2;
+
+            } else {
+                this.armor -= 1;
+                console.log(`Failed to defend! Your agility is exhausted. While trying to catch your breath you trip and fall right on your bum (armor - 1).`)
+            }
+        }
     }
 
     return player;
@@ -591,19 +735,19 @@ const determineDifficulty = enemyType => {
     // determine difficulty based on enemy type higher index in the array should have higher difficulty
     switch (enemyType) {
         case 'Gerblin':
-          difficulty = 0.25;
-          break;
-        case 'Troll':
-          difficulty = 0.5;
-          break;
-        case 'Lich':
           difficulty = 0.75;
           break;
+        case 'Troll':
+          difficulty = 1;
+          break;
+        case 'Lich':
+          difficulty = 1.25;
+          break;
         case 'Krav Maga Master':
-            difficulty = 1;
+            difficulty = 1.5;
             break;
         case 'Dragon':
-            difficulty = 1.25;
+            difficulty = 1.75;
             break;
         default:
           difficulty = 0.1;
@@ -626,6 +770,8 @@ const generateEnemy = (player) => {
     //generate stats based on difficulty
     const enemyVIT = Math.floor(player.maxVitality * difficulty);
     const enemyMaxVIT = enemyVIT;
+    const enemyARM = Math.floor(player.maxArmor * difficulty);
+    const enemyMaxARM = enemyARM;
     const enemyAGI = Math.floor(player.maxAgility * difficulty);
     const enemyMaxAGI = enemyAGI;
     const enemyFOC = Math.floor(player.maxFocus * difficulty);
@@ -643,6 +789,8 @@ const generateEnemy = (player) => {
 
         vitality: enemyVIT,
         maxVitality: enemyMaxVIT,
+        armor: enemyARM,
+        maxArmor: enemyMaxARM,
         agility: enemyAGI,
         maxAgility: enemyMaxAGI,
         focus: enemyFOC,
@@ -652,7 +800,87 @@ const generateEnemy = (player) => {
         strength: enemySTR,
         dexterity: enemyDEX,
         arcana: enemyARC,
-        charisma: enemyCHA
+        charisma: enemyCHA,
+
+        // enemy's basic attack function
+        enemyAttack: function(player) {
+            let attackDamage = 1;
+            
+            //define enemy basic attack damage as a function of an average of their stats
+            const enemyAttackDamage = Math.floor(0.25 *(strDamge(this) + dexDamage(this) + arcDamage(this) +chaDamage(this)));
+        
+            switch (this.type) {
+                case 'Gerblin':
+                    attackDamage = Math.floor(0.6 * enemyAttackDamage);
+                    break;
+                case 'Troll':
+                    attackDamage = Math.floor(0.75 * enemyAttackDamage);
+                    break;
+                case 'Lich':
+                    attackDamage = enemyAttackDamage;
+                    break;
+                case 'Krav Maga Master':
+                    attackDamage = Math.floor(1.2 * enemyAttackDamage);
+                    break;
+                case 'Dragon':
+                    attackDamage = Math.ceil(1.5 * enemyAttackDamage);
+                    break;
+                default:
+                    attackDamage = enemyAttackDamage;
+                    break;
+            }
+        
+            if (player.armor > 0) {
+                if ((player.armor - attackDamage) < 0) {
+                    player.armor = 0;
+                    console.log(`${this.name} knocked the ${player.name}'s armor down to nothing!`)
+                } else {
+                    player.armor -= attackDamage;
+                    console.log(`The ${this.type} dealt ${attackDamage} damage to you and reduced your armor to ${player.armor}!`)
+                }
+            } else {
+                enemy.vitality -= attackDamage;
+                console.log(`${this.name} attacked you and dealt ${attackDamage} damage!`)
+            }
+        },
+
+        //enemy defend function
+        enemyDefend: function() {
+            let diceRoll = getRandomInt(20);
+            const critDefend = Math.floor((this.agility * 0.5) + 4);
+            const highDefend = Math.floor((this.agility * 0.1) + 3);
+            const lowDefend =  Math.floor((this.agility * 0.05) + 2);
+            const badDefend = Math.floor((this.agility * 0.025) + 1);
+
+            if (this.agility > 0) {
+                if (diceRoll === 19) {
+                    this.armor += critDefend;
+                    console.log(`Critical success! ${this.name} artfully recovered their defensive stance (armor + ${critDefend})!`);
+                } else if (diceRoll >= 14) {
+                    this.armor += highDefend;
+                    console.log(`Success! ${this.name} recovered their footing and braced for attack (armor + ${highDefend})!`);
+                } else if (diceRoll >= 9) {
+                    this.armor += lowDefend;
+                    console.log(`Barely managed it! ${this.name} clumisly kept their balance (armor + ${lowDefend}).`);
+                } else if (diceRoll >= 4) {
+                    this.armor += badDefend;
+                    console.log(`It is bewildering that ${this.name} is still on their feet (armor + ${badDefend}).`);
+                } else {
+                    this.armor -= 1;
+                    console.log(`${this.name} fell right on their bum (armor - 1).`)
+                };
+            
+                if (this.armor >= this.maxArmor) {
+                    this.armor = this.maxArmor;
+                };
+            
+                this.agility -= 2;
+
+            } else {
+                this.armor -= 1;
+                console.log(`Failed to defend! ${this.name}'s agility is exhausted. While trying to catch their breath they trip and fall right on their bum (armor - 1).`)
+            }
+        }
 
     }
 
@@ -808,197 +1036,91 @@ const updateDOM = () => {
 
 };
 
-//this section handles combat functions
-//functions defining basic damage numbers based on a main stat with bonus damage from luck
-//strength based damage
-const strDamge = (character) => {
-    let damage = 1;
-    damage = Math.floor(0.25 * (Math.floor(0.5 * (character.strength + character.luck))));
-    return damage;
-};
-
-//dexterity based damage
-const dexDamage = (character) => {
-    let damage = 1;
-    damage = Math.floor(0.25 * (Math.floor(0.5 * (character.dexterity + character.luck))));
-    return damage
-};
-
-//arcana based damage
-const arcDamage = (character) => {
-    let damage = 1;
-    damage = Math.floor(0.25* (Math.floor(0.5 * (character.arcana + character.luck))));
-    return damage;
-};
-
-//charisma based damage 
-const chaDamage = (character) => {
-    let damage = 1;
-    damage = Math.floor(0.25* (Math.floor(0.5 * (character.charisma + character.luck))));
-    return damage;
-};
-
-//basic attack function for the player
-const playerAttack = (player, enemy) => {
-    let attackDamage = 1;
-
-    switch (player.className) {
-
-        //strength based classes
-        case 'Barbarian':
-            attackDamage = strDamge(player);
-            break;
-        case 'Warrior':
-            attackDamage = strDamge(player);
-            break;
-        case 'Paladin':
-            attackDamage = strDamge(player);
-            break;
-        case 'Warlord':
-            attackDamage = strDamge(player);
-            break;
-        case 'Fighter':
-            attackDamage = strDamge(player);
-            break;
-
-        // dexterity based classes
-        case 'Archer':
-            attackDamage = dexDamage(player);
-            break;
-        case 'Ranger':
-            attackDamage = dexDamage(player);
-            break;
-        case 'Rogue':
-            attackDamage = dexDamage(player);
-            break;
-        case 'Thief':
-            attackDamage = dexDamage(player);
-            break;
-
-        // arcana based classes
-        case 'Wizard':
-            attackDamage = arcDamage(player);
-            break;
-        case 'Warlock':
-            attackDamage = arcDamage(player);
-            break;
-        case 'Druid':
-            attackDamage = arcDamage(player);
-            break;
-        case 'Illusionist':
-            attackDamage = arcDamage(player);
-            break;
-        case 'Sorcerer':
-            attackDamage = arcDamage(player);
-            break;
-
-        // charisma based classes
-        case 'Party Animal':
-            attackDamage = chaDamage(player);
-            break;
-        case 'Cleric':
-            attackDamage = chaDamage(player);
-            break;
-        case 'Bard':
-            attackDamage = chaDamage(player);
-            break;
-
-        // multistat classes
-        case 'Swashbuckler':
-            attackDamage = Math.floor(0.5 * (strDamge(player) + dexDamage(player)));
-            break;
-        case 'Spellsword':
-            attackDamage = Math.floor(0.5 * (strDamge(player) + arcDamage(player)));
-            break;
-        case 'Warrior-Poet':
-            attackDamage = Math.floor(0.5 * (strDamge(player) + chaDamage(player)));
-            break;
-        case 'Assassin':
-            attackDamage = Math.floor(0.5 * (dexDamage(player) + arcDamage(player)));
-            break;
-        case 'Daredevil':
-            attackDamage = Math.floor(0.5 * (dexDamage(player) + chaDamage(player)));
-            break;
-        case 'Mesmer':
-            attackDamage = Math.floor(0.5* (arcDamage(player) + chaDamage(player)));
-            break;
-        case 'Hero':
-            attackDamage = Math.ceil((0.3 * (strDamge(player) + dexDamage(player) + arcDamage(player) + chaDamage(player))) + (0.25 * player.luck));
-            break;
-        default:
-            attackDamage = strDamge(player);
-            break;
-    }
-
-    //
-    enemy.vitality -= attackDamage;
-};
-
-const enemyAttack = (enemy, player) => {
-    let attackDamage = 1;
-    
-    //define enemy basic attack damage as a function of an average of their stats
-
-    const enemyAttackDamage = Math.floor(0.25 *(strDamge(enemy) + dexDamage(enemy) + arcDamage(enemy) +chaDamage(enemy)));
-
-    switch (enemy.type) {
-        case 'Gerblin':
-            attackDamage = Math.floor(0.6 * enemyAttackDamage);
-            break;
-        case 'Troll':
-            attackDamage = Math.floor(0.75 * enemyAttackDamage);
-            break;
-        case 'Lich':
-            attackDamage = enemyAttackDamage;
-            break;
-        case 'Krav Maga Master':
-            attackDamage = Math.floor(1.2 * enemyAttackDamage);
-            break;
-        case 'Dragon':
-            attackDamage = Math.ceil(1.5 * enemyAttackDamage);
-            break;
-        default:
-            attackDamage = enemyAttackDamage;
-            break;
-    }
-
-    player.vitality -= attackDamage;
-};
-
+// SECTION FOR PROCESSING PLAYER TURNS AND ACTIONS
 let turn = 'player';
 
-const playerTurn = player => {
-    //show player action buttons
-    document.getElementById("player-actions-panel").style.display = 'flex';
+const playerTurn = (player, enemy) => {
+    // show player action buttons
+    document.getElementById("player-actions-panel").style.display = "flex";
+  
+    return new Promise((resolve, reject) => {
+      // add event listener to each action button
+      const attackButton = document.getElementById("basic-attack");
+      const defendButton = document.getElementById("defend");
+  
+      const handleAttack = () => {
+        player.playerAttack(enemy);
+        attackButton.removeEventListener("click", handleAttack);
+        defendButton.removeEventListener("click", handleDefend);
+        resolve();
+      };
+  
+      const handleDefend = () => {
+        player.playerDefend(player);
+        attackButton.removeEventListener("click", handleAttack);
+        defendButton.removeEventListener("click", handleDefend);
+        resolve();
+      };
+  
+      attackButton.addEventListener("click", handleAttack);
+      defendButton.addEventListener("click", handleDefend);
+    }).finally(() => {
+      // switch the turn to be the enemy's
+      turn = "enemy";
+  
+      // hide the player action buttons as a visual indicator that it is the enemy's turn
+      document.getElementById("player-actions-panel").style.display = "none";
+  
+      // update the DOM after the player's action is taken
+      updateDOM();
+    });
+  };
+  
+  
+  
 
-    //player's turn logic here
-
-    //update the DOM after the player's action is taken
-    updateDOM();
-    
-    //switch the turn to be the enemy's
-    turn = 'enemy';
-
-    //hide the player action buttons as a visual indicator that it is the enemy's turn
-    document.getElementById("player-actions-panel").style.display = 'none';
-
-};
-
-const enemyTurn = enemy => {
-    //enemy's turn logic here
-
+  const enemyTurn = async (enemy, player) => {
+    let enemyDiceRoll = getRandomInt(3);
+  
+    switch (enemyDiceRoll) {
+      case 2:
+        enemy.enemyAttack(player);
+        break;
+      case 1:
+        enemy.enemyDefend();
+        break;
+      default:
+        enemy.enemyAttack(player);
+        break;
+    }
+  
     //update the DOM after the enemy's action is taken
     updateDOM();
+  
+    //wait for 5 seconds to give the player a chance to see the enemy's action
+    await new Promise(resolve => setTimeout(resolve, 5000));
+  
     //switch the turn back to the player's
     turn = 'player';
-};
+  };
+  
 
-const gameLoop = (player, enemy) => {
-    while (player.vitality > 0 && enemy.vitality > 0) {
+const gameLoop = async (player, enemy) => {
+    if (player.vitality > 0 && enemy.vitality > 0) {
         if (turn === 'player') {
-            playerTurn();
+            await playerTurn(player, enemy);
+            turn = 'enemy';
+            gameLoop(player, enemy);
         } else {
-            enemyTurn();
+            enemyTurn(enemy, player);
+            turn = 'player';
+            gameLoop(player, enemy);
+        }
+    } else {
+        if (player.vitality <= 0) {
+            console.log(`You have been defeated.`);
+        } else {
+            console.log(`You have won!`);
         }
     }
 };
