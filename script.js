@@ -428,29 +428,33 @@ const getClass = (STR, DEX, ARC, CHA, LCK, maxLuck) => {
 //functions defining basic damage numbers based on a main stat with bonus damage from luck
 //strength based damage
 const strDamge = (character) => {
+    let damageRoll = getRandomInt(3) + 1;
     let damage = 1;
-    damage = Math.floor(0.25 * (Math.floor(0.5 * (character.strength + character.luck))));
+    damage = Math.floor(damageRoll * (Math.floor(0.25 * (character.strength + character.luck))));
     return damage;
 };
 
 //dexterity based damage
 const dexDamage = (character) => {
+    let damageRoll = getRandomInt(3) +1;
     let damage = 1;
-    damage = Math.floor(0.25 * (Math.floor(0.5 * (character.dexterity + character.luck))));
+    damage = Math.floor(damageRoll * (Math.floor(0.25 * (character.dexterity + character.luck))));
     return damage
 };
 
 //arcana based damage
 const arcDamage = (character) => {
+    let damageRoll = getRandomInt(3) +1;
     let damage = 1;
-    damage = Math.floor(0.25* (Math.floor(0.5 * (character.arcana + character.luck))));
+    damage = Math.floor(damageRoll * (Math.floor(0.25 * (character.arcana + character.luck))));
     return damage;
 };
 
 //charisma based damage 
 const chaDamage = (character) => {
+    let damageRoll = getRandomInt(3) +1;
     let damage = 1;
-    damage = Math.floor(0.25* (Math.floor(0.5 * (character.charisma + character.luck))));
+    damage = Math.floor(damageRoll * (Math.floor(0.5 * (character.charisma + character.luck))));
     return damage;
 };
 
@@ -839,7 +843,7 @@ const generateEnemy = (player) => {
                     console.log(`The ${this.type} dealt ${attackDamage} damage to you and reduced your armor to ${player.armor}!`)
                 }
             } else {
-                enemy.vitality -= attackDamage;
+                player.vitality -= attackDamage;
                 console.log(`${this.name} attacked you and dealt ${attackDamage} damage!`)
             }
         },
@@ -961,6 +965,9 @@ const updateDOM = () => {
         <h4>Vitality</h4><p>${player.vitality}/${player.maxVitality}</p>
     </div>
     <div class="vitals-card">
+        <h4>Armor</h4><p>${player.armor}/${player.maxArmor}</p>
+    </div>
+    <div class="vitals-card">
         <h4>Agility</h4><p>${player.agility}/${player.maxAgility}</p>
     </div>
     <div class="vitals-card">
@@ -1025,6 +1032,9 @@ const updateDOM = () => {
     </div>
     <div class="vitals-card">
         <h4>Vitality</h4><p>${enemy.vitality}/${enemy.maxVitality}</p>
+    </div>
+    <div class="vitals-card">
+        <h4>Armor</h4><p>${enemy.armor}/${enemy.maxArmor}</p>
     </div>
     <div class="vitals-card">
         <h4>Agility</h4><p>${enemy.agility}/${enemy.maxAgility}</p>
@@ -1098,7 +1108,7 @@ const playerTurn = (player, enemy) => {
     updateDOM();
   
     //wait for 5 seconds to give the player a chance to see the enemy's action
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    await new Promise(resolve => setTimeout(resolve, 15000));
   
     //switch the turn back to the player's
     turn = 'player';

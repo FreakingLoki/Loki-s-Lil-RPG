@@ -5,8 +5,9 @@ This project began as a simple message generator learning tool. The purpose of t
   * Rework Input section
     * add a tooltip box when an action button is hovered
     * design styling to show that a button is unavailable (strikethrough + border color match button color)
+    * add armor to vitals display and stats display boxes
+    * add some sort of log that tells the player what is happening each turn
     
-  * build out turn-based combat system that includes attack and defend (to for now)
   * add player and enemy abilities (up to four for each class, not all need to be unique)
       * add these to the interface section so that the player can choose to Attack, Defend, or use Ability 1, etc
   * Add images for each class (this is a maybe)
