@@ -2,14 +2,15 @@
 This project began as a simple message generator learning tool. The purpose of this project was to generate output to the user consisting of at least three items, each randomized. I decided to make a character generator that heavily uses `Math.random()` to generate some stats and then also generate a name and a short bio for the character. Currently there are 24 possible character classes. Each class has five possible biographies. 
 
 ## To Do List:
+  * Increase responsiveness for deifferent sized screens
+  
   * Rework Input section
     * add a tooltip box when an action button is hovered
-    * design styling to show that a button is unavailable (strikethrough + border color match button color)
-
     * add some sort of log that tells the player what is happening each turn
     
   * add player and enemy abilities (up to four for each class, not all need to be unique)
       * add these to the interface section so that the player can choose to Attack, Defend, or use Ability 1, etc
+
   * Add images for each class (this is a maybe)
 
 

@@ -124,6 +124,21 @@ section#interface-section {
     justify-content: space-evenly;
     align-items: center;
   }
+
+  div.vitals-card {
+    margin: 1rem;
+    padding: 0.5rem;
+  }
+
+  @media (max-width: 1300px) {
+    #player-vitals, #enemy-vitals {
+      font-size: 80%; /* adjust the percentage value as needed */
+    }
+    .vitals-card {
+        margin: 0.5rem;
+        padding: 0.4rem;
+    }
+  }
   
   div#player-actions-panel {
 
@@ -137,11 +152,6 @@ section#interface-section {
 
   div#player-actions-panel.hidden {
     display: none;
-  }
-  
-  div.vitals-card {
-    margin: 1rem;
-    padding: 0.5rem;
   }
   
   button {
