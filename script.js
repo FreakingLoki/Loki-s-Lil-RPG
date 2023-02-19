@@ -21,6 +21,9 @@ const getStat = (luck, multiplier) => {
 const pageTitle = document.getElementById("title");
 //log section
 const logBox = document.getElementById('log-box');
+//begin button
+const beginButton = document.getElementById("begin-button");
+
 
 //this function allows logging messages to the user in the log section
 const log = (message) => {
@@ -479,6 +482,7 @@ const chaDamage = (character) => {
 };
 
 const generateCharacter = () => {
+    //throw some flavor text to the log for the player
     setTimeout(function() {
         log(`You hear a robotic voice over unseen speakers: Initializing matter reconfiguration lasers.`)
     }, 500);
@@ -502,13 +506,13 @@ const generateCharacter = () => {
     }, 18000);
     setTimeout(function() {
         log(`You notice new information on your terminal. How does this... SAC have a name and a biography? that makes no sense, it was... born? Manufactured? Just now. In front of you. You notice there seems to also be information about an enemy combatant.`)
-    })
+    }, 21000)
     setTimeout(function() {
         log(`Birthing vat sinks into the floor and the pulse lasers withdraw into the ceiling of the room. An entire wall of the room slides down into the floor doubling the already massive size.`)
-    }, 21000);
+    }, 24000);
     setTimeout(function() {
         log(`The room below you now stands twice as large and twice as occupied. In the newly revealed section of the room is a clearly hostile being. The first figure readies their weaponry and waits.`)
-    }, 24000);
+    }, 27000);
 
 
 
@@ -949,11 +953,6 @@ const generateEnemy = (player) => {
 };
 
 const updateDOM = () => {
-    //hide the begin button
-    document.getElementById("begin-button").style.display = 'none';
-
-
-
     // update player's status
     document.getElementById("player-info").innerHTML = `
     <div id="player-name-card">
@@ -1198,3 +1197,24 @@ const playerTurn = (player, enemy) => {
       }
     }
   };
+
+  const beginGame = () => {
+    //hide the begin button
+    beginButton.style.display = 'none';
+    //generate a character for the player to control
+    player = generateCharacter();
+    //generate an enemy upon which to do glorious combat
+    enemy = generateEnemy(player);
+    // wait for the flavor text from generateCharacter to end then update the DOM.
+    setTimeout(function(){
+        updateDOM();
+    }, 21000)
+
+    // initiate the gameplay loop
+    gameLoop(player, enemy);
+
+    //remove event listener from begin button
+    beginButton.removeEventListener("click", beginGame)
+  };
+
+  beginButton.addEventListener("click", beginGame);
