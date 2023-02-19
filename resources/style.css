@@ -93,7 +93,7 @@ main {
 
 .highlight {
     background-color: #646F58;
-    transition: color 0.5s ease-in-out;
+    transition: color 1s ease-in-out;
 }
 
 div#log {

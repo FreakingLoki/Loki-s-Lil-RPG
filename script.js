@@ -16,10 +16,13 @@ const getStat = (luck, multiplier) => {
     return stat;
 }
 
-// these constants target the sections of the log
-const newLog = document.getElementById("new-log")
-const midLog = document.getElementById("mid-log")
-const oldLog = document.getElementById("old-log")
+// these constants target sections of the HTML for DOM manipulation
+//main title
+const pageTitle = document.getElementById("title");
+//log section
+const newLog = document.getElementById("new-log");
+const midLog = document.getElementById("mid-log");
+const oldLog = document.getElementById("old-log");
 
 // define name generator function
 const genName = () => {
@@ -502,6 +505,7 @@ const generateCharacter = () => {
     }, 14000);
     setTimeout(function() {
         newLog.classList.remove("highlight");
+        pageTitle.innerHTML="Begin Combat Trial"
     }, 16000);
 
     // statBase is the base value for the player's vitals
