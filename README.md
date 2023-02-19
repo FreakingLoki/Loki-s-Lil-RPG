@@ -5,7 +5,7 @@ This project began as a simple message generator learning tool. The purpose of t
   * Rework Input section
     * add a tooltip box when an action button is hovered
     * design styling to show that a button is unavailable (strikethrough + border color match button color)
-    * add armor to vitals display and stats display boxes
+
     * add some sort of log that tells the player what is happening each turn
     
   * add player and enemy abilities (up to four for each class, not all need to be unique)

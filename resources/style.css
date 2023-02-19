@@ -129,10 +129,14 @@ section#interface-section {
 
     grid-column: 1 / 2;
     grid-row: 2 / 3;
-    display: none;
+    display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+  }
+
+  div#player-actions-panel.hidden {
+    display: none;
   }
   
   div.vitals-card {

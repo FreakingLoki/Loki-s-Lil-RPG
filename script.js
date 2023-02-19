@@ -1043,16 +1043,13 @@ const updateDOM = () => {
         <h4>Focus</h4><p>${enemy.focus}/${enemy.maxFocus}</p>
     </div>
     `;
-
 };
 
 // SECTION FOR PROCESSING PLAYER TURNS AND ACTIONS
 let turn = 'player';
 
 const playerTurn = (player, enemy) => {
-    // show player action buttons
-    document.getElementById("player-actions-panel").style.display = "flex";
-  
+    console.log(`begin player turn. actions panel should change be displayed right now`) 
     return new Promise((resolve, reject) => {
       // add event listener to each action button
       const attackButton = document.getElementById("basic-attack");
@@ -1066,7 +1063,7 @@ const playerTurn = (player, enemy) => {
       };
   
       const handleDefend = () => {
-        player.playerDefend(player);
+        player.playerDefend();
         attackButton.removeEventListener("click", handleAttack);
         defendButton.removeEventListener("click", handleDefend);
         resolve();
@@ -1077,12 +1074,10 @@ const playerTurn = (player, enemy) => {
     }).finally(() => {
       // switch the turn to be the enemy's
       turn = "enemy";
-  
-      // hide the player action buttons as a visual indicator that it is the enemy's turn
-      document.getElementById("player-actions-panel").style.display = "none";
-  
+    
       // update the DOM after the player's action is taken
       updateDOM();
+      console.log(`end player's turn`)
     });
   };
   
@@ -1090,47 +1085,58 @@ const playerTurn = (player, enemy) => {
   
 
   const enemyTurn = async (enemy, player) => {
-    let enemyDiceRoll = getRandomInt(3);
+    console.log(`begin enemy turn. actions panel should be hidden now`) 
+    // wait for 1 second to give the player a chance to see the enemy's action
+    await new Promise(resolve => setTimeout(() => {
+      let enemyDiceRoll = getRandomInt(3);
+    
+      switch (enemyDiceRoll) {
+        case 2:
+          enemy.enemyAttack(player);
+          break;
+        case 1:
+          enemy.enemyDefend();
+          break;
+        default:
+          enemy.enemyAttack(player);
+          break;
+      }
+    
+      //update the DOM after the enemy's action is taken
+      updateDOM();
   
-    switch (enemyDiceRoll) {
-      case 2:
-        enemy.enemyAttack(player);
-        break;
-      case 1:
-        enemy.enemyDefend();
-        break;
-      default:
-        enemy.enemyAttack(player);
-        break;
-    }
-  
-    //update the DOM after the enemy's action is taken
-    updateDOM();
-  
-    //wait for 5 seconds to give the player a chance to see the enemy's action
-    await new Promise(resolve => setTimeout(resolve, 15000));
-  
-    //switch the turn back to the player's
-    turn = 'player';
-  };
-  
+      //switch the turn back to the player's
+      turn = 'player';
+      console.log(`end enemy turn`)
+    }, 1000));
+ };  
 
-const gameLoop = async (player, enemy) => {
+ const gameLoop = async (player, enemy) => {
     if (player.vitality > 0 && enemy.vitality > 0) {
-        if (turn === 'player') {
-            await playerTurn(player, enemy);
-            turn = 'enemy';
-            gameLoop(player, enemy);
-        } else {
+      if (turn === 'player') {
+        // show the player action buttons again at the end of the enemy's turn
+        document.querySelector("#interface-section #player-actions-panel").classList.remove("hidden");
+        await playerTurn(player, enemy);
+        // hide the player action buttons as a visual indicator that it is the enemy's turn
+        document.querySelector("#interface-section #player-actions-panel").classList.add("hidden");
+        turn = 'enemy';
+        gameLoop(player, enemy)
+      } else {
+        // introduce a delay of 1 second before the enemy's turn begins
+        setTimeout(() => {
             enemyTurn(enemy, player);
             turn = 'player';
-            gameLoop(player, enemy);
-        }
+            updateDOM();
+            setTimeout(() => {
+              gameLoop(player, enemy);
+            }, 2000);
+          }, 1000);
+      }
     } else {
-        if (player.vitality <= 0) {
-            console.log(`You have been defeated.`);
-        } else {
-            console.log(`You have won!`);
-        }
+      if (player.vitality <= 0) {
+        console.log(`You have been defeated.`);
+      } else {
+        console.log(`You have won!`);
+      }
     }
-};
+  };
