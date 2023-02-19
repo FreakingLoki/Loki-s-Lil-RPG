@@ -27,12 +27,21 @@
     <main>
 
         <h2>Create Life to Begin</h2>
-        <p id="current-description">
-            You begin by deconsctructing a slurry of biomatter in a birthing vat using a series of pulsed laser emissions. The process is violent and slow.
-            Once the moisture level in the vat reaches the proper value you recalibrate the pulse laser and it begins to flash a rapid and painfully bright series 
-            of sickly green pulses. The heartbeat moniter starts to beep as the laser pulses slow. On your console a single button appears underneath the vitals 
-            moniters. Press Begin to start the combat trial.
-        </p>
+        <div id="log">
+            <p id="old-log">
+                You begin by deconsctructing a slurry of biomatter in a birthing vat using a series of pulsed laser emissions. The process is violent and slow.
+                Once the moisture level in the vat reaches the proper value you recalibrate the pulse laser and it begins to flash a rapid and painfully bright series 
+                of sickly green pulses. 
+            </p>
+            <p id="mid-log">
+                The heartbeat moniter starts to beep as the laser pulses slow. On your console a single button appears underneath the vitals 
+                moniters. Press Begin to birth a combatant for the combat trial.
+            </p>
+            <p id="new-log">
+                Once the combatant is birthed, they will move into the combat arena to face a random enemy. 
+            </p>
+        </div>
+
         <section id="interface-section">
 
             <button type="button" id="begin-button" onclick="player=generateCharacter(); enemy=generateEnemy(player); updateDOM(); gameLoop(player, enemy);"><h3>Begin</h3></button>

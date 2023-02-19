@@ -91,6 +91,21 @@ main {
     width: 87.5%;
 }
 
+.highlight {
+    background-color: #646F58;
+    transition: color 0.5s ease-in-out;
+}
+
+div#log {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+}
+
+div#log p {
+    padding: 0.5rem;
+}
+
 section#interface-section {
     margin: 2rem 0;
     width: 100%;
@@ -186,8 +201,6 @@ section#interface-section {
   @media only screen and (max-width: 1080px) {
     section#interface-section {
       height: 50rem;
-      grid-template-columns: 1fr;
-      grid-template-rows: repeat(3, 1fr);
     }
   }
   

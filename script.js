@@ -16,6 +16,11 @@ const getStat = (luck, multiplier) => {
     return stat;
 }
 
+// these constants target the sections of the log
+const newLog = document.getElementById("new-log")
+const midLog = document.getElementById("mid-log")
+const oldLog = document.getElementById("old-log")
+
 // define name generator function
 const genName = () => {
     // array of possible first names
@@ -459,27 +464,55 @@ const chaDamage = (character) => {
 };
 
 const generateCharacter = () => {
-    console.log("Initializing matter reconfiguration lasers...");
-    console.log("Adjusting matter slurry concentration within vat...");
-    console.log("Lasers at maximum power.");
-    console.log("Commence matter deconstruction.");
-    console.log("Moisture level optimal.");
-    console.log("Adjusting laser pulse to reconstruction mode...");
-    console.log("Life created! Logging results...");
+    //this clears the log to begin the character creation statements
+    newLog.innerHTML="";
+    midLog.innerHTML="";
+    oldLog.innerHTML="";
+    //these timeout functions handle slowly logging the character creation process to the logging section
+    setTimeout(function() {
+        newLog.classList.add("highlight");
+        newLog.innerHTML="Initializing matter reconfiguration lasers and adjusting matter slurry concentration within birthing vat."
+    }, 2000);
+    setTimeout(function() {
+        newLog.classList.remove("highlight");
+        newLog.innerHTML=""
+        midLog.innerHTML="Initializing matter reconfiguration lasers and adjusting matter slurry concentration within birthing vat."
+    }, 4000);
+    setTimeout(function() {
+        newLog.classList.add("highlight");
+        newLog.innerHTML="Lasers at maximum power. Commencing matter deconstruction."
+    }, 6000);
+    setTimeout(function() {
+        newLog.classList.remove("highlight");
+    }, 8000);
+    setTimeout(function() {
+        newLog.classList.add("highlight");
+        newLog.innerHTML="Moisture levels optimal. Adjusting laser pulse timing to reconstruction mode."
+        midLog.innerHTML="Lasers at maximum power. Commencing matter deconstruction."
+        oldLog.innerHTML="Initializing matter reconfiguration lasers and adjusting matter slurry concentration within birthing vat."
+    }, 10000);
+    setTimeout(function() {
+        newLog.classList.remove("highlight");
+    }, 12000);
+    setTimeout(function() {
+        newLog.classList.add("highlight");
+        newLog.innerHTML="Life dreated! Logging results to terminal and beginning combat trial."
+        midLog.innerHTML="Moisture levels optimal. Adjusting laser pulse timing to reconstruction mode."
+        oldLog.innerHTML="Lasers at maximum power. Commencing matter deconstruction."
+    }, 14000);
+    setTimeout(function() {
+        newLog.classList.remove("highlight");
+    }, 16000);
 
     // statBase is the base value for the player's vitals
     const statBase = 25;
-
     // statMultiplier defines how much of an effect the parent stat has on the related vital stat
     const statMultiplier = 1.5;
-
     // statMax is the maximum level for luck which makes the maximum possible level for the other stats double this value
     const statMax = 20;
-
     //call functions to generate character sheet
     //Luck has to be rolled first because it effects every other stat
     const LCK = getRandomInt(statMax);
-
     // roll for basic stats
     const STR = getStat(LCK, statMax);
     const DEX = getStat(LCK, statMax);
