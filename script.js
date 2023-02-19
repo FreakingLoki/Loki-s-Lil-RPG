@@ -20,9 +20,21 @@ const getStat = (luck, multiplier) => {
 //main title
 const pageTitle = document.getElementById("title");
 //log section
-const newLog = document.getElementById("new-log");
-const midLog = document.getElementById("mid-log");
-const oldLog = document.getElementById("old-log");
+const logBox = document.getElementById('log-box');
+
+//this function allows logging messages to the user in the log section
+const log = (message) => {
+    //creates new element for log message
+    const logMessage = document.createElement("p");
+    logMessage.textContent = `${message}`;
+
+    //adds the message to the log
+    logBox.appendChild(logMessage);
+
+    //scroll the log box to the bottom (most recent) entry
+    logBox.scrollTop = logBox.scrollHeight;
+
+}
 
 // define name generator function
 const genName = () => {
@@ -467,46 +479,41 @@ const chaDamage = (character) => {
 };
 
 const generateCharacter = () => {
-    //this clears the log to begin the character creation statements
-    newLog.innerHTML="";
-    midLog.innerHTML="";
-    oldLog.innerHTML="";
-    //these timeout functions handle slowly logging the character creation process to the logging section
     setTimeout(function() {
-        newLog.classList.add("highlight");
-        newLog.innerHTML="Initializing matter reconfiguration lasers and adjusting matter slurry concentration within birthing vat."
-    }, 2000);
+        log(`You hear a robotic voice over unseen speakers: Initializing matter reconfiguration lasers.`)
+    }, 500);
     setTimeout(function() {
-        newLog.classList.remove("highlight");
-        newLog.innerHTML=""
-        midLog.innerHTML="Initializing matter reconfiguration lasers and adjusting matter slurry concentration within birthing vat."
-    }, 4000);
+        log(`Below you there is a grotesque swirl of color in the vat as you hear the voice say; "Adjusting matter slurry concentration within birthing vat."`)
+    }, 3000);
     setTimeout(function() {
-        newLog.classList.add("highlight");
-        newLog.innerHTML="Lasers at maximum power. Commencing matter deconstruction."
+        log(`There is a definite increase in temperature in your control room accompanied by a low bass hum and blinding green light as the voice coninues; "Lasers at maximum power. Commence matter deconstruction."`)
     }, 6000);
     setTimeout(function() {
-        newLog.classList.remove("highlight");
-    }, 8000);
+        log(`The glass in front of you has thankfully fogged over as the green light begins to turn bright blue and flash rapidly. The robotic voice is undeterred: "Moisture levels optimal. Cycling pulse lasers for matter reconstitution."`)
+    }, 9000);
     setTimeout(function() {
-        newLog.classList.add("highlight");
-        newLog.innerHTML="Moisture levels optimal. Adjusting laser pulse timing to reconstruction mode."
-        midLog.innerHTML="Lasers at maximum power. Commencing matter deconstruction."
-        oldLog.innerHTML="Initializing matter reconfiguration lasers and adjusting matter slurry concentration within birthing vat."
-    }, 10000);
-    setTimeout(function() {
-        newLog.classList.remove("highlight");
+        log(`Completely devoid of emotion the voice doesn't seem to care much for the process: "Arena Combatant creation achieved. Spellbinding process beginning"`)
     }, 12000);
     setTimeout(function() {
-        newLog.classList.add("highlight");
-        newLog.innerHTML="Life dreated! Logging results to terminal and beginning combat trial."
-        midLog.innerHTML="Moisture levels optimal. Adjusting laser pulse timing to reconstruction mode."
-        oldLog.innerHTML="Lasers at maximum power. Commencing matter deconstruction."
-    }, 14000);
+        log(`A robotic arm descends from the cieling of the room and waves a decidedly non-robotic staff at the figure in the vat as the side of the vat opens. The robotic voice reports: "Spellbinding complete. Spellbound Arena Combatant (S.A.C.) creation complete."`)
+    }, 1500);
     setTimeout(function() {
-        newLog.classList.remove("highlight");
-        pageTitle.innerHTML="Begin Combat Trial"
-    }, 16000);
+        log(`The voice has gone silent. Did someone really decide S.A.C was the best name for this creature? In the room below you a figure (a SAC) steps out of the birthing vat as the fog begins to clear.`)
+    }, 18000);
+    setTimeout(function() {
+        log(`You notice new information on your terminal. How does this... SAC have a name and a biography? that makes no sense, it was... born? Manufactured? Just now. In front of you. You notice there seems to also be information about an enemy combatant.`)
+    })
+    setTimeout(function() {
+        log(`Birthing vat sinks into the floor and the pulse lasers withdraw into the ceiling of the room. An entire wall of the room slides down into the floor doubling the already massive size.`)
+    }, 21000);
+    setTimeout(function() {
+        log(`The room below you now stands twice as large and twice as occupied. In the newly revealed section of the room is a clearly hostile being. The first figure readies their weaponry and waits.`)
+    }, 24000);
+
+
+
+
+   
 
     // statBase is the base value for the player's vitals
     const statBase = 25;
@@ -666,15 +673,16 @@ const generateCharacter = () => {
             // deal damage to enemy
             if (enemy.armor > 0) {
                 if ((enemy.armor - attackDamage) < 0) {
+                    enemy.vitality -= (attackDamage - enemy.armor)
+                    log(`Your SAC punched through the last of the ${enemy.type}'s armor and hurt them for ${(attackDamage - enemy.armor)} damage!`)
                     enemy.armor = 0;
-                    console.log(`You knocked the enemy's armor down to nothing!`)
                 } else {
                     enemy.armor -= attackDamage;
-                    console.log(`You dealt ${attackDamage} to the enemy and reduced their armor to ${enemy.armor}!`)
+                    log(`You dealt ${attackDamage} to the enemy and reduced their armor to ${enemy.armor}!`)
                 }
             } else {
                 enemy.vitality -= attackDamage;
-                console.log(`You attacked the enemy and dealt ${attackDamage} damage to them!`)
+                log(`You attacked the enemy and dealt ${attackDamage} damage to them!`)
             }
 
         },
@@ -690,19 +698,25 @@ const generateCharacter = () => {
             if (this.agility > 0) {
                 if (diceRoll === 19) {
                     this.armor += critDefend;
-                    console.log(`Critical success! You artfully recover your defensive stance (armor + ${critDefend})!`);
+                    log(`Critical success! Your SAC artfully recovered their defensive stance. Armor increased by ${critDefend} to ${this.armor}.`);
                 } else if (diceRoll >= 14) {
                     this.armor += highDefend;
-                    console.log(`Success! You recover your footing and brace for attack (armor + ${highDefend})!`);
+                    log(`Success! Your SAC recovered their footing and braced for attack. Armor increased by ${highDefend} to ${this.armor}.`);
                 } else if (diceRoll >= 9) {
                     this.armor += lowDefend;
-                    console.log(`Barely managed it! You clumisly keep your balance (armor + ${lowDefend}).`);
+                    log(`Barely managed it! Your SAC clumisly kept balance. Armor increased by ${lowDefend} to ${this.armor}.`);
                 } else if (diceRoll >= 4) {
                     this.armor += badDefend;
-                    console.log(`It is bewildering that you are still on your feet (armor + ${badDefend}).`);
+                    log(`It is bewildering that your SAC is still on their feet. Armor increased by ${badDefend} to ${this.armor}.`);
                 } else {
-                    this.armor -= 1;
-                    console.log(`You fell right on your bum (armor - 1).`)
+                    if (this.armor - 1 === 0) {
+                        this.armor = 0;
+                        log(`Your SAC fell right on their bum. Armor decreased by 1 to ${this.armor}.`)
+                    } else {
+                        this.armor -= 1;
+                        log(`Your SAC fell right on their bum. Armor decreased by 1 to ${this.armor}.`)
+                    }
+
                 };
             
                 if (this.armor >= this.maxArmor) {
@@ -713,7 +727,7 @@ const generateCharacter = () => {
 
             } else {
                 this.armor -= 1;
-                console.log(`Failed to defend! Your agility is exhausted. While trying to catch your breath you trip and fall right on your bum (armor - 1).`)
+                log(`Your SAC's defensive stance is... Well it's not one. Their agility is exhausted. While trying to catch their breath your SAC tripped and fell right on their bum. Armor decreased by 1 to ${this.armor}.`)
             }
         }
     }
@@ -873,15 +887,16 @@ const generateEnemy = (player) => {
         
             if (player.armor > 0) {
                 if ((player.armor - attackDamage) < 0) {
+                    player.vitality -= (attackDamage - player.armor)
+                    log(`${this.name}'s attack punched right through ${player.name}'s armor! They took ${(attackDamage - player.armor)} damage.`)
                     player.armor = 0;
-                    console.log(`${this.name} knocked the ${player.name}'s armor down to nothing!`)
                 } else {
                     player.armor -= attackDamage;
-                    console.log(`The ${this.type} dealt ${attackDamage} damage to you and reduced your armor to ${player.armor}!`)
+                    log(`The ${this.type} dealt ${attackDamage} damage to your SAC and reduced their armor to ${player.armor}.`)
                 }
             } else {
                 player.vitality -= attackDamage;
-                console.log(`${this.name} attacked you and dealt ${attackDamage} damage!`)
+                log(`${this.name} attacked your SAC and dealt ${attackDamage} damage!`)
             }
         },
 
@@ -896,19 +911,24 @@ const generateEnemy = (player) => {
             if (this.agility > 0) {
                 if (diceRoll === 19) {
                     this.armor += critDefend;
-                    console.log(`Critical success! ${this.name} artfully recovered their defensive stance (armor + ${critDefend})!`);
+                    log(`Critical success! ${this.name} artfully recovered their defensive stance. Their armor increased by ${critDefend} to ${this.armor}.`);
                 } else if (diceRoll >= 14) {
                     this.armor += highDefend;
-                    console.log(`Success! ${this.name} recovered their footing and braced for attack (armor + ${highDefend})!`);
+                    log(`Success! ${this.name} recovered their footing and braced for attack Their armor increased by ${highDefend} to ${this.armor}.`);
                 } else if (diceRoll >= 9) {
                     this.armor += lowDefend;
-                    console.log(`Barely managed it! ${this.name} clumisly kept their balance (armor + ${lowDefend}).`);
+                    log(`Barely managed it! ${this.name} clumisly kept their balance Their armor increased by ${lowDefend} to ${this.armor}.`);
                 } else if (diceRoll >= 4) {
                     this.armor += badDefend;
-                    console.log(`It is bewildering that ${this.name} is still on their feet (armor + ${badDefend}).`);
+                    log(`It makes no sense the ${this.type} is still on their feet Their armor increased by ${badDefend} to ${this.armor}.`);
                 } else {
-                    this.armor -= 1;
-                    console.log(`${this.name} fell right on their bum (armor - 1).`)
+                    if (this.armor - 1 === 0) {
+                        this.armor = 0;
+                        log(`The ${this.type} fell right on their bum. Armor decreased by 1 to ${this.armor}.`)
+                    } else {
+                        this.armor -= 1;
+                        log(`The ${this.type} fell right on their bum. Armor decreased by 1 to ${this.armor}.`)
+                    }
                 };
             
                 if (this.armor >= this.maxArmor) {
@@ -919,7 +939,7 @@ const generateEnemy = (player) => {
 
             } else {
                 this.armor -= 1;
-                console.log(`Failed to defend! ${this.name}'s agility is exhausted. While trying to catch their breath they trip and fall right on their bum (armor - 1).`)
+                log(`Failed to defend! ${this.name}'s agility is exhausted. While trying to catch their breath they trip and fall right on their bum (armor - 1).`)
             }
         }
 
@@ -1086,7 +1106,7 @@ const updateDOM = () => {
 let turn = 'player';
 
 const playerTurn = (player, enemy) => {
-    console.log(`begin player turn. actions panel should change be displayed right now`) 
+    log(`It is the SAC's turn to act.`)
     return new Promise((resolve, reject) => {
       // add event listener to each action button
       const attackButton = document.getElementById("basic-attack");
@@ -1114,7 +1134,7 @@ const playerTurn = (player, enemy) => {
     
       // update the DOM after the player's action is taken
       updateDOM();
-      console.log(`end player's turn`)
+      log(`The SAC's turn is over now.`)
     });
   };
   
@@ -1122,7 +1142,7 @@ const playerTurn = (player, enemy) => {
   
 
   const enemyTurn = async (enemy, player) => {
-    console.log(`begin enemy turn. actions panel should be hidden now`) 
+    log(`It is the ${enemy.type}'s turn to act.`) 
     // wait for 1 second to give the player a chance to see the enemy's action
     await new Promise(resolve => setTimeout(() => {
       let enemyDiceRoll = getRandomInt(3);
@@ -1144,7 +1164,7 @@ const playerTurn = (player, enemy) => {
   
       //switch the turn back to the player's
       turn = 'player';
-      console.log(`end enemy turn`)
+      log(`The ${enemy.type}'s turn has ended.`)
     }, 1000));
  };  
 
@@ -1171,9 +1191,10 @@ const playerTurn = (player, enemy) => {
       }
     } else {
       if (player.vitality <= 0) {
-        console.log(`You have been defeated.`);
+        log(`Your SAC took a harsh beating.`);
+        log(`The robotic voice booms out over the loudspeakers again: "Deafet is unacceptable."`)
       } else {
-        console.log(`You have won!`);
+        log(`${enemy.name} the ${enemy.type} defeated! Well done.`);
       }
     }
   };
