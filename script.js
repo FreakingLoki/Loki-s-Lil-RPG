@@ -484,35 +484,35 @@ const chaDamage = (character) => {
 const generateCharacter = () => {
     //throw some flavor text to the log for the player
     setTimeout(function() {
-        log(`You hear a robotic voice over unseen speakers: Initializing matter reconfiguration lasers.`)
+        log(`You hear a monotonous robotic voice over unseen speakers: "Initializing matter reconfiguration lasers."`)
     }, 500);
     setTimeout(function() {
-        log(`Below you there is a grotesque swirl of color in the vat as you hear the voice say; "Adjusting matter slurry concentration within birthing vat."`)
-    }, 3000);
+        log(`Below you there is a grotesque swirl of color in the vat as you hear the voice report: "Adjusting matter slurry concentration within birthing vat."`)
+    }, 5000);
     setTimeout(function() {
-        log(`There is a definite increase in temperature in your control room accompanied by a low bass hum and blinding green light as the voice coninues; "Lasers at maximum power. Commence matter deconstruction."`)
-    }, 6000);
+        log(`There is a definite increase in temperature in your control room accompanied by blinding green light as the voice coninues; "Lasers at maximum power. Commencing matter deconstruction."`)
+    }, 10000);
     setTimeout(function() {
-        log(`The glass in front of you has thankfully fogged over as the green light begins to turn bright blue and flash rapidly. The robotic voice is undeterred: "Moisture levels optimal. Cycling pulse lasers for matter reconstitution."`)
-    }, 9000);
+        log(`The glass in front of you has thankfully fogged over as the green light fades. The lasers begin firing painfully bright (even through the fog), violet, strobing beams of energy. The robotic voice is undeterred: "Moisture levels optimal. Cycling pulse lasers for matter reconstitution."`)
+    }, 15000);
     setTimeout(function() {
-        log(`Completely devoid of emotion the voice doesn't seem to care much for the process: "Arena Combatant creation achieved. Spellbinding process beginning"`)
-    }, 12000);
+        log(`The robotic voice drones on even though it just created life. Or did you? You were the one that pressed the button after all. "Arena Combatant creation achieved. Spellbinding process beginning"`)
+    }, 20000);
     setTimeout(function() {
-        log(`A robotic arm descends from the cieling of the room and waves a decidedly non-robotic staff at the figure in the vat as the side of the vat opens. The robotic voice reports: "Spellbinding complete. Spellbound Arena Combatant (S.A.C.) creation complete."`)
-    }, 1500);
+        log(`A robotic arm descends from the ceiling of the room and waves a decidedly non-robotic staff at the figure in the vat as the side of the vat opens. The robotic voice reports: "Spellbinding complete. Spellbound Arena Combatant (S.A.C.) creation complete."`)
+    }, 25000);
     setTimeout(function() {
-        log(`The voice has gone silent. Did someone really decide S.A.C was the best name for this creature? In the room below you a figure (a SAC) steps out of the birthing vat as the fog begins to clear.`)
-    }, 18000);
+        log(`The voice has gone silent. Did someone really decide "S.A.C" was the best name for this creation? In the room below you a figure steps out of the birthing vat as the fog begins to clear.`)
+    }, 30000);
     setTimeout(function() {
-        log(`You notice new information on your terminal. How does this... SAC have a name and a biography? that makes no sense, it was... born? Manufactured? Just now. In front of you. You notice there seems to also be information about an enemy combatant.`)
-    }, 21000)
+        log(`You notice new information on your terminal. How does this... SAC have a name and a biography? that makes no sense, it was... born? Manufactured? Just now as you watched. You notice there seems to also be information about an enemy combatant.`)
+    }, 35000)
     setTimeout(function() {
-        log(`Birthing vat sinks into the floor and the pulse lasers withdraw into the ceiling of the room. An entire wall of the room slides down into the floor doubling the already massive size.`)
-    }, 24000);
+        log(`The birthing vat sinks into the floor and the pulse lasers withdraw into the ceiling of the room. An entire wall of the room slides down into the floor, doubling the already massive size.`)
+    }, 40000);
     setTimeout(function() {
         log(`The room below you now stands twice as large and twice as occupied. In the newly revealed section of the room is a clearly hostile being. The first figure readies their weaponry and waits.`)
-    }, 27000);
+    }, 45000);
 
 
 
@@ -682,11 +682,11 @@ const generateCharacter = () => {
                     enemy.armor = 0;
                 } else {
                     enemy.armor -= attackDamage;
-                    log(`You dealt ${attackDamage} to the enemy and reduced their armor to ${enemy.armor}!`)
+                    log(`${this.name} dealt ${attackDamage} to the enemy and reduced their armor to ${enemy.armor}!`)
                 }
             } else {
                 enemy.vitality -= attackDamage;
-                log(`You attacked the enemy and dealt ${attackDamage} damage to them!`)
+                log(`Your ${this.className} attacked the enemy and dealt ${attackDamage} damage to them!`)
             }
 
         },
@@ -708,10 +708,10 @@ const generateCharacter = () => {
                     log(`Success! Your SAC recovered their footing and braced for attack. Armor increased by ${highDefend} to ${this.armor}.`);
                 } else if (diceRoll >= 9) {
                     this.armor += lowDefend;
-                    log(`Barely managed it! Your SAC clumisly kept balance. Armor increased by ${lowDefend} to ${this.armor}.`);
+                    log(`Barely managed it! Your ${this.className} clumisly kept balance. Armor increased by ${lowDefend} to ${this.armor}.`);
                 } else if (diceRoll >= 4) {
                     this.armor += badDefend;
-                    log(`It is bewildering that your SAC is still on their feet. Armor increased by ${badDefend} to ${this.armor}.`);
+                    log(`It is bewildering that ${this.name} is still on their feet. Armor increased by ${badDefend} to ${this.armor}.`);
                 } else {
                     if (this.armor - 1 === 0) {
                         this.armor = 0;
@@ -731,7 +731,7 @@ const generateCharacter = () => {
 
             } else {
                 this.armor -= 1;
-                log(`Your SAC's defensive stance is... Well it's not one. Their agility is exhausted. While trying to catch their breath your SAC tripped and fell right on their bum. Armor decreased by 1 to ${this.armor}.`)
+                log(`Your SAC's defensive stance is... Well it's not one. Their agility is exhausted. While trying to catch their breath the ${this.name} tripped and fell right on their bum. Armor decreased by 1 to ${this.armor}.`)
             }
         }
     }
@@ -918,10 +918,10 @@ const generateEnemy = (player) => {
                     log(`Critical success! ${this.name} artfully recovered their defensive stance. Their armor increased by ${critDefend} to ${this.armor}.`);
                 } else if (diceRoll >= 14) {
                     this.armor += highDefend;
-                    log(`Success! ${this.name} recovered their footing and braced for attack Their armor increased by ${highDefend} to ${this.armor}.`);
+                    log(`Success! ${this.name} recovered their footing and braced for attack. Their armor increased by ${highDefend} to ${this.armor}.`);
                 } else if (diceRoll >= 9) {
                     this.armor += lowDefend;
-                    log(`Barely managed it! ${this.name} clumisly kept their balance Their armor increased by ${lowDefend} to ${this.armor}.`);
+                    log(`Barely managed it! ${this.name} clumisly kept their balance. Their armor increased by ${lowDefend} to ${this.armor}.`);
                 } else if (diceRoll >= 4) {
                     this.armor += badDefend;
                     log(`It makes no sense the ${this.type} is still on their feet Their armor increased by ${badDefend} to ${this.armor}.`);
@@ -938,12 +938,18 @@ const generateEnemy = (player) => {
                 if (this.armor >= this.maxArmor) {
                     this.armor = this.maxArmor;
                 };
+
+                if (this.agility - 2 <= 0) {
+                    this.agility = 0;
+                } else {
+                    this.agility -= 2;
+                };
             
-                this.agility -= 2;
+
 
             } else {
                 this.armor -= 1;
-                log(`Failed to defend! ${this.name}'s agility is exhausted. While trying to catch their breath they trip and fall right on their bum (armor - 1).`)
+                log(`Failed to defend! ${this.name}'s agility is exhausted. While trying to catch their breath they trip and fall right on their bum. Armor decreased by 1 to ${this.armor}.`)
             }
         }
 
@@ -1208,10 +1214,13 @@ const playerTurn = (player, enemy) => {
     // wait for the flavor text from generateCharacter to end then update the DOM.
     setTimeout(function(){
         updateDOM();
-    }, 21000)
+    }, 35500)
+    setTimeout(function() {
+        // initiate the gameplay loop after the falvor text has finished playing out
+        gameLoop(player, enemy);
+    }, 50000)
 
-    // initiate the gameplay loop
-    gameLoop(player, enemy);
+
 
     //remove event listener from begin button
     beginButton.removeEventListener("click", beginGame)
