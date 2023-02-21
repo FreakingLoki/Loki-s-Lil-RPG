@@ -1016,23 +1016,23 @@ const updateDOM = () => {
     `;
 
     // show player vitals panel
-    document.getElementById("player-vitals").style.display = 'flex';
+    document.getElementById("player-vitals").style.display = 'grid';
     // add player stats to vitals area
     document.getElementById("player-vitals").innerHTML = `
-    <div class="vitals-card">
+    <div id="vitals-player-name">
         <p>${player.name} the ${player.className}</p>
     </div>
 
-    <div class="vitals-card">
+    <div id="vitals-player-vit">
         <h4>Vitality</h4><p>${player.vitality}/${player.maxVitality}</p>
     </div>
-    <div class="vitals-card">
+    <div id="vitals-player-arm">
         <h4>Armor</h4><p>${player.armor}/${player.maxArmor}</p>
     </div>
-    <div class="vitals-card">
+    <div id="vitals-player-agi">
         <h4>Agility</h4><p>${player.agility}/${player.maxAgility}</p>
     </div>
-    <div class="vitals-card">
+    <div id="vitals-player-foc">
         <h4>Focus</h4><p>${player.focus}/${player.maxFocus}</p>
     </div>
     `;
@@ -1086,22 +1086,22 @@ const updateDOM = () => {
     `;
 
     //show enemy vitals panel
-    document.getElementById("enemy-vitals").style.display = 'flex';
+    document.getElementById("enemy-vitals").style.display = 'grid';
     // add enemy stats to vitals area
     document.getElementById("enemy-vitals").innerHTML = `
-    <div class="vitals-card">
+    <div id="vitals-enemy-name">
         <p>${enemy.name} the ${enemy.type}</p>
     </div>
-    <div class="vitals-card">
+    <div id="vitals-enemy-vit">
         <h4>Vitality</h4><p>${enemy.vitality}/${enemy.maxVitality}</p>
     </div>
-    <div class="vitals-card">
+    <div id="vitals-enemy-arm">
         <h4>Armor</h4><p>${enemy.armor}/${enemy.maxArmor}</p>
     </div>
-    <div class="vitals-card">
+    <div id="vitals-enemy-agi">
         <h4>Agility</h4><p>${enemy.agility}/${enemy.maxAgility}</p>
     </div>
-    <div class="vitals-card">
+    <div id="vitals-enemy-foc">
         <h4>Focus</h4><p>${enemy.focus}/${enemy.maxFocus}</p>
     </div>
     `;
@@ -1205,20 +1205,31 @@ const playerTurn = (player, enemy) => {
   };
 
   const beginGame = () => {
+    //set page title
+    pageTitle.innerHTML = `Creation in Progress`
+
     //hide the begin button
     beginButton.style.display = 'none';
+
     //generate a character for the player to control
     player = generateCharacter();
+
     //generate an enemy upon which to do glorious combat
     enemy = generateEnemy(player);
+
     // wait for the flavor text from generateCharacter to end then update the DOM.
     setTimeout(function(){
         updateDOM();
-    }, 35500)
+    }, 35500);
+
+    //once the creation flavor text is done, begin combat phase
+    setTimeout(function() {
+        pageTitle.innerHTML = `Combat Trial`
+    }, 50000);
     setTimeout(function() {
         // initiate the gameplay loop after the falvor text has finished playing out
         gameLoop(player, enemy);
-    }, 50000)
+    }, 50000);
 
 
 
