@@ -20,7 +20,10 @@ BREAKPOINTS:
 915px: vitals moniter cards need to drop down in size
 700px: change the layout of the #stat-display-panel Name on top row, class and alignment on second
 770px: increase height of #stat-display-panel again. adjust input section
-610px increase height of #stat-display-panel section
+610px: increase height of #stat-display-panel section
+560px: reduce font size of h4 elements
+490px: decrease margin of buttons reduce font sizes
+350px: margins on player buttons
 */
 
 /* ---- UNIVERSAL ----*/
@@ -91,6 +94,42 @@ h4 {
     }
 }
 
+@media only screen and (max-width: 560px) {
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    h4 {
+        font-size: 0.9rem;
+    }
+
+    p {
+        font-size: 0.75rem;
+    }
+}
+
+@media only screen and (max-width: 490px) {
+    h2 {
+        font-size: 1.1rem;
+    }
+
+    h3 {
+        font-size: 0.9rem;
+    }
+
+    h4 {
+        font-size: 0.75rem;
+    }
+
+    p {
+        font-size: 0.5rem;
+    }
+}
+
 /* ---- HEADER ---- */
 header {
     width: 100%;
@@ -105,8 +144,7 @@ main {
     margin: 5rem 2.5% 5rem 2.5%;
     width: 87.5%;
 }
-
-
+/* LOG BOX STYLING */
 
 div#log-box {
     width: 100%;
@@ -120,6 +158,8 @@ div#log-box p {
     margin: 0.25rem;
     padding: 0.25rem;
 }
+
+/* INTERFACE PANEL STYLING */
 
 section#interface-section {
     margin: 2rem 0;
@@ -138,15 +178,15 @@ section#interface-section {
     grid-column: 1 / span 5;
     grid-row: 1 / span 3;
 
-    border-bottom: 2px solid #7d8570;
-    border-right: 2px solid #7d8570;
+    border-bottom: 4px solid #7d8570;
+    border-right: 4px solid #7d8570;
 
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, 1fr);
     grid-gap: 0.25rem;
-    /* justify-self: center;
-    align-items: center; */
+    justify-self: center;
+    align-items: center;
   }
 
   div#vitals-player-name {
@@ -194,8 +234,8 @@ section#interface-section {
     grid-column: 6 / span 5;
     grid-row: 1 / span 3;
 
-    border-bottom: 2px solid #7d8570;
-    border-left: 2px solid #7d8570;
+    border-bottom: 4px solid #7d8570;
+    border-left: 4px solid #7d8570;
 
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -246,18 +286,16 @@ section#interface-section {
   }
 
   div#player-actions-panel {
-
-    grid-column: 1 / 5;
-    grid-row: 4 / 5;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+    grid-column: 1 / span 10;
+    grid-row: 4;
+    display: grid;
   }
 
   div#player-actions-panel.hidden {
     display: none;
   }
+
+  /* STYLING FOR BUTTONS WITHIN INTERFACE SECTION */
   
   button {
     margin: 0.5rem;
@@ -266,15 +304,6 @@ section#interface-section {
     border-radius: 8px;
     color: #dde392;
     background-color: #646f58;
-  }
-  
-  button#begin-button {
-    grid-column: 5 / 7;
-    grid-row: 4;
-    justify-self: center;
-    align-self: center;
-    height: 100%;
-    width: 100%;
   }
   
   button:hover {
@@ -286,6 +315,76 @@ section#interface-section {
   button:active {
     color: #646f58;
     background-color: #504b3a;
+  }
+
+  button#begin-button {
+    grid-column: 5 / 7;
+    grid-row: 4;
+    justify-self: center;
+    align-self: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  button#basic-attack {
+    grid-column: 1 /span 2;
+    grid-row: 4;
+  }
+
+  button#defend {
+    grid-column: 3 /span 2;
+    grid-row: 4;
+  }
+
+  button#ability-one {
+    grid-column: 5 /span 2;
+    grid-row: 4;
+  }
+
+  button#ability-two {
+    grid-column: 7 /span 2;
+    grid-row: 4;
+  }
+
+  button#ability-three {
+    grid-column: 9 /span 2;
+    grid-row: 4;
+  }
+
+  @media only screen and (max-width: 490px) {
+    button {
+        margin: 0.25rem;
+        padding: 0.1rem;
+        border: 2px solid #7d8570;
+        border-radius: 4px;
+    }
+
+    button#begin-button {
+        grid-column: 4 / 8;
+        grid-row: 4;
+        justify-self: center;
+        align-self: center;
+        height: 100%;
+        width: 100%;
+      }
+  }
+
+  @media only screen and (max-width: 350px) {
+    button {
+        margin: 0;
+        padding: 0.1rem;
+        border: 2px solid #7d8570;
+        border-radius: 4px;
+    }
+
+    button#begin-button {
+        grid-column: 3 / 9;
+        grid-row: 4;
+        justify-self: center;
+        align-self: center;
+        height: 100%;
+        width: 100%;
+      }
   }
 
 /* ---- PLAYER AND ENEMY STAT DISPLAYS ---- */

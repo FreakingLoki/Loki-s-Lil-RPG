@@ -2,15 +2,13 @@
 
 The initial purpose of this project was to design a simple JavaScript program that would randomly generate a messege containing three parts and display that to the user. I decided to start by building a randomized name, a randomly selected biography, and some randomly generated stats (like strength and arcana) for a character that would fit into a fantasy world. I quickly decided I wanted to try and generate a fantasy enemy too. Then I figured since I have an enemy and a main character, I might as well try to allow the end user to engage in combat. So I built a turn-based combat system. This small project quickly turned into my first simple game.
 
-## To Do List:
-  * Update the entire README to ensure all information here is accurate
-  
+## To Do List: 
   * Increase responsiveness for different sized screens
     * vitals and interface section need adjustment
     * font scaling needs adjustment (make sure it's large enough to read)
   
   * Rework Input section
-    * add a tooltip box when an action button is hovered\
+    * add a tooltip box when an action button is hovered
     * adjust positioning of action buttons
     
   * add complexity to combat
