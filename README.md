@@ -5,20 +5,21 @@ The initial purpose of this project was to design a simple JavaScript program th
 ## To Do List: 
   * Increase responsiveness for different sized screens
     * vitals and interface section need adjustment
-    * font scaling needs adjustment (make sure it's large enough to read)
   
   * Rework Input section
     * add a tooltip box when an action button is hovered
     * adjust positioning of action buttons
     
   * add complexity to combat
+    * add classes to enemies and generate their stats seperate from the player's stats. they should still use the difficulty modifiers
     * add player and enemy abilities (up to three for each class, not all need to be unique)
 
   * Add longevity to gameplay
     * spawn new SAC button should appear if the SAC dies
     * spawn new enemy button spawn new enemy button should appear if the enemy dies
     * win/loss counters
-      * Moonshot Goal: when player wins give token and allow player to spend token to improve stats or SAC creation
+      * On death give player a token they can spend to improve the character generation (spawn better SACs after death)
+      * On wins give player a token they can spend to improve their charater (that does not carry over to next SAC)
 
 
 ## Generated Player Character
@@ -93,8 +94,8 @@ Currently there are only four possible types of enemy characters within the game
   ### Possible Enemy Types (sorted from high difficulty to low)
     * Gerblin
     * Troll
-    * Lich
-    * Krav Maga Master
+    * Undead
+    * Fey
     * Dragon
 
 

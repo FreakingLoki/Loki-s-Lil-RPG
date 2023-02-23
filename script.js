@@ -24,6 +24,17 @@ const logBox = document.getElementById('log-box');
 //begin button
 const beginButton = document.getElementById("begin-button");
 
+// these variables are the win and loss tokens
+let winToken = {
+    name: 'Combat Victory Token',
+    tokenCount: 0
+};
+
+let lossToken = {
+    name: 'Combat Defeat Token',
+    tokenCount: 0
+};
+
 
 //this function allows logging messages to the user in the log section
 const log = (message) => {
@@ -525,6 +536,7 @@ const generateCharacter = () => {
     const statMultiplier = 1.5;
     // statMax is the maximum level for luck which makes the maximum possible level for the other stats double this value
     const statMax = 20;
+    
     //call functions to generate character sheet
     //Luck has to be rolled first because it effects every other stat
     const LCK = getRandomInt(statMax);
@@ -694,10 +706,10 @@ const generateCharacter = () => {
         // player defense function
         playerDefend: function() {
             let diceRoll = getRandomInt(20);
-            const critDefend = Math.floor((this.agility * 0.5) + 4);
-            const highDefend = Math.floor((this.agility * 0.1) + 3);
-            const lowDefend =  Math.floor((this.agility * 0.05) + 2);
-            const badDefend = Math.floor((this.agility * 0.025) + 1);
+            const critDefend = Math.floor((this.agility * 0.75) + 4);
+            const highDefend = Math.floor((this.agility * 0.5) + 3);
+            const lowDefend =  Math.floor((this.agility * 0.25) + 2);
+            const badDefend = Math.floor((this.agility * 0.1) + 1);
 
             if (this.agility > 0) {
                 if (diceRoll === 19) {
@@ -770,13 +782,13 @@ const getEnemyName = () => {
 const getEnemyType = () => {
     //array containing all possible enemy types sorted from low difficulty to high
     const enemyTypes = [
-        'Gerblin', 'Troll', 'Lich', 'Krav Maga Master', 'Dragon'
+        'Gerblin', 'Troll', 'Undead', 'Fey', 'Dragon'
     ];
 
     //determine range of possible indicies
     const range = (enemyTypes.length - 1) - 0;
     //this exponent determines the "weight" toward the easy end of the array
-    const exponent = 1.4;
+    const exponent = 1.25;
     // raise range to the power of exponent
     const weightedRange = Math.pow(range, exponent);
     // generate random number between 0 and weightedRange then root to make the final result more likely to be toward beginning of array
@@ -794,19 +806,19 @@ const determineDifficulty = enemyType => {
     // determine difficulty based on enemy type higher index in the array should have higher difficulty
     switch (enemyType) {
         case 'Gerblin':
-          difficulty = 0.75;
+          difficulty = 0.9;
           break;
         case 'Troll':
           difficulty = 1;
           break;
-        case 'Lich':
-          difficulty = 1.25;
+        case 'Undead':
+          difficulty = 1.05;
           break;
-        case 'Krav Maga Master':
-            difficulty = 1.5;
+        case 'Fey':
+            difficulty = 1.1;
             break;
         case 'Dragon':
-            difficulty = 1.75;
+            difficulty = 1.15;
             break;
         default:
           difficulty = 0.1;
@@ -816,76 +828,155 @@ const determineDifficulty = enemyType => {
     return difficulty;
 };
 
-const generateEnemy = (player) => {
+const generateEnemy = () => {
+
+
+
     //generate a name first
     const enemyName = getEnemyName();
 
     //get an enemy type next
     const enemyType = getEnemyType();
 
-    //get difficulty modifier
+    //get difficulty modifier this has to be determined before the stats are rolled
     const difficulty = determineDifficulty(enemyType);
 
-    //generate stats based on difficulty
-    const enemyVIT = Math.floor(player.maxVitality * difficulty);
-    const enemyMaxVIT = enemyVIT;
-    const enemyARM = Math.floor(player.maxArmor * difficulty);
-    const enemyMaxARM = enemyARM;
-    const enemyAGI = Math.floor(player.maxAgility * difficulty);
-    const enemyMaxAGI = enemyAGI;
-    const enemyFOC = Math.floor(player.maxFocus * difficulty);
-    const enemyMaxFOC = enemyFOC;
+    // statBase is the base value for vitals
+    const statBase = 25 * difficulty;
+    // statMultiplier defines how much of an effect the parent stat has on the related vital stat
+    const statMultiplier = 1.5;
+    // statMax is the maximum level for luck which makes the maximum possible level for the other stats double this value
+    const statMax = 20 * difficulty;
 
-    const enemyLCK = Math.floor(player.luck * difficulty);
-    const enemySTR = Math.floor(player.strength * difficulty);
-    const enemyDEX = Math.floor(player.dexterity * difficulty);
-    const enemyARC = Math.floor(player.arcana * difficulty);
-    const enemyCHA = Math.floor(player.charisma * difficulty);
+    //generate stats based on difficulty
+    const LCK = getRandomInt(statMax);
+    // roll for basic stats
+    const STR = getStat(LCK, statMax);
+    const DEX = getStat(LCK, statMax);
+    const ARC = getStat(LCK, statMax);
+    const CHA = getStat(LCK, statMax);
+
+    // roll for vitals based on a parent stat
+    const VIT = getComplexInt(statBase, LCK, statMultiplier, STR);
+    const maxVIT = VIT;
+    const ARM = getComplexInt(statBase, LCK, statMultiplier, LCK);
+    const maxARM = ARM;
+    const AGI = getComplexInt(statBase, LCK, statMultiplier, DEX);
+    const maxAGI = AGI;
+    const FOC = getComplexInt(statBase, LCK, statMultiplier, ARC);
+    const maxFOC = FOC;
+
+    const enemyClass = getClass(STR, DEX, ARC, CHA, LCK, statMax)
 
     const enemy = {
         name: enemyName,
         type: enemyType,
+        className: enemyClass,
 
-        vitality: enemyVIT,
-        maxVitality: enemyMaxVIT,
-        armor: enemyARM,
-        maxArmor: enemyMaxARM,
-        agility: enemyAGI,
-        maxAgility: enemyMaxAGI,
-        focus: enemyFOC,
-        maxFocus: enemyMaxFOC,
+        vitality: VIT,
+        maxVitality: maxVIT,
+        armor: ARM,
+        maxArmor: maxARM,
+        agility: AGI,
+        maxAgility: maxAGI,
+        focus: FOC,
+        maxFocus: maxFOC,
 
-        luck: enemyLCK,
-        strength: enemySTR,
-        dexterity: enemyDEX,
-        arcana: enemyARC,
-        charisma: enemyCHA,
+        luck: LCK,
+        strength: STR,
+        dexterity: DEX,
+        arcana: ARC,
+        charisma: CHA,
 
         // enemy's basic attack function
         enemyAttack: function(player) {
             let attackDamage = 1;
-            
-            //define enemy basic attack damage as a function of an average of their stats
-            const enemyAttackDamage = Math.floor(0.25 *(strDamge(this) + dexDamage(this) + arcDamage(this) +chaDamage(this)));
-        
-            switch (this.type) {
-                case 'Gerblin':
-                    attackDamage = Math.floor(0.6 * enemyAttackDamage);
+
+            switch (this.className) {
+
+                //strength based classes
+                case 'Barbarian':
+                    attackDamage = strDamge(this);
                     break;
-                case 'Troll':
-                    attackDamage = Math.floor(0.75 * enemyAttackDamage);
+                case 'Warrior':
+                    attackDamage = strDamge(this);
                     break;
-                case 'Lich':
-                    attackDamage = enemyAttackDamage;
+                case 'Paladin':
+                    attackDamage = strDamge(this);
                     break;
-                case 'Krav Maga Master':
-                    attackDamage = Math.floor(1.2 * enemyAttackDamage);
+                case 'Warlord':
+                    attackDamage = strDamge(this);
                     break;
-                case 'Dragon':
-                    attackDamage = Math.ceil(1.5 * enemyAttackDamage);
+                case 'Fighter':
+                    attackDamage = strDamge(this);
+                    break;
+
+                // dexterity based classes
+                case 'Archer':
+                    attackDamage = dexDamage(this);
+                    break;
+                case 'Ranger':
+                    attackDamage = dexDamage(this);
+                    break;
+                case 'Rogue':
+                    attackDamage = dexDamage(this);
+                    break;
+                case 'Thief':
+                    attackDamage = dexDamage(this);
+                    break;
+
+                // arcana based classes
+                case 'Wizard':
+                    attackDamage = arcDamage(this);
+                    break;
+                case 'Warlock':
+                    attackDamage = arcDamage(this);
+                    break;
+                case 'Druid':
+                    attackDamage = arcDamage(this);
+                    break;
+                case 'Illusionist':
+                    attackDamage = arcDamage(this);
+                    break;
+                case 'Sorcerer':
+                    attackDamage = arcDamage(this);
+                    break;
+
+                // charisma based classes
+                case 'Party Animal':
+                    attackDamage = chaDamage(this);
+                    break;
+                case 'Cleric':
+                    attackDamage = chaDamage(this);
+                    break;
+                case 'Bard':
+                    attackDamage = chaDamage(this);
+                    break;
+
+                // multistat classes
+                case 'Swashbuckler':
+                    attackDamage = Math.floor(0.5 * (strDamge(this) + dexDamage(this)));
+                    break;
+                case 'Spellsword':
+                    attackDamage = Math.floor(0.5 * (strDamge(this) + arcDamage(this)));
+                    break;
+                case 'Warrior-Poet':
+                    attackDamage = Math.floor(0.5 * (strDamge(this) + chaDamage(this)));
+                    break;
+                case 'Assassin':
+                    attackDamage = Math.floor(0.5 * (dexDamage(this) + arcDamage(this)));
+                    break;
+                case 'Daredevil':
+                    attackDamage = Math.floor(0.5 * (dexDamage(this) + chaDamage(this)));
+                    break;
+                case 'Mesmer':
+                    attackDamage = Math.floor(0.5* (arcDamage(this) + chaDamage(this)));
+                    break;
+                case 'Hero':
+                    attackDamage = Math.ceil((0.3 * (strDamge(this) + dexDamage(this) + arcDamage(this) + chaDamage(this))) + (0.25 * this.luck));
                     break;
                 default:
-                    attackDamage = enemyAttackDamage;
+                    attackDamage = strDamge(this);
                     break;
             }
         
@@ -907,10 +998,10 @@ const generateEnemy = (player) => {
         //enemy defend function
         enemyDefend: function() {
             let diceRoll = getRandomInt(20);
-            const critDefend = Math.floor((this.agility * 0.5) + 4);
-            const highDefend = Math.floor((this.agility * 0.1) + 3);
-            const lowDefend =  Math.floor((this.agility * 0.05) + 2);
-            const badDefend = Math.floor((this.agility * 0.025) + 1);
+            const critDefend = Math.floor((this.agility * 0.75) + 4);
+            const highDefend = Math.floor((this.agility * 0.5) + 3);
+            const lowDefend =  Math.floor((this.agility * 0.25) + 2);
+            const badDefend = Math.floor((this.agility * 0.1) + 1);
 
             if (this.agility > 0) {
                 if (diceRoll === 19) {
@@ -1048,6 +1139,9 @@ const updateDOM = () => {
         <div class="enemy-info-card">
             <h4>Enemy Type</h4> <p>${enemy.type}</p>
         </div>
+        <div class="enemy-info-card">
+            <h4>Enemy Class</h4> <p>${enemy.className}</p>
+        </div>
     </div>
 
     <div id="enemy-stats">
@@ -1090,7 +1184,7 @@ const updateDOM = () => {
     // add enemy stats to vitals area
     document.getElementById("enemy-vitals").innerHTML = `
     <div id="vitals-enemy-name">
-        <p>${enemy.name} the ${enemy.type}</p>
+        <p>${enemy.name} the ${enemy.type} ${enemy.className}</p>
     </div>
     <div id="vitals-enemy-vit">
         <h4>Vitality</h4><p>${enemy.vitality}/${enemy.maxVitality}</p>
@@ -1173,7 +1267,7 @@ const playerTurn = (player, enemy) => {
     }, 1000));
  };  
 
- const gameLoop = async (player, enemy) => {
+ const gameLoop = async (player, enemy, winToken, lossToken) => {
     if (player.vitality > 0 && enemy.vitality > 0) {
       if (turn === 'player') {
         // show the player action buttons again at the end of the enemy's turn
@@ -1182,7 +1276,7 @@ const playerTurn = (player, enemy) => {
         // hide the player action buttons as a visual indicator that it is the enemy's turn
         document.querySelector("#interface-section #player-actions-panel").classList.add("hidden");
         turn = 'enemy';
-        gameLoop(player, enemy)
+        gameLoop(player, enemy, winToken, lossToken)
       } else {
         // introduce a delay of 1 second before the enemy's turn begins
         setTimeout(() => {
@@ -1190,7 +1284,7 @@ const playerTurn = (player, enemy) => {
             turn = 'player';
             updateDOM();
             setTimeout(() => {
-              gameLoop(player, enemy);
+              gameLoop(player, enemy, winToken, lossToken);
             }, 2000);
           }, 1000);
       }
@@ -1198,8 +1292,22 @@ const playerTurn = (player, enemy) => {
       if (player.vitality <= 0) {
         log(`Your SAC took a harsh beating.`);
         log(`The robotic voice booms out over the loudspeakers again: "Deafet is unacceptable."`)
+        setTimeout(function() {
+            log('Logging defeat and adding results to improve Spellbound Arena Combatant creation process.')
+            lossToken.tokenCount += 1;
+        }, 500)
+        setTimeout(function() {
+            log(`You now have ${lossToken.tokenCount} token(s) you may use to improve your SAC creation process.`)
+        }, 2500)
       } else {
         log(`${enemy.name} the ${enemy.type} defeated! Well done.`);
+        setTimeout(function() {
+            log(`Your Spellbound Arena Combatant has improved their combat capabilities.`)
+            winToken.tokenCount += 1;
+        }, 500)
+        setTimeout(function() {
+            log(`You now have ${winToken.tokenCount} token(s) you may use to improve your SAC.`)
+        }, 2500)
       }
     }
   };
@@ -1215,7 +1323,7 @@ const playerTurn = (player, enemy) => {
     player = generateCharacter();
 
     //generate an enemy upon which to do glorious combat
-    enemy = generateEnemy(player);
+    enemy = generateEnemy();
 
     // wait for the flavor text from generateCharacter to end then update the DOM.
     setTimeout(function(){
@@ -1228,7 +1336,7 @@ const playerTurn = (player, enemy) => {
     }, 19000);
     setTimeout(function() {
         // initiate the gameplay loop after the falvor text has finished playing out
-        gameLoop(player, enemy);
+        gameLoop(player, enemy, winToken, lossToken);
     }, 20000);
 
 

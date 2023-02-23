@@ -418,7 +418,7 @@ section#interface-section {
       }
   }
 
-/* ---- PLAYER AND ENEMY STAT DISPLAYS ---- */
+/* ---- PLAYER AND ENEMY STAT DISPLAY PANELS ---- */
 
 div#stat-display-panel {
     width: 100%;
@@ -429,7 +429,7 @@ div#stat-display-panel {
     align-items: center;
 }
 
-/* ---- PLAYER SECTION ---- */
+/* ---- PLAYER STAT DISPLAY PANEL ---- */
 
 section#player-info {
     width: 50%;
@@ -457,6 +457,7 @@ section#player-info {
 @media only screen and (max-width: 770px) {
     section#player-info {
         height: 50rem;
+        margin: 0;
     }
 }
 
@@ -556,7 +557,7 @@ div.stat-card {
     }
 }
 
-/* ---- ENEMY SECTION ---- */
+/* ---- ENEMY DISPLAY PANEL ---- */
 
 section#enemy-info {
     width: 50%;
@@ -585,6 +586,7 @@ section#enemy-info {
 @media only screen and (max-width: 770px) {
     section#enemy-info {
         height: 50rem;
+        margin: 0;
     }
 }
 
@@ -647,7 +649,7 @@ div#enemy-stats {
     justify-content: space-around;
     flex-wrap: wrap;
 
-    margin: 1rem;
+    margin: 0.25rem;
 }
 
 /* ---- FOOTER ---- */
