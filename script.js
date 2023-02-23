@@ -488,31 +488,31 @@ const generateCharacter = () => {
     }, 500);
     setTimeout(function() {
         log(`Below you there is a grotesque swirl of color in the vat as you hear the voice report: "Adjusting matter slurry concentration within birthing vat."`)
-    }, 5000);
+    }, 2500);
     setTimeout(function() {
         log(`There is a definite increase in temperature in your control room accompanied by blinding green light as the voice coninues; "Lasers at maximum power. Commencing matter deconstruction."`)
-    }, 10000);
+    }, 4500);
     setTimeout(function() {
         log(`The glass in front of you has thankfully fogged over as the green light fades. The lasers begin firing painfully bright (even through the fog), violet, strobing beams of energy. The robotic voice is undeterred: "Moisture levels optimal. Cycling pulse lasers for matter reconstitution."`)
-    }, 15000);
+    }, 6500);
     setTimeout(function() {
         log(`The robotic voice drones on even though it just created life. Or did you? You were the one that pressed the button after all. "Arena Combatant creation achieved. Spellbinding process beginning"`)
-    }, 20000);
+    }, 8500);
     setTimeout(function() {
         log(`A robotic arm descends from the ceiling of the room and waves a decidedly non-robotic staff at the figure in the vat as the side of the vat opens. The robotic voice reports: "Spellbinding complete. Spellbound Arena Combatant (S.A.C.) creation complete."`)
-    }, 25000);
+    }, 11000);
     setTimeout(function() {
         log(`The voice has gone silent. Did someone really decide "S.A.C" was the best name for this creation? In the room below you a figure steps out of the birthing vat as the fog begins to clear.`)
-    }, 30000);
+    }, 12000);
     setTimeout(function() {
         log(`You notice new information on your terminal. How does this... SAC have a name and a biography? that makes no sense, it was... born? Manufactured? Just now as you watched. You notice there seems to also be information about an enemy combatant.`)
-    }, 35000)
+    }, 14000)
     setTimeout(function() {
         log(`The birthing vat sinks into the floor and the pulse lasers withdraw into the ceiling of the room. An entire wall of the room slides down into the floor, doubling the already massive size.`)
-    }, 40000);
+    }, 16000);
     setTimeout(function() {
         log(`The room below you now stands twice as large and twice as occupied. In the newly revealed section of the room is a clearly hostile being. The first figure readies their weaponry and waits.`)
-    }, 45000);
+    }, 18000);
 
 
 
@@ -1220,16 +1220,16 @@ const playerTurn = (player, enemy) => {
     // wait for the flavor text from generateCharacter to end then update the DOM.
     setTimeout(function(){
         updateDOM();
-    }, 35500);
+    }, 14000);
 
     //once the creation flavor text is done, begin combat phase
     setTimeout(function() {
         pageTitle.innerHTML = `Combat Trial`
-    }, 50000);
+    }, 19000);
     setTimeout(function() {
         // initiate the gameplay loop after the falvor text has finished playing out
         gameLoop(player, enemy);
-    }, 50000);
+    }, 20000);
 
 
 
