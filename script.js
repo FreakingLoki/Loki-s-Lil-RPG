@@ -18,23 +18,21 @@ const getStat = (luck, multiplier) => {
 
 // these constants target sections of the HTML for DOM manipulation
 //main title
-const pageTitle = document.getElementById("title");
+const pageTitle = document.getElementById('title');
 //log section
 const logBox = document.getElementById('log-box');
 //begin button
-const beginButton = document.getElementById("begin-button");
+const beginButton = document.getElementById('begin-button');
+//stat increase buttons
+const statUp = document.getElementsByClassName('stat-up');
+//player combat actions panel (initially hidden)
+const playerCombat = document.querySelector('#interface-section #player-actions-panel');
 
-// these variables are the win and loss tokens
+// define the win token object for use after victories
 let winToken = {
     name: 'Combat Victory Token',
     tokenCount: 0
 };
-
-let lossToken = {
-    name: 'Combat Defeat Token',
-    tokenCount: 0
-};
-
 
 //this function allows logging messages to the user in the log section
 const log = (message) => {
@@ -493,37 +491,7 @@ const chaDamage = (character) => {
 };
 
 const generateCharacter = () => {
-    //throw some flavor text to the log for the player
-    setTimeout(function() {
-        log(`You hear a monotonous robotic voice over unseen speakers: "Initializing matter reconfiguration lasers."`)
-    }, 500);
-    setTimeout(function() {
-        log(`Below you there is a grotesque swirl of color in the vat as you hear the voice report: "Adjusting matter slurry concentration within birthing vat."`)
-    }, 2500);
-    setTimeout(function() {
-        log(`There is a definite increase in temperature in your control room accompanied by blinding green light as the voice coninues; "Lasers at maximum power. Commencing matter deconstruction."`)
-    }, 4500);
-    setTimeout(function() {
-        log(`The glass in front of you has thankfully fogged over as the green light fades. The lasers begin firing painfully bright (even through the fog), violet, strobing beams of energy. The robotic voice is undeterred: "Moisture levels optimal. Cycling pulse lasers for matter reconstitution."`)
-    }, 6500);
-    setTimeout(function() {
-        log(`The robotic voice drones on even though it just created life. Or did you? You were the one that pressed the button after all. "Arena Combatant creation achieved. Spellbinding process beginning"`)
-    }, 8500);
-    setTimeout(function() {
-        log(`A robotic arm descends from the ceiling of the room and waves a decidedly non-robotic staff at the figure in the vat as the side of the vat opens. The robotic voice reports: "Spellbinding complete. Spellbound Arena Combatant (S.A.C.) creation complete."`)
-    }, 11000);
-    setTimeout(function() {
-        log(`The voice has gone silent. Did someone really decide "S.A.C" was the best name for this creation? In the room below you a figure steps out of the birthing vat as the fog begins to clear.`)
-    }, 12000);
-    setTimeout(function() {
-        log(`You notice new information on your terminal. How does this... SAC have a name and a biography? that makes no sense, it was... born? Manufactured? Just now as you watched. You notice there seems to also be information about an enemy combatant.`)
-    }, 14000)
-    setTimeout(function() {
-        log(`The birthing vat sinks into the floor and the pulse lasers withdraw into the ceiling of the room. An entire wall of the room slides down into the floor, doubling the already massive size.`)
-    }, 16000);
-    setTimeout(function() {
-        log(`The room below you now stands twice as large and twice as occupied. In the newly revealed section of the room is a clearly hostile being. The first figure readies their weaponry and waits.`)
-    }, 18000);
+
 
 
 
@@ -531,7 +499,7 @@ const generateCharacter = () => {
    
 
     // statBase is the base value for the player's vitals
-    const statBase = 25;
+    const statBase = 40;
     // statMultiplier defines how much of an effect the parent stat has on the related vital stat
     const statMultiplier = 1.5;
     // statMax is the maximum level for luck which makes the maximum possible level for the other stats double this value
@@ -788,7 +756,7 @@ const getEnemyType = () => {
     //determine range of possible indicies
     const range = (enemyTypes.length - 1) - 0;
     //this exponent determines the "weight" toward the easy end of the array
-    const exponent = 1.25;
+    const exponent = 1.1;
     // raise range to the power of exponent
     const weightedRange = Math.pow(range, exponent);
     // generate random number between 0 and weightedRange then root to make the final result more likely to be toward beginning of array
@@ -842,7 +810,7 @@ const generateEnemy = () => {
     const difficulty = determineDifficulty(enemyType);
 
     // statBase is the base value for vitals
-    const statBase = 25 * difficulty;
+    const statBase = 40 * difficulty;
     // statMultiplier defines how much of an effect the parent stat has on the related vital stat
     const statMultiplier = 1.5;
     // statMax is the maximum level for luck which makes the maximum possible level for the other stats double this value
@@ -1053,55 +1021,75 @@ const updateDOM = () => {
     // update player's status
     document.getElementById("player-info").innerHTML = `
     <div id="player-name-card">
-        <h3>Name</h3> <p>${player.name}</p>
+        <h3>Name</h3>
+        <p>${player.name}</p>
     </div>
 
 
     <div id="player-info-container">
         <div class="player-info-card">
-            <h4>Alignment</h4> <p>${player.alignment}</p>
+            <h4>Alignment</h4>
+            <p>${player.alignment}</p>
         </div>
 
         <div class="player-info-card">
-            <h4>Class</h4> <p>${player.className}</p>
+            <h4>Class</h4>
+            <p>${player.className}</p>
         </div>
     </div>
 
     <div id="player-bio-card">
-        <h4>Bio</h4> <p>${player.bio}</p>
+        <h4>Bio</h4>
+        <p>${player.bio}</p>
     </div>
 
     <div id="player-stats">
         <div class="stat-card">
-            <h4>Vitality</h4> <p>${player.vitality} / ${player.maxVitality}</p>
+            <h4>Vitality</h4>
+            <p>${player.vitality} / ${player.maxVitality}</p>
+            <button type="button" id="vit-up" class="stat-up hidden"><p>Add</p></button>
         </div>
 
         <div class="stat-card">
-            <h4>Agility</h4> <p>${player.agility} / ${player.maxAgility}</p>
+            <h4>Agility</h4>
+            <p>${player.agility} / ${player.maxAgility}</p>
+            <button type="button" id="agi-up" class="stat-up hidden"><p>Add</p></button>
         </div>
 
         <div class="stat-card">
-            <h4>Focus</h4> <p>${player.focus} / ${player.maxFocus}</p>
+            <h4>Focus</h4>
+            <p>${player.focus} / ${player.maxFocus}</p>
+            <button type="button" id="foc-up" class="stat-up hidden"><p>Add</p></button>
         </div>
         
         <div class="stat-card">
-            <h4>Luck</h4> <p>${player.luck}</p>
+            <h4>Luck</h4>
+            <p>${player.luck}</p>
+            <button type="button" id="lck-up" class="stat-up hidden"><p>Add</p></button>
         </div>
 
         <div class="stat-card">
-            <h4>Strength</h4> <p>${player.strength}</p>
+            <h4>Strength</h4>
+            <p>${player.strength}</p>
+            <button type="button" id="str-up" class="stat-up hidden"><p>Add</p></button>
         </div>
 
         <div class="stat-card">
-            <h4>Dexterity</h4> <p>${player.dexterity}</p>
+            <h4>Dexterity</h4>
+            <p>${player.dexterity}</p>
+            <button type="button" id="dex-up" class="stat-up hidden"><p>Add</p></button>
         </div>
 
         <div class="stat-card">
-            <h4>Arcana</h4> <p>${player.arcana}</p>
+            <h4>Arcana</h4>
+            <p>${player.arcana}</p>
+            <button type="button" id="arc-up" class="stat-up hidden"><p>Add</p></button>
         </div>
 
         <div class="stat-card">
-            <h4>Charisma</h4> <p>${player.charisma}</p>
+            <h4>Charisma</h4>
+            <p>${player.charisma}</p>
+            <button type="button" id="cha-up" class="stat-up hidden"><p>Add</p></button>
         </div>
     </div>
     `;
@@ -1115,66 +1103,81 @@ const updateDOM = () => {
     </div>
 
     <div id="vitals-player-vit">
-        <h4>Vitality</h4><p>${player.vitality}/${player.maxVitality}</p>
+        <h4>Vitality</h4>
+        <p>${player.vitality}/${player.maxVitality}</p>
     </div>
     <div id="vitals-player-arm">
-        <h4>Armor</h4><p>${player.armor}/${player.maxArmor}</p>
+        <h4>Armor</h4>
+        <p>${player.armor}/${player.maxArmor}</p>
     </div>
     <div id="vitals-player-agi">
-        <h4>Agility</h4><p>${player.agility}/${player.maxAgility}</p>
+        <h4>Agility</h4>
+        <p>${player.agility}/${player.maxAgility}</p>
     </div>
     <div id="vitals-player-foc">
-        <h4>Focus</h4><p>${player.focus}/${player.maxFocus}</p>
+        <h4>Focus</h4>
+        <p>${player.focus}/${player.maxFocus}</p>
     </div>
     `;
 
     // update enemy status
     document.getElementById("enemy-info").innerHTML = `
     <div id="enemy-name-card">
-        <h3>Enemy</h3> <p>${enemy.name}</p>
+        <h3>Enemy</h3>
+        <p>${enemy.name}</p>
     </div>
 
 
     <div id="enemy-info-container">
         <div class="enemy-info-card">
-            <h4>Enemy Type</h4> <p>${enemy.type}</p>
+            <h4>Enemy Type</h4>
+            <p>${enemy.type}</p>
         </div>
         <div class="enemy-info-card">
-            <h4>Enemy Class</h4> <p>${enemy.className}</p>
+            <h4>Enemy Class</h4>
+            <p>${enemy.className}</p>
         </div>
     </div>
 
     <div id="enemy-stats">
         <div class="stat-card">
-            <h4>Vitality</h4> <p>${enemy.vitality} / ${enemy.maxVitality}</p>
+            <h4>Vitality</h4>
+            <p>${enemy.vitality} / ${enemy.maxVitality}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Agility</h4> <p>${enemy.agility} / ${enemy.maxAgility}</p>
+            <h4>Agility</h4>
+            <p>${enemy.agility} / ${enemy.maxAgility}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Focus</h4> <p>${enemy.focus} / ${enemy.maxFocus}</p>
+            <h4>Focus</h4>
+            <p>${enemy.focus} / ${enemy.maxFocus}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Luck</h4> <p>${enemy.luck}</p>
+            <h4>Luck</h4>
+            <p>${enemy.luck}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Strength</h4> <p>${enemy.strength}</p>
+            <h4>Strength</h4>
+            <p>${enemy.strength}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Dexterity</h4> <p>${enemy.dexterity}</p>
+            <h4>Dexterity</h4>
+            <p>${enemy.dexterity}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Arcana</h4> <p>${enemy.arcana}</p>
+            <h4>Arcana</h4>
+            <p>${enemy.arcana}</p>
         </div>
 
         <div class="stat-card">
-            <h4>Charisma</h4> <p>${enemy.charisma}</p>
+            <h4>Charisma</h4>
+            <p>${enemy.charisma}</p>
         </div>
     </div>
     `;
@@ -1187,18 +1190,205 @@ const updateDOM = () => {
         <p>${enemy.name} the ${enemy.type} ${enemy.className}</p>
     </div>
     <div id="vitals-enemy-vit">
-        <h4>Vitality</h4><p>${enemy.vitality}/${enemy.maxVitality}</p>
+        <h4>Vitality</h4>
+        <p>${enemy.vitality}/${enemy.maxVitality}</p>
     </div>
     <div id="vitals-enemy-arm">
-        <h4>Armor</h4><p>${enemy.armor}/${enemy.maxArmor}</p>
+        <h4>Armor</h4>
+        <p>${enemy.armor}/${enemy.maxArmor}</p>
     </div>
     <div id="vitals-enemy-agi">
-        <h4>Agility</h4><p>${enemy.agility}/${enemy.maxAgility}</p>
+        <h4>Agility</h4>
+        <p>${enemy.agility}/${enemy.maxAgility}</p>
     </div>
     <div id="vitals-enemy-foc">
-        <h4>Focus</h4><p>${enemy.focus}/${enemy.maxFocus}</p>
+        <h4>Focus</h4>
+        <p>${enemy.focus}/${enemy.maxFocus}</p>
     </div>
     `;
+};
+
+const clearDOM = () => {
+        // update player's status
+        document.getElementById("player-info").innerHTML = `
+        <div id="player-name-card">
+            <h3>Name</h3>
+            <p>Destroyed Spellbound Arena Combatant</p>
+        </div>
+    
+    
+        <div id="player-info-container">
+            <div class="player-info-card">
+                <h4>Alignment</h4>
+                <p>Horizontal</p>
+            </div>
+    
+            <div class="player-info-card">
+                <h4>Class</h4>
+                <p>N/A</p>
+            </div>
+        </div>
+    
+        <div id="player-bio-card">
+            <h4>Bio</h4>
+            <p>Served their purpose in the combat trial and is now deceased.</p>
+        </div>
+    
+        <div id="player-stats">
+            <div class="stat-card">
+                <h4>Vitality</h4>
+                <p>0</p>
+            </div>
+    
+            <div class="stat-card">
+                <h4>Agility</h4>
+                <p>0</p>
+            </div>
+    
+            <div class="stat-card">
+                <h4>Focus</h4>
+                <p>0</p>
+            </div>
+            
+            <div class="stat-card">
+                <h4>Luck</h4>
+                <p>Bad</p>
+            </div>
+    
+            <div class="stat-card">
+                <h4>Strength</h4>
+                <p>None</p>
+            </div>
+    
+            <div class="stat-card">
+                <h4>Dexterity</h4>
+                <p>None</p>
+            </div>
+    
+            <div class="stat-card">
+                <h4>Arcana</h4>
+                <p>None</p>
+            </div>
+    
+            <div class="stat-card">
+                <h4>Charisma</h4>
+                <p>None</p>
+            </div>
+        </div>
+        `;
+    
+        // show player vitals panel
+        document.getElementById("player-vitals").style.display = 'grid';
+        // add player stats to vitals area
+        document.getElementById("player-vitals").innerHTML = `
+        <div id="vitals-player-name">
+            <p>Dstroyed Spellbound Arena Combatant</p>
+        </div>
+    
+        <div id="vitals-player-vit">
+            <h4>Vitality</h4>
+            <p>0</p>
+        </div>
+        <div id="vitals-player-arm">
+            <h4>Armor</h4>
+            <p>0</p>
+        </div>
+        <div id="vitals-player-agi">
+            <h4>Agility</h4>
+            <p>0</p>
+        </div>
+        <div id="vitals-player-foc">
+            <h4>Focus</h4>
+            <p>0</p>
+        </div>
+        `;
+    
+        // update enemy status
+        document.getElementById("enemy-info").innerHTML = `
+        <div id="enemy-name-card">
+            <h3>Enemy</h3>
+            <p>Destroyed Hostile Evil Reactive Organism</p>
+        </div>
+    
+    
+        <div id="enemy-info-container">
+            <div class="enemy-info-card">
+                <h4>Enemy Type</h4>
+                <p>N/A</p>
+            </div>
+            <div class="enemy-info-card">
+                <h4>Enemy Class</h4>
+                <p>N/A</p>
+            </div>
+        </div>
+    
+        <div id="enemy-stats">
+            <div class="stat-card">
+                <h4>Vitality</h4>
+                <p>0</p>
+            </div>
+    
+            <div class="stat-card">
+                <h4>Agility</h4>
+                <p>0</p>
+            </div>
+    
+            <div class="stat-card">
+                <h4>Focus</h4>
+                <p>0</p>
+            </div>
+    
+            <div class="stat-card">
+                <h4>Luck</h4>
+                <p>Bad</p>
+            </div>
+    
+            <div class="stat-card">
+                <h4>Strength</h4>
+                <p>None</p>
+            </div>
+    
+            <div class="stat-card">
+                <h4>Dexterity</h4>
+                <p>None</p>
+            </div>
+    
+            <div class="stat-card">
+                <h4>Arcana</h4>
+                <p>None</p>
+            </div>
+    
+            <div class="stat-card">
+                <h4>Charisma</h4>
+                <p>None</p>
+            </div>
+        </div>
+        `;
+    
+        //show enemy vitals panel
+        document.getElementById("enemy-vitals").style.display = 'grid';
+        // add enemy stats to vitals area
+        document.getElementById("enemy-vitals").innerHTML = `
+        <div id="vitals-enemy-name">
+            <p>Destroyed Hostile Evil Reactive Organism</p>
+        </div>
+        <div id="vitals-enemy-vit">
+            <h4>Vitality</h4>
+            <p>0</p>
+        </div>
+        <div id="vitals-enemy-arm">
+            <h4>Armor</h4>
+            <p>0</p>
+        </div>
+        <div id="vitals-enemy-agi">
+            <h4>Agility</h4>
+            <p>0</p>
+        </div>
+        <div id="vitals-enemy-foc">
+            <h4>Focus</h4>
+            <p>0</p>
+        </div>
+        `;
 };
 
 // SECTION FOR PROCESSING PLAYER TURNS AND ACTIONS
@@ -1235,12 +1425,10 @@ const playerTurn = (player, enemy) => {
       updateDOM();
       log(`The SAC's turn is over now.`)
     });
-  };
-  
-  
+};
   
 
-  const enemyTurn = async (enemy, player) => {
+const enemyTurn = async (enemy, player) => {
     log(`It is the ${enemy.type}'s turn to act.`) 
     // wait for 1 second to give the player a chance to see the enemy's action
     await new Promise(resolve => setTimeout(() => {
@@ -1265,56 +1453,144 @@ const playerTurn = (player, enemy) => {
       turn = 'player';
       log(`The ${enemy.type}'s turn has ended.`)
     }, 1000));
- };  
+};
 
- const gameLoop = async (player, enemy, winToken, lossToken) => {
+const gameWinEnd = () => {
+    pageTitle.innerHTML="Cleanup"
+    log(`The Spellbound Arena Combatant lowers their weapons and breaths a sigh of relief before the now all-too-familiar voice drones out from the loudspeakers.`);
+    setTimeout(function() {
+        setTimeout(function() {
+            log(`"Clearing combat arena and preparing for new trial."`);
+        }, 2000);
+        setTimeout(function() {
+            log(`Laser arrays similar to the ones in the birthing vat room pop out from the ceiling of the combat arena.`);
+        }, 4000);
+        setTimeout(function() {
+            log(`As soon as they've cleared their housing, the lasers fire blinding purple beams that sweep the entire room. Once your eyes regain their sight, you can see that the room is spotless`);
+            clearDOM();
+            player = {};
+            enemy = {};
+        }, 6000);
+        setTimeout(function() {
+            beginButton.addEventListener("click", beginGame);
+            beginButton.style.display = 'inline-block';
+            log(`Your control terminal asks you to begin the process again.`)
+        }, 8000)
+    }, 2000);
+
+};
+
+const gameLossEnd = () => {
+    pageTitle.innerHTML="Cleanup"
+    log(`The Hostile lowers their weapons and begins catching their breath. Your SAC lies in a bloody pile at their feet.`);
+    setTimeout(function() {
+        setTimeout(function() {
+            log(`"Clearing combat arena and preparing for new trial."`);
+        }, 2000);
+        setTimeout(function() {
+            log(`Laser arrays similar to the ones in the birthing vat room pop out from the ceiling of the combat arena.`);
+        }, 4000);
+        setTimeout(function() {
+            log(`As soon as they've cleared their housing, the lasers fire blinding purple beams that sweep the entire room. Once your eyes regain focus, you can see that the room is spotless`);
+            clearDOM();
+            player = {};
+            enemy = {};
+        }, 6000);
+        setTimeout(function() {
+            beginButton.addEventListener("click", beginGame);
+            beginButton.style.display = 'inline-block';
+            log(`Your control terminal asks you to begin the process again.`)
+        }, 8000)
+    }, 2000);
+
+};
+
+const gameLoop = async (player, enemy, winToken) => {
     if (player.vitality > 0 && enemy.vitality > 0) {
       if (turn === 'player') {
         // show the player action buttons again at the end of the enemy's turn
-        document.querySelector("#interface-section #player-actions-panel").classList.remove("hidden");
+        playerCombat.classList.remove("hidden");
         await playerTurn(player, enemy);
         // hide the player action buttons as a visual indicator that it is the enemy's turn
-        document.querySelector("#interface-section #player-actions-panel").classList.add("hidden");
+        playerCombat.classList.add("hidden");
         turn = 'enemy';
-        gameLoop(player, enemy, winToken, lossToken)
+        gameLoop(player, enemy, winToken)
       } else {
         // introduce a delay of 1 second before the enemy's turn begins
         setTimeout(() => {
-            enemyTurn(enemy, player);
-            turn = 'player';
-            updateDOM();
-            setTimeout(() => {
-              gameLoop(player, enemy, winToken, lossToken);
-            }, 2000);
-          }, 1000);
+          enemyTurn(enemy, player);
+          turn = 'player';
+          updateDOM();
+          setTimeout(() => {
+            gameLoop(player, enemy, winToken);
+          }, 2000);
+        }, 1000);
       }
     } else {
       if (player.vitality <= 0) {
-        log(`Your SAC took a harsh beating.`);
-        log(`The robotic voice booms out over the loudspeakers again: "Deafet is unacceptable."`)
         setTimeout(function() {
-            log('Logging defeat and adding results to improve Spellbound Arena Combatant creation process.')
-            lossToken.tokenCount += 1;
-        }, 500)
-        setTimeout(function() {
-            log(`You now have ${lossToken.tokenCount} token(s) you may use to improve your SAC creation process.`)
-        }, 2500)
+          log(`Your SAC took a harsh beating and was destroyed by the ${enemy.type}.`);
+
+          return; // Exit the function after the defeat block is executed
+        }, 2000);         
+          
       } else {
-        log(`${enemy.name} the ${enemy.type} defeated! Well done.`);
         setTimeout(function() {
-            log(`Your Spellbound Arena Combatant has improved their combat capabilities.`)
+          log(`Your ${player.className} decimated ${enemy.name} the ${enemy.type}. Well done.`);
+    
+          setTimeout(function() {
+            log(`The voice beems out over the loudspeakers again: "Logging combat trial results. Allocating improvement algorithms."`)
             winToken.tokenCount += 1;
-        }, 500)
-        setTimeout(function() {
-            log(`You now have ${winToken.tokenCount} token(s) you may use to improve your SAC.`)
-        }, 2500)
+          }, 500);
+        
+          setTimeout(function() {
+            log(`You now have ${winToken.tokenCount} Victory Token(s). You may use these tokens to improve the capabilities of future Spellbound Arena Combatants.`)
+          }, 1000);
+          
+          gameWinEnd();
+          return; // Exit the function after the victory block is executed
+        }, 2000)
       }
     }
   };
+  
+  
 
-  const beginGame = () => {
+const beginGame = () => {
     //set page title
     pageTitle.innerHTML = `Creation in Progress`
+
+    //throw some flavor text to the log for the player
+    setTimeout(function() {
+        log(`You hear a monotonous robotic voice over unseen speakers: "Initializing matter reconfiguration lasers."`)
+    }, 500);
+    setTimeout(function() {
+        log(`Below you there is a grotesque swirl of color in the vat as you hear the voice report: "Adjusting matter slurry concentration within birthing vat."`)
+    }, 2500);
+    setTimeout(function() {
+        log(`There is a definite increase in temperature in your control room accompanied by blinding green light as the voice coninues; "Lasers at maximum power. Commencing matter deconstruction."`)
+    }, 4500);
+    setTimeout(function() {
+        log(`The glass in front of you has thankfully fogged over as the green light fades. The lasers begin firing painfully bright (even through the fog), violet, strobing beams of energy. The robotic voice is undeterred: "Moisture levels optimal. Cycling pulse lasers for matter reconstitution."`)
+    }, 6500);
+    setTimeout(function() {
+        log(`The robotic voice drones on even though it just created life. Or did you? You were the one that pressed the button after all. "Arena Combatant creation achieved. Spellbinding process beginning"`)
+    }, 8500);
+    setTimeout(function() {
+        log(`A robotic arm descends from the ceiling of the room and waves a decidedly non-robotic staff at the figure in the vat as the side of the vat opens. The robotic voice reports: "Spellbinding complete. Spellbound Arena Combatant (S.A.C.) creation complete."`)
+    }, 11000);
+    setTimeout(function() {
+        log(`The voice has gone silent. Did someone really decide "S.A.C" was the best name for this creation? In the room below you a figure steps out of the birthing vat as the fog begins to clear.`)
+    }, 12000);
+    setTimeout(function() {
+        log(`You notice new information on your terminal. How does this... SAC have a name and a biography? that makes no sense, it was... born? Manufactured? Just now as you watched. You notice there seems to also be information about an enemy combatant.`)
+    }, 14000)
+    setTimeout(function() {
+        log(`The birthing vat sinks into the floor and the pulse lasers withdraw into the ceiling of the room. An entire wall of the room slides down into the floor, doubling the already massive size.`)
+    }, 16000);
+    setTimeout(function() {
+        log(`The room below you now stands twice as large and twice as occupied. In the newly revealed section of the room is a clearly hostile being. The first figure readies their weaponry and waits.`)
+    }, 18000);
 
     //hide the begin button
     beginButton.style.display = 'none';
@@ -1327,7 +1603,17 @@ const playerTurn = (player, enemy) => {
 
     // wait for the flavor text from generateCharacter to end then update the DOM.
     setTimeout(function(){
-        updateDOM();
+        if (winToken.tokenCount >= 1) {
+            updateDOM();
+            for (let i = 0; i < statUp.length; i++) {
+                statUp[i].classList.remove('hidden');
+              };
+        } else {
+            updateDOM();
+            for (let i = 0; i < statUp.length; i++) {
+                statUp[i].classList.add('hidden');
+              };
+        };
     }, 14000);
 
     //once the creation flavor text is done, begin combat phase
@@ -1336,13 +1622,13 @@ const playerTurn = (player, enemy) => {
     }, 19000);
     setTimeout(function() {
         // initiate the gameplay loop after the falvor text has finished playing out
-        gameLoop(player, enemy, winToken, lossToken);
+        gameLoop(player, enemy, winToken);
     }, 20000);
 
 
 
     //remove event listener from begin button
-    beginButton.removeEventListener("click", beginGame)
-  };
+    beginButton.removeEventListener("click", beginGame);
+};
 
-  beginButton.addEventListener("click", beginGame);
+beginButton.addEventListener("click", beginGame);

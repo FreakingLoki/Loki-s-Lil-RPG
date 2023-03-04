@@ -3,23 +3,22 @@
 The initial purpose of this project was to design a simple JavaScript program that would randomly generate a messege containing three parts and display that to the user. I decided to start by building a randomized name, a randomly selected biography, and some randomly generated stats (like strength and arcana) for a character that would fit into a fantasy world. I quickly decided I wanted to try and generate a fantasy enemy too. Then I figured since I have an enemy and a main character, I might as well try to allow the end user to engage in combat. So I built a turn-based combat system. This small project quickly turned into my first simple game.
 
 ## To Do List: 
-  * Increase responsiveness for different sized screens
-    * vitals and interface section need adjustment
+* Rework enemies
+  * increase chance to encounter difficult enemies
   
   * Rework Input section
     * add a tooltip box when an action button is hovered
     * adjust positioning of action buttons
     
   * add complexity to combat
-    * add classes to enemies and generate their stats seperate from the player's stats. they should still use the difficulty modifiers
     * add player and enemy abilities (up to three for each class, not all need to be unique)
 
   * Add longevity to gameplay
-    * spawn new SAC button should appear if the SAC dies
-    * spawn new enemy button spawn new enemy button should appear if the enemy dies
-    * win/loss counters
-      * On death give player a token they can spend to improve the character generation (spawn better SACs after death)
-      * On wins give player a token they can spend to improve their charater (that does not carry over to next SAC)
+    * allow player to increase stats using win tokens
+      * this has to happen AFTER the Begin button is pressed...
+      * it will show 8 increase buttons that allow the player to allocate token onclick in the stats area
+      * the function call should decrease winToken count, update player object, then updateDOM, then check to see if there are any winTokens remaining, if none, hide all the increase buttons
+    * begin combat again
 
 
 ## Generated Player Character
@@ -76,7 +75,7 @@ The initial purpose of this project was to design a simple JavaScript program th
   * Hero: STR + DEX + INT + CHA
 
 ## Generated Enemy Character
-Currently there are only four possible types of enemy characters within the game. I intend to add more later on. They have all the same stats as the player character (yes, even charisma), but they are not divided into classes. I may do that in the future, but for now the enemy characters only get a name, a type, and their stats. Their stats are determined by the player's stats right now and are multiplied by a difficulty modifier. See the list below for the difficulties. It may be more interesting in the future to allow for enemy classes then multiply their stats by the difficulty modifier after their stats are generated... Also, the easier enemies have a higher chance of being generated than the harder enemies.
+Currently there are five possible enemy types in the game. They have their stats generated seperately from the player's stats and are assigned a class based on those stats in the same manner as the player. The main difference is there is a difficulty modifier based on the enemy type. Since every enemy can have any class, their types are more of a species sort of thing. This allows Undead Warlocks and Gerblin Bards to make sense. I'll try to come up with more enemy types in the future and I may flatten the difficulty curve too. Oh, also you are more likely to encounter easier enemies right now. I've been testing a lot and have generated hundreds of enemies and have yet to encounter a Dragon. I may need to adjust the generation curve too.
 
 ### Enemy Character Sheet
   * Name
@@ -101,6 +100,7 @@ Currently there are only four possible types of enemy characters within the game
 
   ## Known Issues
 
-  * The website currently doesn't display well on smaller screens, especialy mobile devices.
+  * after combat the game gets stuck in a "win loop" or a "loss loop" and does not start the game again
+  * log messages may show the armor values being increased over their maximum possible values
 
  If you find any other problems, please shoot me an email at jesse@jesseheald.com. Include a screenshot or any other information you think may help. Thank you.
