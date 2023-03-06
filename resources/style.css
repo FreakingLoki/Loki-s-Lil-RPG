@@ -567,7 +567,7 @@ div#player-stats {
 
 div.stat-card {
     margin: 0.25rem;
-    padding: 0.5rem;
+    padding: 0.2rem;
 
     display: flex;
     flex-direction: column;
@@ -580,7 +580,7 @@ div.stat-card {
 @media only screen and (max-width: 1340) {
     div.stat-card {
         margin: 0.2rem;
-        padding: 0.4rem;
+        padding: 0.1rem;
     }
 }
 

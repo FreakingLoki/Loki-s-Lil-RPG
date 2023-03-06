@@ -3,22 +3,24 @@
 The initial purpose of this project was to design a simple JavaScript program that would randomly generate a messege containing three parts and display that to the user. I decided to start by building a randomized name, a randomly selected biography, and some randomly generated stats (like strength and arcana) for a character that would fit into a fantasy world. I quickly decided I wanted to try and generate a fantasy enemy too. Then I figured since I have an enemy and a main character, I might as well try to allow the end user to engage in combat. So I built a turn-based combat system. This small project quickly turned into my first simple game.
 
 ## To Do List: 
-* Rework enemies
-  * increase chance to encounter difficult enemies
-  
-  * Rework Input section
-    * add a tooltip box when an action button is hovered
-    * adjust positioning of action buttons
-    
-  * add complexity to combat
-    * add player and enemy abilities (up to three for each class, not all need to be unique)
+* Improve UI and Visuals
+  * Rework skills detail area so that the win token spending buttons don't cause overflow
+  * Add a display for Victory Tokens
 
-  * Add longevity to gameplay
-    * allow player to increase stats using win tokens
-      * this has to happen AFTER the Begin button is pressed...
-      * it will show 8 increase buttons that allow the player to allocate token onclick in the stats area
-      * the function call should decrease winToken count, update player object, then updateDOM, then check to see if there are any winTokens remaining, if none, hide all the increase buttons
-    * begin combat again
+* Rework Enemies
+  * Increase chance to encounter difficult enemies
+  * Add more enemy types
+  
+  * Rework Input Section
+    * Add a tooltip box when an action button is hovered
+    * Adjust positioning of action buttons
+    
+  * Add Complexity to Combat
+    * Add player and enemy abilities (up to three for each class, not all need to be unique)
+  
+  * Code Refactoring
+    * Add more comments to HTML, CSS, and JS
+    * Reorganize CSS code 
 
 
 ## Generated Player Character
@@ -99,8 +101,6 @@ Currently there are five possible enemy types in the game. They have their stats
 
 
   ## Known Issues
-
-  * after combat the game gets stuck in a "win loop" or a "loss loop" and does not start the game again
-  * log messages may show the armor values being increased over their maximum possible values
+  * log messages may show the armor values being increased over their maximum possible values, this is not actually happening
 
  If you find any other problems, please shoot me an email at jesse@jesseheald.com. Include a screenshot or any other information you think may help. Thank you.

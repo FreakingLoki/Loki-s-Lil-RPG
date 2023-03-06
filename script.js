@@ -23,8 +23,6 @@ const pageTitle = document.getElementById('title');
 const logBox = document.getElementById('log-box');
 //begin button
 const beginButton = document.getElementById('begin-button');
-//stat increase buttons
-const statUp = document.getElementsByClassName('stat-up');
 //player combat actions panel (initially hidden)
 const playerCombat = document.querySelector('#interface-section #player-actions-panel');
 
@@ -1051,6 +1049,12 @@ const updateDOM = () => {
         </div>
 
         <div class="stat-card">
+            <h4>Armor</h4>
+            <p>${player.armor} / ${player.maxArmor}</p>
+            <button type="button" id="arm-up" class="stat-up hidden"><p>Add</p></button>
+        </div>
+
+        <div class="stat-card">
             <h4>Agility</h4>
             <p>${player.agility} / ${player.maxAgility}</p>
             <button type="button" id="agi-up" class="stat-up hidden"><p>Add</p></button>
@@ -1104,19 +1108,19 @@ const updateDOM = () => {
 
     <div id="vitals-player-vit">
         <h4>Vitality</h4>
-        <p>${player.vitality}/${player.maxVitality}</p>
+        <p>${player.vitality} / ${player.maxVitality}</p>
     </div>
     <div id="vitals-player-arm">
         <h4>Armor</h4>
-        <p>${player.armor}/${player.maxArmor}</p>
+        <p>${player.armor} / ${player.maxArmor}</p>
     </div>
     <div id="vitals-player-agi">
         <h4>Agility</h4>
-        <p>${player.agility}/${player.maxAgility}</p>
+        <p>${player.agility} / ${player.maxAgility}</p>
     </div>
     <div id="vitals-player-foc">
         <h4>Focus</h4>
-        <p>${player.focus}/${player.maxFocus}</p>
+        <p>${player.focus} / ${player.maxFocus}</p>
     </div>
     `;
 
@@ -1143,6 +1147,11 @@ const updateDOM = () => {
         <div class="stat-card">
             <h4>Vitality</h4>
             <p>${enemy.vitality} / ${enemy.maxVitality}</p>
+        </div>
+
+        <div class="stat-card">
+            <h4>Armor</h4>
+            <p>${enemy.armor} / ${enemy.maxArmor}</p>
         </div>
 
         <div class="stat-card">
@@ -1206,6 +1215,43 @@ const updateDOM = () => {
         <p>${enemy.focus}/${enemy.maxFocus}</p>
     </div>
     `;
+};
+
+const updateDOMWithButtons =() => {
+    if (winToken.tokenCount >= 1) {
+        updateDOM();
+        // get the stat-up buttons and remove 'hidden' class
+        const statUp = document.getElementsByClassName('stat-up');
+        for (let i = 0; i < statUp.length; i++) {
+            statUp[i].classList.remove('hidden');
+          };
+        // declare constants for all the statup buttons to later add event listeners
+        const vitUpButton = document.getElementById('vit-up');
+        const armUpButton = document.getElementById('arm-up');
+        const agiUpButton = document.getElementById('agi-up');
+        const focUpButton = document.getElementById('foc-up');
+        const lckUpButton = document.getElementById('lck-up');
+        const strUpButton = document.getElementById('str-up');
+        const dexUpButton = document.getElementById('dex-up');
+        const arcUpButton = document.getElementById('arc-up');
+        const chaUpButton = document.getElementById('cha-up');
+        // add event listeners to the buttons
+        vitUpButton.addEventListener('click', vitUp);
+        armUpButton.addEventListener('click', armUp);
+        agiUpButton.addEventListener('click', agiUp);
+        focUpButton.addEventListener('click', focUp);
+        lckUpButton.addEventListener('click', lckUp);
+        strUpButton.addEventListener('click', strUp);
+        dexUpButton.addEventListener('click', dexUp);
+        arcUpButton.addEventListener('click', arcUp);
+        chaUpButton.addEventListener('click', chaUp);
+    } else {
+        updateDOM();
+        const statUp = document.getElementsByClassName('stat-up');
+        for (let i = 0; i < statUp.length; i++) {
+            statUp[i].classList.add('hidden');
+          };
+    };
 };
 
 const clearDOM = () => {
@@ -1391,6 +1437,118 @@ const clearDOM = () => {
         `;
 };
 
+const vitUp = () => {
+    if (winToken.tokenCount >= 1) {
+        winToken.tokenCount -= 1;
+        player.vitality += 10;
+        player.maxVitality += 10;
+        updateDOMWithButtons();
+        log(`You used a Victory Token to increase your SAC's vitality by 10. You have ${winToken.tokenCount} Tokens remaining.`);
+    } else {
+        updateDOMWithButtons();
+        log(`You do not have enough Victory Tokens. You shouldn't even be able to see this button.`);
+    };
+};
+
+const armUp = () => {
+    if (winToken.tokenCount >= 1) {
+        winToken.tokenCount -= 1;
+        player.armor += 10;
+        player.maxArmor += 10;
+        updateDOMWithButtons();
+        log(`You used a Victory Token to increase your SAC's armor by 10. You have ${winToken.tokenCount} Tokens remaining.`);
+    } else {
+        updateDOMWithButtons();
+        log(`You do not have enough Victory Tokens. You shouldn't even be able to see this button.`);
+    };
+};
+
+const agiUp = () => {
+    if (winToken.tokenCount >= 1) {
+        winToken.tokenCount -= 1;
+        player.agility += 10;
+        player.maxAgility += 10;
+        updateDOMWithButtons();
+        log(`You used a Victory Token to increase your SAC's agility by 10. You have ${winToken.tokenCount} Tokens remaining.`);
+    } else {
+        updateDOMWithButtons();
+        log(`You do not have enough Victory Tokens. You shouldn't even be able to see this button.`); 
+    };
+};
+
+const focUp = () => {
+    if (winToken.tokenCount >= 1) {
+        winToken.tokenCount -= 1;
+        player.focus += 10;
+        player.maxFocus += 10;
+        updateDOMWithButtons();
+        log(`You used a Victory Token to increase your SAC's focus by 10. You have ${winToken.tokenCount} Tokens remaining.`);
+    } else {
+        updateDOMWithButtons();
+        log(`You do not have enough Victory Tokens. You shouldn't even be able to see this button.`);
+    };
+};
+
+const lckUp = () => {
+    if (winToken.tokenCount >= 1) {
+        winToken.tokenCount -= 1;
+        player.luck += 1;
+        updateDOMWithButtons();
+        log(`You used a Victory Token to increase your SAC's luck by 1. You have ${winToken.tokenCount} Tokens remaining.`);
+    } else {
+        updateDOMWithButtons();
+        log(`You do not have enough Victory Tokens. You shouldn't even be able to see this button.`);
+    } ;   
+};
+
+const strUp = () => {
+    if (winToken.tokenCount >= 1) {
+        winToken.tokenCount -= 1;
+        player.strength += 1;
+        updateDOMWithButtons();
+        log(`You used a Victory Token to increase your SAC's strength by 1. You have ${winToken.tokenCount} Tokens remaining.`);
+    } else {
+        updateDOMWithButtons();
+        log(`You do not have enough Victory Tokens. You shouldn't even be able to see this button.`); 
+    };
+};
+
+const dexUp = () => {
+    if (winToken.tokenCount >= 1) {
+        winToken.tokenCount -= 1;
+        player.dexterity += 1;
+        updateDOMWithButtons();
+        log(`You used a Victory Token to increase your SAC's dexterity by 1. You have ${winToken.tokenCount} Tokens remaining.`);
+    } else {
+        updateDOMWithButtons();
+        log(`You do not have enough Victory Tokens. You shouldn't even be able to see this button.`);  
+    };
+};
+
+const arcUp = () => {
+    if (winToken.tokenCount >= 1) {
+        winToken.tokenCount -= 1;
+        player.arcana += 1;
+        updateDOMWithButtons();
+        log(`You used a Victory Token to increase your SAC's arcana by 1. You have ${winToken.tokenCount} Tokens remaining.`);
+    } else {
+        updateDOMWithButtons();
+        log(`You do not have enough Victory Tokens. You shouldn't even be able to see this button.`);  
+    };
+};
+
+const chaUp = () => {
+    if (winToken.tokenCount >= 1) {
+        winToken.tokenCount -= 1;
+        player.charisma += 1;
+        updateDOMWithButtons();
+        log(`You used a Victory Token to increase your SAC's charisma by 1. You have ${winToken.tokenCount} Tokens remaining.`);
+    } else {
+        updateDOMWithButtons();
+        log(`You do not have enough Victory Tokens. You shouldn't even be able to see this button.`); 
+    };
+};
+
 // SECTION FOR PROCESSING PLAYER TURNS AND ACTIONS
 let turn = 'player';
 
@@ -1422,7 +1580,7 @@ const playerTurn = (player, enemy) => {
       turn = "enemy";
     
       // update the DOM after the player's action is taken
-      updateDOM();
+      updateDOMWithButtons();
       log(`The SAC's turn is over now.`)
     });
 };
@@ -1447,7 +1605,7 @@ const enemyTurn = async (enemy, player) => {
       }
     
       //update the DOM after the enemy's action is taken
-      updateDOM();
+      updateDOMWithButtons();
   
       //switch the turn back to the player's
       turn = 'player';
@@ -1520,7 +1678,7 @@ const gameLoop = async (player, enemy, winToken) => {
         setTimeout(() => {
           enemyTurn(enemy, player);
           turn = 'player';
-          updateDOM();
+          updateDOMWithButtons();
           setTimeout(() => {
             gameLoop(player, enemy, winToken);
           }, 2000);
@@ -1603,17 +1761,7 @@ const beginGame = () => {
 
     // wait for the flavor text from generateCharacter to end then update the DOM.
     setTimeout(function(){
-        if (winToken.tokenCount >= 1) {
-            updateDOM();
-            for (let i = 0; i < statUp.length; i++) {
-                statUp[i].classList.remove('hidden');
-              };
-        } else {
-            updateDOM();
-            for (let i = 0; i < statUp.length; i++) {
-                statUp[i].classList.add('hidden');
-              };
-        };
+updateDOMWithButtons();
     }, 14000);
 
     //once the creation flavor text is done, begin combat phase
