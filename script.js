@@ -26,6 +26,14 @@ const beginButton = document.getElementById('begin-button');
 //player combat actions panel (initially hidden)
 const playerCombat = document.querySelector('#interface-section #player-actions-panel');
 
+//player action buttons
+const attackButton = document.getElementById("basic-attack");
+const defendButton = document.getElementById("defend");
+const abilityOneButton = document.getElementById("ability-one");
+const abilityTwoButton = document.getElementById("ability-two");
+const abilityThreeButton = document.getElementById("ability-three");
+const abilityDescription = document.getElementById("ability-description");
+
 // define the win token object for use after victories
 let winToken = {
     name: 'Combat Victory Token',
@@ -455,9 +463,196 @@ const getClass = (STR, DEX, ARC, CHA, LCK, maxLuck) => {
     return determinedClass;
 };
 
+// this function defines abilities based on the character's class
+
+const getAbilities = (character) => {
+    let abilityArray = [];
+    switch (character.className) {
+        //str based classes
+        case 'Barbarian':
+            abilityArray = [
+                {name: `Brutal Blow`, description: `Strike ferociously with a powerful blow.`, focCost: 10, abilityValue: strDamage(character) + 15},
+                {name: `Rend Armor`, description: `Decimate the enemy's armor with a fierce strike. No effect on Vitality.`, focCost: 16, abilityValue: strDamage(character) + 20},
+                {name: `Warcry`, description: `Unleash a mighty shout for a permanant increase to attack damage.`, focCost: 20, abilityValue: strDamage(character) + 10}
+            ];
+            break;
+        case 'Warrior':
+            abilityArray = [
+                {name: `Practiced Strike`, description: `Strike your foe with a practiced, confident attack.`, focCost: 10, abilityValue: strDamage(character) + 10},
+                {name: `Defensive Stance`, description: `Reset your balance to a better defensive stance. Increased Armor and Max Armor.`, focCost: 16, abilityValue: strDamage(character) + 12},
+                {name: `Precise Cut`, description: `Drive an attack straight through a weakpoint in your enemy's defenses. Ignores Armor.`, focCost: 20, abilityValue: strDamage(character) + 20}
+            ];
+            break;
+        case 'Paladin':
+            abilityArray = [
+                {name: `Imbuned Weapon`, description: `Imbune your weapon with holy light to strike with increased attack damage.`, focCost: 16, abilityValue: strDamage(character) + 12},
+                {name: `Healing Word`, description: `Heal yourself with a prayer to your god.`, focCost: 12, abilityValue: strDamage(character) + 15},
+                {name: `Holy Shield`, description: `Raise a shield of sacred light to increase your Armor and Max Armor.`, focCost: 20, abilityValue: strDamage(character) + 20}
+            ];
+            break;
+        case 'Warlord':
+            abilityArray = [
+                {name: `Commanding Stance`, description: `Strike a confident pose for a permanent increase to Armor and Max Armor.`, focCost: 16, abilityValue: strDamage(character) + 12},
+                {name: `Glorious Attack`, description: `A fantastic glorious blow.`, focCost: 6, abilityValue: strDamage(character) + 10},
+                {name: `Honor the Fallen`, description: `Meditate for a moment to restore some Vitality. `, focCost: 20, abilityValue: strDamage(character) + 5}
+            ];
+            break;
+        case 'Fighter':
+            abilityArray = [
+                {name: `Krav Maga Flurry`, description: `A lightning-fast series of strikes and kicks aimed at vital areas.`, focCost: 6, abilityValue: strDamage(character) + 10},
+                {name: `Defensive Stance`, description: `Reset your balance to a better defensive stance. Increased Armor and Max Armor.`, focCost: 12, abilityValue: strDamage(character) + 15},
+                {name: `Warcry`, description: `Unleash a mighty shout for a permanant increase to attack damage.`, focCost: 20, abilityValue: strDamage(character) + 10}
+            ];
+            break;
+        
+        //dex based classes
+        case 'Archer':
+            abilityArray = [
+                {name: `Piercing Shot`, description: `A lethal ranged attack that inflicts heavy damage by piercing through the enemy's defenses. Ignores Armor`, focCost: 16, abilityValue: dexDamage(character) + 15},
+                {name: `Double Shot`, description: `A quick double attack.`, focCost: 10, abilityValue: dexDamage(character) + 10},
+                {name: `Dodge`, description: `Avoid an enemy attack. Increases Armor and Max Armor.`, focCost: 12, abilityValue: dexDamage(character) + 12}
+            ];
+            break;
+        case 'Ranger':
+            abilityArray = [
+                {name: `Dagger Flurry`, description: `A quick series of attacks with a dagger.`, focCost: 8, abilityValue: dexDamage(character) + 12},
+                {name: `Practiced Shot`, description: `A deadly precise shot.`, focCost: 20, abilityValue: dexDamage(character) + 20},
+                {name: `Faded Cloak`, description: `Blend in to your surroundings for increased Armor and Max Armor.`, focCost: 16, abilityValue: dexDamage(character) + 10}
+            ];
+            break;
+        case 'Rogue':
+            abilityArray = [
+                {name: `Dagger Flurry`, description: `A quick series of attacks with a dagger.`, focCost: 6, abilityValue: dexDamage(character) + 12},
+                {name: `Rougish Charm`, description: `Charm your enemy with your charisma to increase your Armor and Max Armor.`, focCost: 12, abilityValue: dexDamage(character) + 15},
+                {name: `Dodge`, description: `Avoid an enemy attack. Increases Armor and Max Armor.`, focCost: 16, abilityValue: dexDamage(character) + 20}
+            ];
+            break;
+        case 'Thief':
+            abilityArray = [
+                {name: `Vanish`, description: `Fade into the shadows to avoid enemy attacks. Increases Armor and Max Armor.`, focCost: 16, abilityValue: dexDamage(character) + 20},
+                {name: `Sneak Attack`, description: `Attack from an unexpected direction for devestating damage.`, focCost: 12, abilityValue: dexDamage(character) + 15},
+                {name: `Dagger Flurry`, description: `A quick series of attacks with a dagger.`, focCost: 8, abilityValue: dexDamage(character) + 10}
+            ];
+            break;
+        
+        //arc based classes
+        case 'Wizard':
+            abilityArray = [
+                {name: `Lighting Strike`, description: `Blast lighting into your enemy for massive damage. Ignores enemy Armor`, focCost: 20, abilityValue: arcDamage(character) + 25},
+                {name: `Flaming Sword`, description: `Summon a flaming sword into your hands and strike your foe with it.`, focCost: 16, abilityValue: arcDamage(character) + 15},
+                {name: `Focus Shield`, description: `Surround yourself with a shield of pure Focus energy. Increases Armor and Max Armor.`, focCost: 10, abilityValue: arcDamage(character) + 10}
+            ];
+            break;
+        case 'Warlock':
+            abilityArray = [
+                {name: `Dark Bolt`, description: `Summon a bolt of darkness and throw it at your enemy. Ignores Armor`, focCost: 20, abilityValue: arcDamage(character) + 25},
+                {name: `Blackflame Font`, description: `Spew flames of black energy from your hands.`, focCost: 10, abilityValue: arcDamage(character) + 10},
+                {name: `Demonic Vigor`, description: `Channel demonic power to heal a great amount.`, focCost: 16, abilityValue: arcDamage(character) + 15}
+            ];
+            break;
+        case 'Druid':
+            abilityArray = [
+                {name: `Vine Whip`, description: `Just like Bulbasaur`, focCost: 20, abilityValue: arcDamage(character) + 20},
+                {name: `Photosynthesis`, description: `Absorb Vitality from the surrounding natural energy`, focCost: 12, abilityValue: arcDamage(character) + 15},
+                {name: `Crunchy Armor`, description: `You are a crunchy nature lover. Increases your Armor and Max Armor.`, focCost: 16, abilityValue: arcDamage(character) + 10}
+            ];
+            break;
+        case 'Illusionist':
+            abilityArray = [
+                {name: `Vanish`, description: `Fade into the shadows to avoid enemy attacks. Increases Armor and Max Armor.`, focCost: 20, abilityValue: arcDamage(character) + 25},
+                {name: `Mind Flay`, description: `Summon a horrifying image in your opponent's mind for devestating damage.`, focCost: 16, abilityValue: arcDamage(character) + 15},
+                {name: `Card Trick`, description: `Fling a deck of cards into the air as a distraction allowing you to strike undeterred.`, focCost: 12, abilityValue: arcDamage(character) + 10}
+            ];
+            break;
+        case 'Sorcerer':
+            abilityArray = [
+                {name: `Inner Flame`, description: ` Tap into your innate arcane abilities to fling an arc of flame at your opponent.`, focCost: 20, abilityValue: arcDamage(character) + 25},
+                {name: `Untapped Potential`, description: `Tap your inner potential for a burst of arcane energy to block an attack. Increase Armor and Max Armor.`, focCost: 16, abilityValue: arcDamage(character) + 10},
+                {name: `Rending Lightning`, description: `Penetrate your enemy's defenses with a powerful burst of lightning. Ignores Armor.`, focCost: 12, abilityValue: arcDamage(character) + 15}
+            ];
+            break;
+        
+        //cha based classes
+        case 'Party Animal':
+            abilityArray = [
+                {name: `Party Foul`, description: `Your enemy knocked over the pong table. Unlease a string of insults that penetrate their defenses. Ignores Armor`, focCost: 16, abilityValue: chaDamage(character) + 20},
+                {name: `The Drop`, description: `The beat drop knocks your enemy off balance causing a huge hit to their Armor.`, focCost: 12, abilityValue: chaDamage(character) + 15},
+                {name: `Shots`, description: `Take 16 shots of your favorite drink to restore a large amount of Vitality. Also increases your Charisma slightly`, focCost: 8, abilityValue: chaDamage(character) + 16}
+            ];
+            break;
+        case 'Cleric':
+            abilityArray = [
+                {name: `Healing Word`, description: `Heal yourself with a prayer to your god.`, focCost: 8, abilityValue: chaDamage(character) + 15},
+                {name: `Convert`, description: `Decrease your enemy's defenses by convincing them that your god is the correct one. Damages Armor only.`, focCost: 12, abilityValue: chaDamage(character) + 15},
+                {name: `Holy Shield`, description: `Raise a shield of sacred light to increase your Armor.`, focCost: 16, abilityValue: chaDamage(character) + 12}
+            ];
+            break;
+        case 'Bard':
+            abilityArray = [
+                {name: `Rougish Charm`, description: `Charm your enemy with your charisma to increase your Armor and Max Armor.`, focCost: 8, abilityValue: chaDamage(character) + 10},
+                {name: `Power Ballad`, description: `Cause psychic damage by reminding your enemy of that long-lost love. Ignores Armor`, focCost: 12, abilityValue: chaDamage(character) + 20},
+                {name: `Heavy Metal`, description: `Rock out hardcore to destroy your enemy's Armor.`, focCost: 10, abilityValue: chaDamage(character) + 15}
+            ];
+            break;
+        
+        //multistat classes
+        case 'Hero':
+            abilityArray = [
+                {name: `Plot Armor`, description: `You are the hero of this story, nothing can harm you. Increases Armor and Max Armor`, focCost: 8, abilityValue: 0.5 * (chaDamage(character) + strDamage(character) + dexDamage(character) + arcDamage(character) + 15)},
+                {name: `Monologue`, description: `Convince the enemy they are in the wrong by delivering a beautifully written speech. Damages while ignoring Armor`, focCost: 10, abilityValue: 0.7 * (chaDamage(character) + strDamage(character) + dexDamage(character) + arcDamage(character) + 20)},
+                {name: `Heroic Gaze`, description: `Gaze of into the middle distance for a while. Recover some Vitality.`, focCost: 12, abilityValue: 0.6 *(chaDamage(character) + strDamage(character) + dexDamage(character) + arcDamage(character) + 12)}
+            ];
+            break;
+        case 'Swashbuckler':
+            abilityArray = [
+                {name: `Swab the Deck`, description: `Demonstrate your incredible dexterity with a flurry of attacks aimed low to throw your enemy off balance. Does big damage to enemy Armor`, focCost: 16, abilityValue: 0.5 * (strDamage(character) + dexDamage(character) + 12)},
+                {name: `And a Bottle O' Rum`, description: `Take a swig of your rum to restore some Vitality.`, focCost: 8, abilityValue: 0.7 * (strDamage(character) + dexDamage(character) + 15)},
+                {name: `Cutlass Dance`, description: `Initiate a fast flurry of attacks with your cutlass for devestating damage.`, focCost: 12, abilityValue: 0.6 * (strDamage(character) + dexDamage(character) + 16)}
+            ];
+            break;
+        case 'Spellsword':
+            abilityArray = [
+                {name: `Flaming Sword`, description: `Summon a flaming sword into your hands and strike your foe with it.`, focCost: 16, abilityValue: 0.5 * (strDamage(character) + arcDamage(character) + 10)},
+                {name: `Defensive Stance`, description: `Reset your balance to a better defensive stance. Increased Armor and Max Armor.`, focCost: 12, abilityValue: 0.6 * (strDamage(character) + arcDamage(character) + 12)},
+                {name: `Lighting Strike`, description: `Blast lighting into your enemy for massive damage. Ignores enemy Armor`, focCost: 20, abilityValue: 0.8 * (strDamage(character) + arcDamage(character) + 20)}
+            ];
+            break;
+        case 'Warrior-Poet':
+            abilityArray = [
+                {name: `Power Ballad`, description: `Cause psychic damage by reminding your enemy of that long-lost love. Ignores Armor`, focCost: 12, abilityValue: 0.5 * (strDamage(character) + chaDamage(character) + 10)},
+                {name: `Practiced Strike`, description: `Strike your foe with a practiced, confident attack.`, focCost: 16, abilityValue: 0.8 * (strDamage(character) + chaDamage(character) + 18)},
+                {name: `Monologue`, description: `Convince the enemy they are in the wrong by delivering a beautifully written speech. Damages while ignoring Armor`, focCost: 20, abilityValue: 0.6 * (strDamage(character) + chaDamage(character) + 10)}
+            ];
+            break;
+        case 'Assassin':
+            abilityArray = [
+                {name: `Vanish`, description: `Fade into the shadows to avoid enemy attacks. Increases Armor and Max Armor.`, focCost: 12, abilityValue: 0.8 * (dexDamage(character) + arcDamage(character) + 20)},
+                {name: `Sneak Attack`, description: `Attack from an unexpected direction for devestating damage.`, focCost: 16, abilityValue: 0.6 * (strDamage(character) + arcDamage(character) + 18)},
+                {name: `Dark Bolt`, description: `Summon a bolt of darkness and throw it at your enemy. Ignores Armor`, focCost: 20, abilityValue: 0.8 * (dexDamage(character) + arcDamage(character) + 15)}
+            ];
+            break;
+        case 'Daredevil':
+            abilityArray = [
+                {name: `Parkour!`, description: `Do a sweet parkour trick to regain your balance. Increases Armor and Max Armor.`, focCost: 16, abilityValue: 0.5 * (dexDamage(character) + chaDamage(character) + 12)},
+                {name: `Backflip`, description: `Perform a sweet backflip to deal psychic damage. Ignores Armor.`, focCost: 12, abilityValue: 0.7 * (dexDamage(character) + chaDamage(character) + 18)},
+                {name: `Heroic Gaze`, description: `Gaze of into the middle distance for a while. Recover some Vitality.`, focCost: 20, abilityValue: 0.6 * (dexDamage(character) + chaDamage(character) + 15)}
+            ];
+            break;
+        case 'Mesmer':
+            abilityArray = [
+                {name: `Mind Flay`, description: `Summon a horrifying image in your opponent's mind for devestating damage.`, focCost: 12, abilityValue: 0.8 * (arcDamage(character) + chaDamage(character) + 22)},
+                {name: `Heavy Metal`, description: `Rock out hardcore to destroy your enemy's Armor.`, focCost: 16, abilityValue: 0.6 * (arcDamage(character) + chaDamage(character) + 18)},
+                {name: `Focus Shield`, description: `Surround yourself with a shield of pure Focus energy. Increases Armor and Max Armor.`, focCost: 20, abilityValue: 0.5 * (arcDamage(character) + chaDamage(character) + 10)}
+            ];
+            break;
+    };
+
+    return abilityArray;
+};
+
 //functions defining basic damage numbers based on a main stat with bonus damage from luck
 //strength based damage
-const strDamge = (character) => {
+const strDamage = (character) => {
     let damageRoll = getRandomInt(3) + 1;
     let damage = 1;
     damage = Math.floor(damageRoll * (Math.floor(0.25 * (character.strength + character.luck))));
@@ -489,12 +684,6 @@ const chaDamage = (character) => {
 };
 
 const generateCharacter = () => {
-
-
-
-
-
-   
 
     // statBase is the base value for the player's vitals
     const statBase = 40;
@@ -534,8 +723,6 @@ const generateCharacter = () => {
     // get a randomized biography
     const charBio = genBio(charClass);
 
-
-
     const player = {
         //player name and flavor
         name: charName,
@@ -560,6 +747,10 @@ const generateCharacter = () => {
         focus: FOC,
         charisma: CHA,
 
+        abilityOne: {},
+        abilityTwo: {},
+        abilityThree: {},
+
         //basic attack function for the player
         playerAttack: function(enemy) {
             let attackDamage = 1;
@@ -568,19 +759,19 @@ const generateCharacter = () => {
 
                 //strength based classes
                 case 'Barbarian':
-                    attackDamage = strDamge(this);
+                    attackDamage = strDamage(this);
                     break;
                 case 'Warrior':
-                    attackDamage = strDamge(this);
+                    attackDamage = strDamage(this);
                     break;
                 case 'Paladin':
-                    attackDamage = strDamge(this);
+                    attackDamage = strDamage(this);
                     break;
                 case 'Warlord':
-                    attackDamage = strDamge(this);
+                    attackDamage = strDamage(this);
                     break;
                 case 'Fighter':
-                    attackDamage = strDamge(this);
+                    attackDamage = strDamage(this);
                     break;
 
                 // dexterity based classes
@@ -627,13 +818,13 @@ const generateCharacter = () => {
 
                 // multistat classes
                 case 'Swashbuckler':
-                    attackDamage = Math.floor(0.5 * (strDamge(this) + dexDamage(this)));
+                    attackDamage = Math.floor(0.5 * (strDamage(this) + dexDamage(this)));
                     break;
                 case 'Spellsword':
-                    attackDamage = Math.floor(0.5 * (strDamge(this) + arcDamage(this)));
+                    attackDamage = Math.floor(0.5 * (strDamage(this) + arcDamage(this)));
                     break;
                 case 'Warrior-Poet':
-                    attackDamage = Math.floor(0.5 * (strDamge(this) + chaDamage(this)));
+                    attackDamage = Math.floor(0.5 * (strDamage(this) + chaDamage(this)));
                     break;
                 case 'Assassin':
                     attackDamage = Math.floor(0.5 * (dexDamage(this) + arcDamage(this)));
@@ -645,10 +836,10 @@ const generateCharacter = () => {
                     attackDamage = Math.floor(0.5* (arcDamage(this) + chaDamage(this)));
                     break;
                 case 'Hero':
-                    attackDamage = Math.ceil((0.3 * (strDamge(this) + dexDamage(this) + arcDamage(this) + chaDamage(this))) + (0.25 * this.luck));
+                    attackDamage = Math.ceil((0.3 * (strDamage(this) + dexDamage(this) + arcDamage(this) + chaDamage(this))) + (0.25 * this.luck));
                     break;
                 default:
-                    attackDamage = strDamge(this);
+                    attackDamage = strDamage(this);
                     break;
             }
 
@@ -711,6 +902,576 @@ const generateCharacter = () => {
                 this.armor -= 1;
                 log(`Your SAC's defensive stance is... Well it's not one. Their agility is exhausted. While trying to catch their breath the ${this.name} tripped and fell right on their bum. Armor decreased by 1 to ${this.armor}.`)
             }
+        },
+
+        //player ability functions
+        playerAbilityOne: function(enemy) {
+            if (this.focus - this.abilityOne.focCost < 0) {
+                this.focus = 0;
+                log(`Your SAC does not have enough Focus to use that ability.`);
+            } else {
+                this.focus -= this.abilityOne.focCost;
+                switch (this.abilityOne.name) {
+                    //str abilities
+                    case `Brutal Blow`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityOne.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityOne.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityOne.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityOne.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityOne.abilityValue;
+                                log(`${this.name} dealt ${this.abilityOne.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityOne.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityOne.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityOne.name} attack and dealt ${this.abilityOne.abilityValue} damage to them!`)
+                        };
+                        break;
+                    case `Practiced Strike`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityOne.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityOne.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityOne.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityOne.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityOne.abilityValue;
+                                log(`${this.name} dealt ${this.abilityOne.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityOne.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityOne.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityOne.name} attack and dealt ${this.abilityOne.abilityValue} damage to them!`)
+                        };
+                        break;
+                    case `Imbuned Weapon`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityOne.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityOne.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityOne.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityOne.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityOne.abilityValue;
+                                log(`${this.name} dealt ${this.abilityOne.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityOne.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityOne.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityOne.name} attack and dealt ${this.abilityOne.abilityValue} damage to them!`)
+                        };
+                        break;
+                    case `Commanding Stance`:
+                        this.armor += this.abilityOne.abilityValue;
+                        this.maxArmor += this.abilityOne.abilityValue;
+                        break;
+                    case `Krav Maga Flurry`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityOne.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityOne.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityOne.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityOne.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityOne.abilityValue;
+                                log(`${this.name} dealt ${this.abilityOne.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityOne.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityOne.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityOne.name} attack and dealt ${this.abilityOne.abilityValue} damage to them!`)
+                        };
+                        break;
+    
+                    //dex abilities
+                    case `Piercing Shot`:
+                            enemy.vitality -= this.abilityOne.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityOne.name} attack and dealt ${this.abilityOne.abilityValue} damage to them!`);
+                        break;
+                    case `Dagger Flurry`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityOne.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityOne.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityOne.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityOne.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityOne.abilityValue;
+                                log(`${this.name} dealt ${this.abilityOne.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityOne.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityOne.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityOne.name} attack and dealt ${this.abilityOne.abilityValue} damage to them!`)
+                        };
+                        break;
+                    case `Vanish`:
+                        this.armor += this.abilityOne.abilityValue;
+                        this.maxArmor += this.abilityOne.abilityValue;
+                        break;
+                    
+                    //arc abilities
+                    case `Lighting Strike`:
+                        enemy.vitality -= this.abilityOne.abilityValue;
+                        log(`Your ${this.className} whaled on the enemy with their ${this.abilityOne.name} attack and dealt ${this.abilityOne.abilityValue} damage to them!`);
+                        break;
+                    case `Dark Bolt`:
+                        enemy.vitality -= this.abilityOne.abilityValue;
+                        log(`Your ${this.className} whaled on the enemy with their ${this.abilityOne.name} attack and dealt ${this.abilityOne.abilityValue} damage to them!`);
+                        break;
+                    case `Vine Whip`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityOne.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityOne.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityOne.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityOne.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityOne.abilityValue;
+                                log(`${this.name} dealt ${this.abilityOne.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityOne.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityOne.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityOne.name} attack and dealt ${this.abilityOne.abilityValue} damage to them!`)
+                        };
+                        break;
+                    case `Inner Flame`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityOne.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityOne.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityOne.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityOne.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityOne.abilityValue;
+                                log(`${this.name} dealt ${this.abilityOne.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityOne.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityOne.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityOne.name} attack and dealt ${this.abilityOne.abilityValue} damage to them!`)
+                        };
+                        break;
+                    
+                    //cha abilities
+                    case `Party Foul`:
+                        enemy.vitality -= this.abilityOne.abilityValue;
+                        log(`Your ${this.className} whaled on the enemy with their ${this.abilityOne.name} attack and dealt ${this.abilityOne.abilityValue} damage to them!`);
+                        break;
+                    case `Healing Word`:
+                        if (this.vitality + this.abilityOne.abilityValue >= this.maxVitality) {
+                            this.vitality = this.maxVitality
+                        } else {
+                            this.vitality += this.abilityOne.abilityValue
+                        };
+                        break;
+                    case `Rougish Charm`:
+                        this.armor += this.abilityOne.abilityValue;
+                        this.maxArmor += this.abilityOne.abilityValue;
+                        break;
+                    
+                    //multistat abilities
+                    case `Plot Armor`:
+                        this.armor += this.abilityOne.abilityValue;
+                        this.maxArmor += this.abilityOne.abilityValue;
+                        break;
+                    case `Swab the Deck`:
+                        if (enemy.armor - this.abilityOne.abilityValue <= 0) {
+                            enemy.armor = 0
+                        } else {
+                            enemy.armor -= this.abilityOne.abilityValue
+                        };
+                        break;
+                    case `Flaming Sword`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityOne.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityOne.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityOne.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityOne.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityOne.abilityValue;
+                                log(`${this.name} dealt ${this.abilityOne.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityOne.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityOne.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityOne.name} attack and dealt ${this.abilityOne.abilityValue} damage to them!`)
+                        };
+                        break;
+                    case `Power Ballad`:
+                        enemy.vitality -= this.abilityOne.abilityValue;
+                        log(`Your ${this.className} whaled on the enemy with their ${this.abilityOne.name} attack and dealt ${this.abilityOne.abilityValue} damage to them!`);
+                        break;
+                    case `Parkour!`:
+                        this.armor += this.abilityOne.abilityValue;
+                        this.maxArmor += this.abilityOne.abilityValue;
+                        break;
+                    case `Mind Flay`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityOne.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityOne.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityOne.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityOne.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityOne.abilityValue;
+                                log(`${this.name} dealt ${this.abilityOne.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityOne.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityOne.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityOne.name} attack and dealt ${this.abilityOne.abilityValue} damage to them!`)
+                        };
+                        break;
+                    
+                }
+            }
+
+        },
+
+        playerAbilityTwo: function(enemy) {
+            if (this.focus - this.abilityTwo.focCost < 0) {
+                this.focus = 0;
+                log(`Your SAC does not have enough Focus to use that ability.`);
+            } else {
+                this.focus -= this.abilityTwo.focCost;
+                switch (this.abilityTwo.name) {
+                    //str abilities
+                    case `Rend Armor`:
+                        if (enemy.armor - this.abilityTwo.abilityValue <= 0) {
+                            enemy.armor = 0
+                        } else {
+                            enemy.armor -= this.abilityTwo.abilityValue
+                        };
+                        break;
+                    case `Defensive Stance`:
+                        this.armor += this.abilityTwo.abilityValue;
+                        this.maxArmor += this.abilityTwo.abilityValue;
+                        break;
+                    case `Healing Word`:
+                        if (this.vitality + this.abilityTwo.abilityValue >= this.maxVitality) {
+                            this.vitality = this.maxVitality
+                        } else {
+                            this.vitality += this.abilityTwo.abilityValue
+                        };
+                        break;
+                    case `Glorious Attack`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityTwo.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityTwo.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityTwo.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityTwo.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityTwo.abilityValue;
+                                log(`${this.name} dealt ${this.abilityTwo.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityTwo.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityTwo.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityTwo.name} attack and dealt ${this.abilityTwo.abilityValue} damage to them!`)
+                        };
+                        break;
+                    
+                    //dex abilities
+                    case `Double Shot`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityTwo.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityTwo.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityTwo.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityTwo.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityTwo.abilityValue;
+                                log(`${this.name} dealt ${this.abilityTwo.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityTwo.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityTwo.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityTwo.name} attack and dealt ${this.abilityTwo.abilityValue} damage to them!`)
+                        };
+                        break;
+                    case `Practiced Shot`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityTwo.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityTwo.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityTwo.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityTwo.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityTwo.abilityValue;
+                                log(`${this.name} dealt ${this.abilityTwo.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityTwo.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityTwo.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityTwo.name} attack and dealt ${this.abilityTwo.abilityValue} damage to them!`)
+                        };
+                        break;
+                    case `Rougish Charm`:
+                        this.armor += this.abilityTwo.abilityValue;
+                        this.maxArmor += this.abilityTwo.abilityValue;
+                        break;
+                    case `Sneak Attack`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityTwo.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityTwo.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityTwo.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityTwo.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityTwo.abilityValue;
+                                log(`${this.name} dealt ${this.abilityTwo.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityTwo.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityTwo.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityTwo.name} attack and dealt ${this.abilityTwo.abilityValue} damage to them!`)
+                        };
+                        break;
+                    
+                    //arc abilities
+                    case `Flaming Sword`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityTwo.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityTwo.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityTwo.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityTwo.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityTwo.abilityValue;
+                                log(`${this.name} dealt ${this.abilityTwo.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityTwo.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityTwo.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityTwo.name} attack and dealt ${this.abilityTwo.abilityValue} damage to them!`)
+                        };
+                        break;
+                    case `Blackflame Font`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityTwo.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityTwo.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityTwo.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityTwo.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityTwo.abilityValue;
+                                log(`${this.name} dealt ${this.abilityTwo.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityTwo.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityTwo.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityTwo.name} attack and dealt ${this.abilityTwo.abilityValue} damage to them!`)
+                        };
+                        break;
+                    case `Photosynthesis`:
+                        if (this.vitality + this.abilityTwo.abilityValue >= this.maxVitality) {
+                            this.vitality = this.maxVitality
+                        } else {
+                            this.vitality += this.abilityTwo.abilityValue
+                        };
+                        break;
+                    case `Mind Flay`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityTwo.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityTwo.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityTwo.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityTwo.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityTwo.abilityValue;
+                                log(`${this.name} dealt ${this.abilityTwo.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityTwo.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityTwo.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityTwo.name} attack and dealt ${this.abilityTwo.abilityValue} damage to them!`)
+                        };
+                        break;
+                    case `Untapped Potential`:
+                        this.armor += this.abilityTwo.abilityValue;
+                        this.maxArmor += this.abilityTwo.abilityValue;
+                        break;
+                    
+                    //cha abilities
+                    case `The Drop`:
+                        if (enemy.armor - this.abilityTwo.abilityValue <= 0) {
+                            enemy.armor = 0
+                        } else {
+                            enemy.armor -= this.abilityTwo.abilityValue
+                        };
+                        break;
+                    case `Convert`:
+                        if (enemy.armor - this.abilityTwo.abilityValue <= 0) {
+                            enemy.armor = 0
+                        } else {
+                            enemy.armor -= this.abilityTwo.abilityValue
+                        };
+                        break;
+                    case `Power Ballad`:
+                        enemy.vitality -= this.abilityTwo.abilityValue;
+                        log(`Your ${this.className} whaled on the enemy with their ${this.abilityTwo.name} attack and dealt ${this.abilityTwo.abilityValue} damage to them!`);
+                        break;
+    
+                    //multistat abilities
+                    case `Monologue`:
+                        enemy.vitality -= this.abilityTwo.abilityValue;
+                        log(`Your ${this.className} whaled on the enemy with their ${this.abilityTwo.name} attack and dealt ${this.abilityTwo.abilityValue} damage to them!`);
+                        break;
+                    case `And a Bottle O' Rum`:
+                        if (this.vitality + this.abilityTwo.abilityValue >= this.maxVitality) {
+                            this.vitality = this.maxVitality
+                        } else {
+                            this.vitality += this.abilityTwo.abilityValue
+                        };
+                        break;
+                    case `Practiced Strike`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityTwo.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityTwo.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityTwo.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityTwo.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityTwo.abilityValue;
+                                log(`${this.name} dealt ${this.abilityTwo.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityTwo.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityTwo.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityTwo.name} attack and dealt ${this.abilityTwo.abilityValue} damage to them!`)
+                        };
+                        break;
+                    case `Backflip`:
+                        enemy.vitality -= this.abilityTwo.abilityValue;
+                        log(`Your ${this.className} whaled on the enemy with their ${this.abilityTwo.name} attack and dealt ${this.abilityTwo.abilityValue} damage to them!`);
+                        break;
+                    case `Heavy Metal`:
+                        if (enemy.armor - this.abilityTwo.abilityValue <= 0) {
+                            enemy.armor = 0
+                        } else {
+                            enemy.armor -= this.abilityTwo.abilityValue
+                        };
+                        break;
+                }
+            }
+
+
+        },
+
+        playerAbilityThree: function(enemy) {
+            if (this.focus - this.abilityThree.focCost < 0) {
+                this.focus = 0;
+                log(`Your SAC does not have enough Focus to use that ability.`);
+            } else {
+                this.focus -= this.abilityThree.focCost;
+                switch (this.abilityThree.name) {
+                    //str abilities
+                    case `Warcry`:
+                        this.strength += (this.abilityValue / 5)
+                        break;
+                    case `Precise Cut`:
+                        enemy.vitality -= this.abilityThree.abilityValue;
+                        log(`Your ${this.className} whaled on the enemy with their ${this.abilityThree.name} attack and dealt ${this.abilityThree.abilityValue} damage to them!`);
+                        break;
+                    case `Holy Shield`:
+                        this.armor += this.abilityThree.abilityValue;
+                        this.maxArmor += this.abilityThree.abilityValue;
+                        break;
+                    case `Honor the Fallen`:
+                        if (this.vitality + this.abilityThree.abilityValue >= this.maxVitality) {
+                            this.vitality = this.maxVitality
+                        } else {
+                            this.vitality += this.abilityThree.abilityValue
+                        };
+                        break;
+                    
+                    //dex abilities
+                    case `Dodge`:
+                        this.armor += this.abilityThree.abilityValue;
+                        this.maxArmor += this.abilityThree.abilityValue;
+                        break;
+                    case `Faded Cloak`:
+                        this.armor += this.abilityThree.abilityValue;
+                        this.maxArmor += this.abilityThree.abilityValue;
+                        break;
+                    case `Dagger Flurry`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityThree.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityThree.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityThree.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityThree.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityThree.abilityValue;
+                                log(`${this.name} dealt ${this.abilityThree.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityThree.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityThree.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityThree.name} attack and dealt ${this.abilityThree.abilityValue} damage to them!`)
+                        };
+                        break;
+                    
+                    //arc abilities
+                    case `Focus Shield`:
+                        this.armor += this.abilityThree.abilityValue;
+                        this.maxArmor += this.abilityThree.abilityValue;
+                        break;
+                    case `Demonic Vigor`:
+                        if (this.vitality + this.abilityThree.abilityValue >= this.maxVitality) {
+                            this.vitality = this.maxVitality
+                        } else {
+                            this.vitality += this.abilityThree.abilityValue
+                        };
+                        break;
+                    case `Crunchy Armor`:
+                        this.armor += this.abilityThree.abilityValue;
+                        this.maxArmor += this.abilityThree.abilityValue;
+                        break;
+                    case `Card Trick`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityThree.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityThree.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityThree.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityThree.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityThree.abilityValue;
+                                log(`${this.name} dealt ${this.abilityThree.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityThree.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityThree.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityThree.name} attack and dealt ${this.abilityThree.abilityValue} damage to them!`)
+                        };
+                        break;
+                    case `Rending Lightning`:
+                        enemy.vitality -= this.abilityThree.abilityValue;
+                        log(`Your ${this.className} whaled on the enemy with their ${this.abilityThree.name} attack and dealt ${this.abilityThree.abilityValue} damage to them!`);
+                        break;
+                    
+                    //cha abilities
+                    case `Shots`:
+                        if (this.vitality + this.abilityThree.abilityValue >= this.maxVitality) {
+                            this.vitality = this.maxVitality
+                        } else {
+                            this.vitality += this.abilityThree.abilityValue
+                        };
+                        break;
+                    case `Heavy Metal`:
+                        enemy.vitality -= this.abilityThree.abilityValue;
+                        log(`Your ${this.className} whaled on the enemy with their ${this.abilityThree.name} attack and dealt ${this.abilityThree.abilityValue} damage to them!`);
+                        break;
+    
+                    //multistat abilities
+                    case `Heroic Gaze`:
+                        if (this.vitality + this.abilityThree.abilityValue >= this.maxVitality) {
+                            this.vitality = this.maxVitality
+                        } else {
+                            this.vitality += this.abilityThree.abilityValue
+                        };
+                        break;
+                    case `Cutlass Dance`:
+                        if (enemy.armor > 0) {
+                            if ((enemy.armor - this.abilityThree.abilityValue) < 0) {
+                                enemy.vitality -= (this.abilityThree.abilityValue - enemy.armor)
+                                log(`Your ${this.className}'s ${this.abilityThree.name} dented the ${enemy.type}'s armor, destroying the last of it, and hurt them for ${(this.abilityThree.abilityValue - enemy.armor)} damage!`)
+                                enemy.armor = 0;
+                            } else {
+                                enemy.armor -= this.abilityThree.abilityValue;
+                                log(`${this.name} dealt ${this.abilityThree.abilityValue} to the enemy and reduced their armor to ${enemy.armor}! What an impressive display of the ${this.abilityThree.name} ability!`)
+                            }
+                        } else {
+                            enemy.vitality -= this.abilityThree.abilityValue;
+                            log(`Your ${this.className} whaled on the enemy with their ${this.abilityThree.name} attack and dealt ${this.abilityThree.abilityValue} damage to them!`)
+                        };
+                        break;
+                    case `Lighting Strike`:
+                        enemy.vitality -= this.abilityThree.abilityValue;
+                        log(`Your ${this.className} whaled on the enemy with their ${this.abilityThree.name} attack and dealt ${this.abilityThree.abilityValue} damage to them!`);
+                        break;
+                    case `Monologue`:
+                        enemy.vitality -= this.abilityThree.abilityValue;
+                        log(`Your ${this.className} whaled on the enemy with their ${this.abilityThree.name} attack and dealt ${this.abilityThree.abilityValue} damage to them!`);
+                        break;
+                    case `Dark Bolt`:
+                        enemy.vitality -= this.abilityThree.abilityValue;
+                        log(`Your ${this.className} whaled on the enemy with their ${this.abilityThree.name} attack and dealt ${this.abilityThree.abilityValue} damage to them!`);
+                        break;
+                }
+            }
+            
+                
+
         }
     }
 
@@ -862,19 +1623,19 @@ const generateEnemy = () => {
 
                 //strength based classes
                 case 'Barbarian':
-                    attackDamage = strDamge(this);
+                    attackDamage = strDamage(this);
                     break;
                 case 'Warrior':
-                    attackDamage = strDamge(this);
+                    attackDamage = strDamage(this);
                     break;
                 case 'Paladin':
-                    attackDamage = strDamge(this);
+                    attackDamage = strDamage(this);
                     break;
                 case 'Warlord':
-                    attackDamage = strDamge(this);
+                    attackDamage = strDamage(this);
                     break;
                 case 'Fighter':
-                    attackDamage = strDamge(this);
+                    attackDamage = strDamage(this);
                     break;
 
                 // dexterity based classes
@@ -921,13 +1682,13 @@ const generateEnemy = () => {
 
                 // multistat classes
                 case 'Swashbuckler':
-                    attackDamage = Math.floor(0.5 * (strDamge(this) + dexDamage(this)));
+                    attackDamage = Math.floor(0.5 * (strDamage(this) + dexDamage(this)));
                     break;
                 case 'Spellsword':
-                    attackDamage = Math.floor(0.5 * (strDamge(this) + arcDamage(this)));
+                    attackDamage = Math.floor(0.5 * (strDamage(this) + arcDamage(this)));
                     break;
                 case 'Warrior-Poet':
-                    attackDamage = Math.floor(0.5 * (strDamge(this) + chaDamage(this)));
+                    attackDamage = Math.floor(0.5 * (strDamage(this) + chaDamage(this)));
                     break;
                 case 'Assassin':
                     attackDamage = Math.floor(0.5 * (dexDamage(this) + arcDamage(this)));
@@ -939,10 +1700,10 @@ const generateEnemy = () => {
                     attackDamage = Math.floor(0.5* (arcDamage(this) + chaDamage(this)));
                     break;
                 case 'Hero':
-                    attackDamage = Math.ceil((0.3 * (strDamge(this) + dexDamage(this) + arcDamage(this) + chaDamage(this))) + (0.25 * this.luck));
+                    attackDamage = Math.ceil((0.3 * (strDamage(this) + dexDamage(this) + arcDamage(this) + chaDamage(this))) + (0.25 * this.luck));
                     break;
                 default:
-                    attackDamage = strDamge(this);
+                    attackDamage = strDamage(this);
                     break;
             }
         
@@ -1016,6 +1777,10 @@ const generateEnemy = () => {
 };
 
 const updateDOM = () => {
+    //update names of player ability buttons
+    abilityOneButton.innerHTML = `<h4>${player.abilityOne.name}</h4>`
+    abilityTwoButton.innerHTML = `<h4>${player.abilityTwo.name}</h4>`
+    abilityThreeButton.innerHTML = `<h4>${player.abilityThree.name}</h4>`
     // update player's status
     document.getElementById("player-info").innerHTML = `
     <div id="player-name-card">
@@ -1553,16 +2318,61 @@ const chaUp = () => {
 let turn = 'player';
 
 const playerTurn = (player, enemy) => {
-    log(`It is the SAC's turn to act.`)
+    log(`It is the SAC's turn to act.`);
+
+
+    // these functions handle displaying the description of the abilities when the player hovers over a button
+    const handleAttackMouseover = () => {
+        abilityDescription.innerHTML = `<p>Use your basic attack to strike the enemy. No Agility or Focus cost.</p>`;
+    };
+
+    const handleDefendMouseover =() => {
+        abilityDescription.innerHTML = `<p>Use your Agility to recover your defenses. This can take many forms from a magical barrier to a simple wooden shield. Agility Cost: 2.</p>`
+    };
+
+    const handleAbilityOneMouseover = () => {
+        abilityDescription.innerHTML = `<p>Description: ${player.abilityOne.description} Focus Cost: ${player.abilityOne.focCost}.</p>`;
+    };
+
+    const handleAbilityTwoMouseover = () => {
+        abilityDescription.innerHTML = `<p>Description: ${player.abilityTwo.description} Focus Cost: ${player.abilityTwo.focCost}.</p>`;
+    };
+
+    const handleAbilityThreeMouseover = () => {
+        abilityDescription.innerHTML = `<p>Description: ${player.abilityThree.description} Focus Cost: ${player.abilityThree.focCost}.</p>`;
+    };
+
+    //this function resets the description when the player stops hovering
+    const handleAbilityMouseout = () => {
+        abilityDescription.innerHTML = `<p>Hover over a button for details.</p>`;
+    };
+
+    // mousing over the buttons should make the description display
+    attackButton.addEventListener('mouseover', handleAttackMouseover);
+    defendButton.addEventListener('mouseover', handleDefendMouseover)
+    abilityOneButton.addEventListener('mouseover', handleAbilityOneMouseover);
+    abilityTwoButton.addEventListener('mouseover', handleAbilityTwoMouseover);
+    abilityThreeButton.addEventListener('mouseover', handleAbilityThreeMouseover);
+
+    //these listeners remove the description when the user stops hovering
+    attackButton.addEventListener('mouseout', handleAbilityMouseout);
+    defendButton.addEventListener('mouseout', handleAbilityMouseout);
+    abilityOneButton.addEventListener('mouseout', handleAbilityMouseout);
+    abilityTwoButton.addEventListener('mouseout', handleAbilityMouseout);
+    abilityThreeButton.addEventListener('mouseout', handleAbilityMouseout);
+
+    //this Promise ensures the player can only take one action per turn
     return new Promise((resolve, reject) => {
       // add event listener to each action button
-      const attackButton = document.getElementById("basic-attack");
-      const defendButton = document.getElementById("defend");
+
   
       const handleAttack = () => {
         player.playerAttack(enemy);
         attackButton.removeEventListener("click", handleAttack);
         defendButton.removeEventListener("click", handleDefend);
+        abilityOneButton.removeEventListener("click", handleAbilityOne);
+        abilityTwoButton.removeEventListener("click", handleAbilityTwo);
+        abilityThreeButton.removeEventListener("click", handleAbilityThree);
         resolve();
       };
   
@@ -1570,11 +2380,47 @@ const playerTurn = (player, enemy) => {
         player.playerDefend();
         attackButton.removeEventListener("click", handleAttack);
         defendButton.removeEventListener("click", handleDefend);
+        abilityOneButton.removeEventListener("click", handleAbilityOne);
+        abilityTwoButton.removeEventListener("click", handleAbilityTwo);
+        abilityThreeButton.removeEventListener("click", handleAbilityThree);
         resolve();
       };
+
+      const handleAbilityOne = () => {
+        player.playerAbilityOne(enemy);
+        attackButton.removeEventListener("click", handleAttack);
+        defendButton.removeEventListener("click", handleDefend);
+        abilityOneButton.removeEventListener("click", handleAbilityOne);
+        abilityTwoButton.removeEventListener("click", handleAbilityTwo);
+        abilityThreeButton.removeEventListener("click", handleAbilityThree);
+        resolve();
+      }
+
+      const handleAbilityTwo = () => {
+        player.playerAbilityTwo(enemy);
+        attackButton.removeEventListener("click", handleAttack);
+        defendButton.removeEventListener("click", handleDefend);
+        abilityOneButton.removeEventListener("click", handleAbilityOne);
+        abilityTwoButton.removeEventListener("click", handleAbilityTwo);
+        abilityThreeButton.removeEventListener("click", handleAbilityThree);
+        resolve();
+      }
+
+      const handleAbilityThree = () => {
+        player.playerAbilityThree(enemy);
+        attackButton.removeEventListener("click", handleAttack);
+        defendButton.removeEventListener("click", handleDefend);
+        abilityOneButton.removeEventListener("click", handleAbilityOne);
+        abilityTwoButton.removeEventListener("click", handleAbilityTwo);
+        abilityThreeButton.removeEventListener("click", handleAbilityThree);
+        resolve();
+      }
   
       attackButton.addEventListener("click", handleAttack);
       defendButton.addEventListener("click", handleDefend);
+      abilityOneButton.addEventListener("click", handleAbilityOne);
+      abilityTwoButton.addEventListener("click", handleAbilityTwo);
+      abilityThreeButton.addEventListener("click", handleAbilityThree);
     }).finally(() => {
       // switch the turn to be the enemy's
       turn = "enemy";
@@ -1755,6 +2601,11 @@ const beginGame = () => {
 
     //generate a character for the player to control
     player = generateCharacter();
+
+    //add abilities to player
+    player.abilityOne = getAbilities(player)[0];
+    player.abilityTwo = getAbilities(player)[1];
+    player.abilityThree = getAbilities(player)[2];
 
     //generate an enemy upon which to do glorious combat
     enemy = generateEnemy();

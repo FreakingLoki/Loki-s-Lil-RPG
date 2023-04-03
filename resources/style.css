@@ -391,23 +391,10 @@ section#interface-section {
     grid-row: 4;
   }
 
-  button#respawn-button {
-    grid-column: 5 / 7;
-    grid-row: 4;
-    justify-self: center;
-    align-self: center;
-    height: 100%;
-    width: 100%;
-  }
-
-  button#spawn-enemy {
-    grid-column: 5 / 7;
-    grid-row: 4;
-    justify-self: center;
-    align-self: center;
-    height: 100%;
-    width: 100%;
-  }
+div#ability-description {
+    grid-column: 1 /span 10;
+    grid-row: 5;
+}
 
   @media only screen and (max-width: 490px) {
     button {
